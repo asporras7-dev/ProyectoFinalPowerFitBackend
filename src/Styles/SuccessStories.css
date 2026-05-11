@@ -1,5 +1,4 @@
 .success-stories-page {
-    padding-top: var(--nav-height);
     background-color: var(--bg-dark);
     min-height: 100vh;
     padding-bottom: 50px;
@@ -1482,6 +1481,10 @@
     .modal-content {
         width: 95%;
         padding: 1.5rem;
+    }
+
+    .success-stories-page {
+        padding-bottom: 30px;
     }
 
     .contacto-container {

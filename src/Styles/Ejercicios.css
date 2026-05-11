@@ -13,7 +13,7 @@
   min-height: 100vh;
   background-color: var(--bg-dark);
   color: var(--text-main);
-  padding: 100px 5% 50px;
+  padding: 20px 5% 50px;
   font-family: 'Outfit', 'Inter', sans-serif;
 }
 
@@ -583,7 +583,6 @@
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .ejercicios-container {
-    padding-top: 80px;
   }
 
   .main-title-section {

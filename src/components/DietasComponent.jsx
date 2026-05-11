@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Apple, Scale, Target, Activity, ChevronRight, Info, Utensils, Flame } from 'lucide-react';
 import '../styles/Dietas.css';
-import MotivationalQuote from './MotivationalQuote';
+
 
 const DietasComponent = () => {
     const [formData, setFormData] = useState({
@@ -37,7 +37,7 @@ const DietasComponent = () => {
                     </p>
                 </header>
 
-                <MotivationalQuote />
+                
 
                 <div className="dietas-layout">
                     {/* Form Section */}

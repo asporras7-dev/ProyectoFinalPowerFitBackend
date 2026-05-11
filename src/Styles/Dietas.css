@@ -1,5 +1,4 @@
 .dietas-page {
-    padding-top: var(--nav-height);
     background-color: var(--bg-dark);
     min-height: 100vh;
     padding-bottom: 50px;
@@ -336,7 +335,6 @@
 
 @media (max-width: 768px) {
     .dietas-page {
-        padding-top: var(--nav-height-mobile);
     }
 
     .dietas-header {

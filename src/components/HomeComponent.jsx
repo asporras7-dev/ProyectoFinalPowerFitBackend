@@ -1,7 +1,7 @@
 import { Zap, Calendar, Utensils, Dumbbell, Activity, TrendingUp } from 'lucide-react';
 import '../styles/Home.css';
 import { Link } from 'react-router-dom';
-import MotivationalQuote from './MotivationalQuote';
+
 
 const HomeComponent = () => {
     return (
@@ -73,7 +73,7 @@ const HomeComponent = () => {
                     </div>
                 </section>
 
-                <MotivationalQuote />
+                
 
                 {/* Features Section */}
                 <section className="features-section">

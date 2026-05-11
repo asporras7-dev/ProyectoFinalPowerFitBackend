@@ -138,6 +138,24 @@
       "ejerciciosElegidos": [
         "e1"
       ]
+    },
+    {
+      "id": "3e74",
+      "email": "Andres@gmail.com",
+      "password": "12345",
+      "nombre": "Andres Salas",
+      "edad": "18",
+      "rol": "client",
+      "edadFisica": "18",
+      "sexo": "m",
+      "altura": "180",
+      "peso": "69.9",
+      "lugarEntrenamiento": "gym",
+      "alergias": "nd",
+      "pesoMeta": 65,
+      "plazoSemanas": 4,
+      "pesoActual": 70,
+      "deficitEstimado": 450
     }
   ],
   "contactos": [
@@ -687,5 +705,6 @@
       "status": "pending",
       "fecha": "2026-03-28T03:08:03.718Z"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

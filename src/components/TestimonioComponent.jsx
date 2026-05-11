@@ -6,7 +6,7 @@ import { getAllUsers, updateUser } from '../services/userService';
 import { Link } from 'react-router-dom';
 import SubirImagen from './SubirImagen';
 import '../styles/SuccessStories.css';
-import MotivationalQuote from './MotivationalQuote';
+
 import Swal from 'sweetalert2';
 import FormPublicaciones from './FormPublicaciones';
 
@@ -646,7 +646,7 @@ const TestimonioComponent = () => {
                     </div>
                 </header>
 
-                <MotivationalQuote />
+                
 
                 <div className="stories-layout">
                     {/* Main Feed */}
