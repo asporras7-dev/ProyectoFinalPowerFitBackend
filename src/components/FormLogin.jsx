@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock, CheckCircle, X } from "lucide-react";
 import { loginUser } from "../services/userService";
+import { UserContext } from "../context/UserContext";
 import "../styles/Login.css";
 
 function FormLogin() {
+  const { login } = useContext(UserContext);
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -38,8 +40,8 @@ function FormLogin() {
     try {
       const user = await loginUser(formData.email, formData.password);
 
-      // Store user info in localStorage
-      localStorage.setItem("user", JSON.stringify(user));
+      // Store user info in context and localStorage
+      login(user);
 
       setNotificationMsg(`¡Bienvenido ${user.nombre || user.email}!`);
       setIsNotificationOpen(true);

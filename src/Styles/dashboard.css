@@ -834,10 +834,10 @@ hr {
 .admin-mobile-overlay {
   display: none;
   position: fixed;
-  top: 80px;
+  top: var(--nav-height);
   left: 0;
   width: 100vw;
-  height: calc(100vh - 80px);
+  height: calc(100vh - var(--nav-height));
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(2px);
   z-index: 990;
@@ -861,7 +861,7 @@ hr {
   .admin-content {
     margin-left: 0;
     padding: 1.5rem;
-    padding-top: calc(80px + 1.5rem);
+    padding-top: calc(var(--nav-height) + 1.5rem);
   }
 
   .admin-mobile-header {

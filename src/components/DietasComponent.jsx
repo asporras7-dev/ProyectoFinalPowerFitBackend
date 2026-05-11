@@ -22,6 +22,17 @@ const DietasComponent = () => {
         { id: 'muscle', name: 'Ganancia Pro', icon: <Activity size={20} />, desc: 'Alta en proteína para hipertrofia.' }
     ];
 
+    const handleGeneratePlan = () => {
+        Swal.fire({
+            title: '¡Plan Generado!',
+            text: 'Hemos actualizado tus macros y recomendaciones basadas en tus nuevos datos.',
+            icon: 'success',
+            background: '#171212',
+            color: '#fff',
+            confirmButtonColor: '#8b0000'
+        });
+    };
+
     return (
         <div className="dietas-page">
             <div className="dietas-container">
@@ -51,19 +62,39 @@ const DietasComponent = () => {
                                 <div className="inputs-grid">
                                     <div className="input-group">
                                         <label>Peso Actual (kg)</label>
-                                        <input type="number" placeholder="Ej: 75" />
+                                        <input 
+                                            type="number" 
+                                            placeholder="Ej: 75" 
+                                            value={formData.currentWeight}
+                                            onChange={(e) => setFormData({...formData, currentWeight: e.target.value})}
+                                        />
                                     </div>
                                     <div className="input-group">
                                         <label>Peso Meta (kg)</label>
-                                        <input type="number" placeholder="Ej: 70" />
+                                        <input 
+                                            type="number" 
+                                            placeholder="Ej: 70" 
+                                            value={formData.goalWeight}
+                                            onChange={(e) => setFormData({...formData, goalWeight: e.target.value})}
+                                        />
                                     </div>
                                     <div className="input-group">
                                         <label>Altura (cm)</label>
-                                        <input type="number" placeholder="Ej: 175" />
+                                        <input 
+                                            type="number" 
+                                            placeholder="Ej: 175" 
+                                            value={formData.height}
+                                            onChange={(e) => setFormData({...formData, height: e.target.value})}
+                                        />
                                     </div>
                                     <div className="input-group">
                                         <label>Edad</label>
-                                        <input type="number" placeholder="Ej: 25" />
+                                        <input 
+                                            type="number" 
+                                            placeholder="Ej: 25" 
+                                            value={formData.age}
+                                            onChange={(e) => setFormData({...formData, age: e.target.value})}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -96,10 +127,14 @@ const DietasComponent = () => {
                                     <span>Nivel de Actividad</span>
                                 </h3>
                                 <div className="activity-options">
-                                    <select className="premium-select">
+                                    <select 
+                                        className="premium-select"
+                                        value={formData.activityLevel}
+                                        onChange={(e) => setFormData({...formData, activityLevel: e.target.value})}
+                                    >
                                         <option value="sedentary">Sedentario (Poco o nada de ejercicio)</option>
                                         <option value="light">Ligero (1-2 días/semana)</option>
-                                        <option value="moderate" selected>Moderado (3-5 días/semana)</option>
+                                        <option value="moderate">Moderado (3-5 días/semana)</option>
                                         <option value="intense">Intenso (6-7 días/semana)</option>
                                     </select>
                                 </div>
@@ -110,7 +145,7 @@ const DietasComponent = () => {
                                     <Info size={16} />
                                     <span>Usamos esta información para calcular tus macros exactos.</span>
                                 </div>
-                                <button className="btn-generate-plan">
+                                <button className="btn-generate-plan" onClick={handleGeneratePlan}>
                                     <span>Generar mi Plan</span>
                                     <ChevronRight size={20} />
                                 </button>

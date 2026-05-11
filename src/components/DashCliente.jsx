@@ -82,9 +82,11 @@ const DashCliente = () => {
   };
 
   const calculateIMC = () => {
-    if (!user?.pesoActual || !user?.altura) return 0;
-    const peso = parseFloat(user.pesoActual);
-    const altura = parseFloat(user.altura) / 100;
+    const peso = parseFloat(user?.pesoActual || user?.peso);
+    const altura = parseFloat(user?.altura) / 100;
+    
+    if (!peso || !altura || isNaN(peso) || isNaN(altura)) return "0.0";
+    
     return (peso / (altura * altura)).toFixed(1);
   };
 
@@ -302,7 +304,7 @@ const DashCliente = () => {
               <div className="hero-card maroon">
                 <div className="card-content">
                   <h3>Progreso de Peso</h3>
-                  <p>Meta: {user.pesoMeta}kg | Actual: {user.pesoActual}kg</p>
+                  <p>Meta: {user.pesoMeta || '--'}kg | Actual: {user.pesoActual || user.peso || '--'}kg</p>
                 </div>
                 <div className="card-icon-box">
                   <Target size={24} />
@@ -326,7 +328,7 @@ const DashCliente = () => {
                   <span>Peso Actual</span>
                   <Scale size={18} />
                 </div>
-                <div className="stat-value">{user.pesoActual} kg</div>
+                <div className="stat-value">{user.pesoActual || user.peso || '--'} kg</div>
                 <div className="stat-change positive">Iniciaste con {user.peso} kg</div>
               </div>
               <div className="stat-card">
@@ -352,7 +354,7 @@ const DashCliente = () => {
                   <span>Altura Registrada</span>
                   <Activity size={18} />
                 </div>
-                <div className="stat-value">{user.altura} cm</div>
+                <div className="stat-value">{user.altura || '--'} cm</div>
                 <div className="progress-bar-mini">
                   <div className="progress-fill" style={{ width: '100%' }}></div>
                 </div>

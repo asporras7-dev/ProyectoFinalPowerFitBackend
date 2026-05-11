@@ -95,17 +95,17 @@ const MetaUsuario = ({ userData, onBack }) => {
 
               <div className="lose-section">
                 <div className="lose-header">
-                  <span>Peso total a perder</span>
-                  <span className="lose-amount">{weightToLose} kg</span>
+                  <span>{currentWeight >= targetWeight ? 'Peso total a perder' : 'Peso total a ganar'}</span>
+                  <span className="lose-amount">{Math.abs(weightToLose)} kg</span>
                 </div>
                 <div className="range-container">
                   <input
                     type="range"
                     className="weight-range"
                     min="0"
-                    max="20"
+                    max="30"
                     step="0.5"
-                    value={weightToLose}
+                    value={Math.abs(weightToLose)}
                     readOnly
                   />
                 </div>

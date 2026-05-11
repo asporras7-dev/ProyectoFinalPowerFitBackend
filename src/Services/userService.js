@@ -28,14 +28,15 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (email, password) => {
   try {
-    const response = await multiFetch("");
+    // Optimization: Filter by email on the server side
+    const response = await fetch(`${BASE_URL}/usuarios?email=${encodeURIComponent(email)}`);
 
     if (!response.ok) {
       throw new Error(`Error del servidor (${response.status}). Asegúrate de que npm run backend esté activo.`);
     }
 
     const users = await response.json();
-    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+    const user = users.find(u => u.password === password);
 
     if (!user) {
       throw new Error("Credenciales inválidas. Revisa tu correo y contraseña.");
@@ -77,12 +78,13 @@ export const deleteUser = async (userId) => {
 
 export const checkUserExists = async (email) => {
   try {
-    const response = await multiFetch("");
+    // Optimization: Use server-side filtering
+    const response = await fetch(`${BASE_URL}/usuarios?email=${encodeURIComponent(email)}`);
     if (!response.ok) {
       throw new Error("Error fetching users");
     }
     const users = await response.json();
-    return users.some(user => user.email === email);
+    return users.length > 0;
   } catch (error) {
     console.error("Check user error:", error);
     throw error;
