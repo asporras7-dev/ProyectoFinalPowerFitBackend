@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAllContactMessages, deleteContactMessage } from '../services/userService';
 import { Trash2, Mail, Calendar, User, Phone, MapPin } from 'lucide-react';
+import Swal from 'sweetalert2';
 
 const AdminMessages = () => {
   const [messages, setMessages] = useState([]);
@@ -25,12 +26,44 @@ const AdminMessages = () => {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await deleteContactMessage(id);
-      setMessages(messages.filter(m => m.id !== id));
-    } catch {
-      alert("Error al eliminar el mensaje");
-    }
+    Swal.fire({
+      title: '¿Eliminar Mensaje?',
+      text: "El mensaje será removido permanentemente de la bandeja de entrada.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#8b0000',
+      cancelButtonColor: '#333',
+      confirmButtonText: 'Sí, Eliminar',
+      cancelButtonText: 'Cancelar',
+      background: '#171212',
+      color: '#fff'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteContactMessage(id);
+          setMessages(messages.filter(m => m.id !== id));
+          
+          Swal.fire({
+            title: 'Eliminado',
+            text: 'El mensaje ha sido borrado.',
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false,
+            background: '#171212',
+            color: '#fff'
+          });
+        } catch {
+          Swal.fire({
+            title: 'Error',
+            text: 'No se pudo eliminar el mensaje.',
+            icon: 'error',
+            background: '#171212',
+            color: '#fff',
+            confirmButtonColor: '#8b0000'
+          });
+        }
+      }
+    });
   };
 
   return (

@@ -15,6 +15,7 @@ const AdminExercises = ({ openAddModal }) => {
     const [exercises, setExercises] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [processing, setProcessing] = useState(false);
 
     useEffect(() => {
         loadExercises();
@@ -60,6 +61,7 @@ const AdminExercises = ({ openAddModal }) => {
 
     const confirmDelete = async (id) => {
         try {
+            setProcessing(true);
             await eliminarEjercicio(id);
             setExercises(exercises.filter(ex => ex.id !== id));
             Swal.fire({
@@ -79,6 +81,8 @@ const AdminExercises = ({ openAddModal }) => {
                 color: '#fff',
                 confirmButtonColor: '#8b0000'
             });
+        } finally {
+            setProcessing(false);
         }
     };
 
@@ -136,7 +140,12 @@ const AdminExercises = ({ openAddModal }) => {
                                 <td><span className={`badge ${ex.nivel.toLowerCase()}`}>{ex.nivel}</span></td>
                                 <td>
                                     <div className="actions-cell">
-                                        <button className="btn-action delete" title="Eliminar" onClick={() => handleDeleteClick(ex.id)}>
+                                        <button 
+                                            className="btn-action delete" 
+                                            title="Eliminar" 
+                                            onClick={() => handleDeleteClick(ex.id)}
+                                            disabled={processing}
+                                        >
                                             <Trash2 size={18} />
                                         </button>
                                     </div>

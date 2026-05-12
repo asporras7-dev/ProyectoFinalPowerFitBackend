@@ -69,7 +69,14 @@ const AdminReports = () => {
                     confirmButtonColor: '#8b0000'
                 });
             } catch {
-                alert('Error al eliminar el reporte');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No se pudo eliminar el reporte.',
+                    background: '#171212',
+                    color: '#fff',
+                    confirmButtonColor: '#8b0000'
+                });
             }
         }
     };
@@ -102,7 +109,14 @@ const AdminReports = () => {
                 });
                 if (selectedStory?.id === storyId) setShowStoryModal(false);
             } catch {
-                alert('Error al eliminar la publicación');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No se pudo eliminar la publicación.',
+                    background: '#171212',
+                    color: '#fff',
+                    confirmButtonColor: '#8b0000'
+                });
             }
         }
     };

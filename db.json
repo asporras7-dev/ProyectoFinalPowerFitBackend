@@ -56,6 +56,7 @@
       "edad": "22",
       "rol": "admin"
     },
+
     {
       "id": "ac2b",
       "email": "jporrasfwdcostarica@gmail.com",
@@ -100,24 +101,7 @@
         "e3"
       ]
     },
-    {
-      "id": "ebaa",
-      "email": "ransesalvir75@gmail.com",
-      "password": "R4nses_2008",
-      "nombre": "RANSES MATIAS",
-      "edad": "20",
-      "rol": "client",
-      "edadFisica": "20",
-      "sexo": "m",
-      "altura": "190",
-      "peso": "120",
-      "lugarEntrenamiento": "gym",
-      "alergias": "",
-      "pesoMeta": 70,
-      "plazoSemanas": 8,
-      "pesoActual": "120",
-      "deficitEstimado": 450
-    },
+    
     {
       "id": "d709",
       "email": "pepe@pepe",
@@ -381,6 +365,7 @@
       "categoria": "Espalda",
       "videoUrl": "https://www.youtube.com/embed/aAggnpPyR6E?si=FaNyPHsiJ2J-3N7j"
     },
+
     {
       "id": "e4",
       "nombre": "Peso Muerto",
@@ -391,6 +376,7 @@
       "categoria": "Piernas",
       "videoUrl": "https://www.youtube.com/embed/0XL4cZR2Ink?si=LDmwMH4WdnSpkPmA"
     },
+
     {
       "id": "e5",
       "nombre": "Press Militar",
@@ -705,6 +691,5 @@
       "status": "pending",
       "fecha": "2026-03-28T03:08:03.718Z"
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }

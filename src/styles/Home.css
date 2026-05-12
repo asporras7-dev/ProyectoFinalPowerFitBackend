@@ -6,18 +6,34 @@
     background-color: var(--bg-dark);
 }
 
-.hero-background-layer {
+.hero-background-carousel {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 120vh;
-    /* Extends behind features slightly */
-    background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2000&auto=format&fit=crop');
-    background-size: cover;
-    background-position: center top;
     z-index: 0;
-    opacity: 0.8;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out, transform 8s linear;
+    transform: scale(1.1);
+}
+
+.carousel-slide.active {
+    opacity: 0.6;
+    transform: scale(1);
+    z-index: 1;
 }
 
 .hero-overlay {
@@ -26,10 +42,11 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, rgba(15, 16, 20, 0.98) 0%, rgba(15, 16, 20, 0.85) 40%, rgba(15, 16, 20, 0.3) 100%);
+    background: linear-gradient(90deg, rgba(15, 16, 20, 1) 0%, rgba(15, 16, 20, 0.8) 40%, rgba(15, 16, 20, 0.2) 100%);
+    z-index: 2;
 }
 
-.hero-background-layer::after {
+.hero-background-carousel::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -37,6 +54,56 @@
     width: 100%;
     height: 300px;
     background: linear-gradient(to top, var(--bg-dark) 0%, transparent 100%);
+    z-index: 3;
+}
+
+.carousel-controls {
+    position: absolute;
+    bottom: 25%;
+    left: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    z-index: 20;
+}
+
+.carousel-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    transform: scale(1.1);
+}
+
+.carousel-indicators {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.indicator {
+    width: 40px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.indicator.active {
+    background: var(--primary);
+    width: 60px;
 }
 
 .home-content {
@@ -218,7 +285,7 @@
     display: flex;
     align-items: center;
     gap: 1.25rem;
-    width: 290px;
+    width: 350px;
     transition: transform 0.3s ease;
 }
 
@@ -259,7 +326,7 @@
 }
 
 .stat-label {
-    font-size: 0.7rem;
+    font-size: 0.3rem;
     color: var(--text-muted);
     font-weight: 500;
     text-transform: uppercase;

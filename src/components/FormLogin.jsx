@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock, CheckCircle, X } from "lucide-react";
 import { loginUser } from "../services/userService";
 import { UserContext } from "../context/UserContext";
+import Swal from 'sweetalert2';
 import "../styles/Login.css";
 
 function FormLogin() {
@@ -32,7 +33,14 @@ function FormLogin() {
     if (!formData.email?.trim() || !formData.password?.trim()) {
       const msg = "Por favor, completa todos los campos.";
       setError(msg);
-      alert(msg);
+      Swal.fire({
+        title: 'Campos Incompletos',
+        text: msg,
+        icon: 'warning',
+        background: '#171212',
+        color: '#fff',
+        confirmButtonColor: '#8b0000'
+      });
       return;
     }
 

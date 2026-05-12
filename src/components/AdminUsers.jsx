@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { getAllUsers, deleteUser, updateUser } from '../services/userService';
 import { Trash2, UserPlus, AlertTriangle, X, Edit2, Save, Eye, Activity, ClipboardList, Target, Calendar, User as UserIcon } from 'lucide-react';
+import Swal from 'sweetalert2';
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [userIdToDelete, setUserIdToDelete] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [editForm, setEditForm] = useState({
     nombre: '',
@@ -17,6 +16,7 @@ const AdminUsers = () => {
   });
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [detailUser, setDetailUser] = useState(null);
+  const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
     loadUsers();
@@ -29,14 +29,36 @@ const AdminUsers = () => {
       setUsers(data);
     } catch (error) {
       console.error("Error loading users", error);
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudieron cargar los usuarios. Verifica la conexión con el servidor.',
+        icon: 'error',
+        background: '#171212',
+        color: '#fff',
+        confirmButtonColor: '#8b0000'
+      });
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = (userId) => {
-    setUserIdToDelete(userId);
-    setIsDeleteModalOpen(true);
+    Swal.fire({
+      title: '¿Eliminar Usuario?',
+      text: "Esta acción es irreversible y el usuario perderá el acceso permanentemente.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#8b0000',
+      cancelButtonColor: '#333',
+      confirmButtonText: 'Sí, Eliminar',
+      cancelButtonText: 'Cancelar',
+      background: '#171212',
+      color: '#fff'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        confirmDeleteUser(userId);
+      }
+    });
   };
 
   const handleEdit = (user) => {
@@ -55,12 +77,32 @@ const AdminUsers = () => {
     if (!selectedUser) return;
 
     try {
-      await updateUser(selectedUser.id, editForm);
+      setProcessing(true);
+      const updated = await updateUser(selectedUser.id, editForm);
       setUsers(users.map(u => u.id === selectedUser.id ? { ...u, ...editForm } : u));
       setIsEditModalOpen(false);
       setSelectedUser(null);
+      
+      Swal.fire({
+        title: '¡Actualizado!',
+        text: 'Los datos del usuario han sido guardados.',
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false,
+        background: '#171212',
+        color: '#fff'
+      });
     } catch {
-      alert("Error al actualizar usuario");
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo actualizar el usuario.',
+        icon: 'error',
+        background: '#171212',
+        color: '#fff',
+        confirmButtonColor: '#8b0000'
+      });
+    } finally {
+      setProcessing(false);
     }
   };
 
@@ -76,16 +118,31 @@ const AdminUsers = () => {
     return (inicio - actual).toFixed(1);
   };
 
-  const confirmDeleteUser = async () => {
-    if (!userIdToDelete) return;
-
+  const confirmDeleteUser = async (userId) => {
     try {
-      await deleteUser(userIdToDelete);
-      setUsers(users.filter(u => u.id !== userIdToDelete));
-      setIsDeleteModalOpen(false);
-      setUserIdToDelete(null);
+      setProcessing(true);
+      await deleteUser(userId);
+      setUsers(users.filter(u => u.id !== userId));
+      
+      Swal.fire({
+        title: 'Eliminado',
+        text: 'El usuario ha sido removido del sistema.',
+        icon: 'success',
+        background: '#171212',
+        color: '#fff',
+        confirmButtonColor: '#8b0000'
+      });
     } catch {
-      alert("Error al eliminar usuario");
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo eliminar el usuario.',
+        icon: 'error',
+        background: '#171212',
+        color: '#fff',
+        confirmButtonColor: '#8b0000'
+      });
+    } finally {
+      setProcessing(false);
     }
   };
 
@@ -222,29 +279,18 @@ const AdminUsers = () => {
               </div>
               <div className="modal-actions" style={{ marginTop: '1.5rem' }}>
                 <button type="button" className="btn-cancel" onClick={() => setIsEditModalOpen(false)}>Cancelar</button>
-                <button type="submit" className="btn-submit">
-                  <Save size={18} />
-                  Guardar Cambios
+                <button type="submit" className="btn-submit" disabled={processing}>
+                  {processing ? (
+                    'Guardando...'
+                  ) : (
+                    <>
+                      <Save size={18} />
+                      Guardar Cambios
+                    </>
+                  )}
                 </button>
               </div>
             </form>
-          </div>
-        </div>
-      )}
-
-      {/* Modal de confirmación de eliminación */}
-      {isDeleteModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content confirm-modal animate-fade-in">
-            <div className="confirm-icon-container">
-              <AlertTriangle size={48} color="#ff4d4d" />
-            </div>
-            <h3>¿Eliminar Usuario?</h3>
-            <p>Esta acción es irreversible y el usuario perderá el acceso a la plataforma permanentemente.</p>
-            <div className="modal-actions-column">
-              <button className="btn-cancel-full" onClick={() => setIsDeleteModalOpen(false)}>No, Mantener Usuario</button>
-              <button className="btn-delete-full" onClick={confirmDeleteUser}>Sí, Eliminar Usuario</button>
-            </div>
           </div>
         </div>
       )}
