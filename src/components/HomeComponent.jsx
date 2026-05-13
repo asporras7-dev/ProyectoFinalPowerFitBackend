@@ -1,41 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../context/UserContext';
 import { Zap, Calendar, Utensils, Dumbbell, Activity, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
 import '../styles/Home.css';
 import { Link } from 'react-router-dom';
 
-const carouselImages = [
-    "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=2000&auto=format&fit=crop", // Barbell
-    "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2000&auto=format&fit=crop", // Rows/Action
-    "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2000&auto=format&fit=crop", // Deadlift
-    "https://images.unsplash.com/photo-1434681940516-7df58513d71f?q=80&w=2000&auto=format&fit=crop", // Arms open
-    "https://images.unsplash.com/photo-1517838276535-2200424599ff?q=80&w=2000&auto=format&fit=crop"  // Gym interior
-];
+const videoBackground = "https://res.cloudinary.com/dho2o1hmc/video/upload/v1778602962/Nuevo_proyecto_ssj42q.mp4";
 
 const HomeComponent = () => {
-    const [currentSlide, setCurrentSlide] = useState(0);
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
-        }, 4000);
-        return () => clearInterval(timer);
-    }, []);
-
-    const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
-    const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + carouselImages.length) % carouselImages.length);
+    const { user } = useContext(UserContext);
 
     return (
         <div className="home-wrapper">
-            <div className="hero-background-carousel">
-                {carouselImages.map((img, index) => (
-                    <div
-                        key={index}
-                        className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}
-                        style={{ backgroundImage: `url(${img})` }}
-                    >
-                        <div className="hero-overlay"></div>
-                    </div>
-                ))}
+            <div className="hero-video-background">
+                <video 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline 
+                    className="hero-video"
+                >
+                    <source src={videoBackground} type="video/mp4" />
+                </video>
+                <div className="hero-overlay"></div>
             </div>
 
             <div className="home-content">
@@ -47,15 +33,14 @@ const HomeComponent = () => {
                             <span className="italic-red">SUPERA TUS LÍMITES</span>
                         </h1>
                         <p className="hero-subtitle delay-100">
-                            Descubre los mejores planes de entrenamiento y dietas personalizadas para alcanzar la mejor versión de ti mismo. Inicia hoy mismo tu cambio radical.
+                            Descubre los mejores planes de entrenamiento personalizados para alcanzar la mejor versión de ti mismo. Inicia hoy mismo tu cambio radical.
                         </p>
                         <div className="hero-buttons delay-200">
-                            <Link to="/registro" className="btn btn-red">
-                                Empieza Ahora
-                            </Link>
-                            <Link to="/dietas" className="btn btn-outline">
-                                Ver Dietas
-                            </Link>
+                            {!user && (
+                                <Link to="/registro" className="btn btn-red">
+                                    Empieza Ahora
+                                </Link>
+                            )}
                         </div>
 
                     

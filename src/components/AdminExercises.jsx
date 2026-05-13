@@ -6,7 +6,9 @@ import {
     Dumbbell,
     X,
     Image as ImageIcon,
-    AlertTriangle
+    AlertTriangle,
+    Play,
+    Eye
 } from 'lucide-react';
 import { obtenerTodosEjercicios, eliminarEjercicio } from '../services/exerciseService';
 import Swal from 'sweetalert2';
@@ -16,6 +18,7 @@ const AdminExercises = ({ openAddModal }) => {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [processing, setProcessing] = useState(false);
+    const [selectedTechnique, setSelectedTechnique] = useState(null);
 
     useEffect(() => {
         loadExercises();
@@ -141,6 +144,13 @@ const AdminExercises = ({ openAddModal }) => {
                                 <td>
                                     <div className="actions-cell">
                                         <button 
+                                            className="btn-action edit" 
+                                            title="Ver técnica" 
+                                            onClick={() => setSelectedTechnique(ex)}
+                                        >
+                                            <Play size={18} fill="currentColor" />
+                                        </button>
+                                        <button 
                                             className="btn-action delete" 
                                             title="Eliminar" 
                                             onClick={() => handleDeleteClick(ex.id)}
@@ -162,8 +172,57 @@ const AdminExercises = ({ openAddModal }) => {
                 )}
             </div>
             {/* Redundant modal removed as it is handled by the parent DashAdmin component */}
+            
+            <TechniqueModal exercise={selectedTechnique} onClose={() => setSelectedTechnique(null)} />
         </div>
     );
 };
+
+/* Técnica Modal Helper Component */
+const TechniqueModal = ({ exercise, onClose }) => {
+    if (!exercise) return null;
+    return (
+      <div className="modal-overlay" onClick={onClose} style={{ zIndex: 3000 }}>
+        <div className="modal-content animate-fade-in" onClick={e => e.stopPropagation()} style={{ maxWidth: '600px', padding: '0', overflow: 'hidden' }}>
+          <div className="modal-header" style={{ padding: '20px', borderBottom: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h2 style={{ margin: 0, fontSize: '1.25rem' }}>Técnica: {exercise.nombre}</h2>
+            <button className="close-btn" onClick={onClose} style={{ background: 'transparent', border: 'none', color: '#888', cursor: 'pointer' }}><X size={24} /></button>
+          </div>
+          <div className="modal-body" style={{ padding: '0' }}>
+            {exercise.videoUrl ? (
+              <div className="video-responsive">
+                <iframe 
+                  width="100%" 
+                  height="350" 
+                  src={exercise.videoUrl} 
+                  title={exercise.nombre}
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                ></iframe>
+              </div>
+            ) : (
+              <div style={{ textAlign: 'center', padding: '60px 40px', color: '#555' }}>
+                <Dumbbell size={64} style={{ opacity: 0.1, marginBottom: '20px' }} />
+                <p>El video de técnica para este ejercicio aún no está disponible.</p>
+              </div>
+            )}
+            <div style={{ padding: '20px', background: 'rgba(255,255,255,0.02)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+                    <div>
+                        <span style={{ fontSize: '0.75rem', color: '#666', textTransform: 'uppercase' }}>Músculo</span>
+                        <p style={{ margin: '4px 0 0 0', fontWeight: 'bold' }}>{exercise.musculo}</p>
+                    </div>
+                    <div>
+                        <span style={{ fontSize: '0.75rem', color: '#666', textTransform: 'uppercase' }}>Nivel</span>
+                        <p style={{ margin: '4px 0 0 0', fontWeight: 'bold' }}>{exercise.nivel}</p>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
 export default AdminExercises;

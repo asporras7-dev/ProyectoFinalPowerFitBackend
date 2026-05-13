@@ -17,7 +17,12 @@
       "plazoSemanas": 8,
       "pesoActual": "96",
       "deficitEstimado": 450,
-      "avatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774390526/rldqwumojedsbdfoojao.jpg"
+      "avatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774390526/rldqwumojedsbdfoojao.jpg",
+      "followers": [
+         "0e67"
+      ],
+      "following": [],
+      "cover": ""
     },
     {
       "id": "0e67",
@@ -36,17 +41,26 @@
       "plazoSemanas": 8,
       "pesoActual": "67",
       "deficitEstimado": 450,
-      "avatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774825669/dv36wuoqgpxvkkfxi5tx.jpg",
+      "avatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1778622464/vuv30vdhmbhglssqxyx0.jpg",
       "semanasEnProgreso": 1,
       "ultimoFeedbackDieta": "muy bien ",
       "ultimoFeedbackEjercicio": "no mucho",
+      "followers": [],
+      "following": [
+        "d709",
+        "3e74",
+        "c695",
+        "b508",
+        "ac2b"
+      ],
       "ejerciciosElegidos": [
         "e1",
         "e2",
         "e3",
         "e8",
         "e9"
-      ]
+      ],
+      "cover": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1778622414/yv0vk84hreshyraftpxw.jpg"
     },
     {
       "id": "eb3d",
@@ -54,9 +68,12 @@
       "password": "admin",
       "nombre": "admin",
       "edad": "22",
-      "rol": "admin"
+      "rol": "admin",
+      "avatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1778596362/je2u0f9btdvqhwcyz5de.png",
+      "followers": [],
+      "following": [],
+      "cover": ""
     },
-
     {
       "id": "ac2b",
       "email": "jporrasfwdcostarica@gmail.com",
@@ -73,7 +90,12 @@
       "pesoMeta": 70,
       "plazoSemanas": 8,
       "pesoActual": "76",
-      "deficitEstimado": 450
+      "deficitEstimado": 450,
+      "followers": [
+        "0e67"
+      ],
+      "following": [],
+      "cover": ""
     },
     {
       "id": "b508",
@@ -96,12 +118,16 @@
       "semanasEnProgreso": 2,
       "ultimoFeedbackDieta": "Genial",
       "ultimoFeedbackEjercicio": "Excelente",
+      "followers": [
+        "0e67"
+      ],
+      "following": [],
+      "cover": "",
       "ejerciciosElegidos": [
         "e1",
         "e3"
       ]
     },
-    
     {
       "id": "d709",
       "email": "pepe@pepe",
@@ -121,7 +147,12 @@
       "deficitEstimado": 450,
       "ejerciciosElegidos": [
         "e1"
-      ]
+      ],
+      "followers": [
+        "0e67"
+      ],
+      "following": [],
+      "cover": ""
     },
     {
       "id": "3e74",
@@ -139,7 +170,12 @@
       "pesoMeta": 65,
       "plazoSemanas": 4,
       "pesoActual": 70,
-      "deficitEstimado": 450
+      "deficitEstimado": 450,
+      "followers": [
+        "0e67"
+      ],
+      "following": [],
+      "cover": ""
     }
   ],
   "contactos": [
@@ -204,9 +240,10 @@
       "imageAfter": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80",
       "likes": 2,
       "likedBy": [
-        "c695"
+        "c695",
+        "0e67"
       ],
-      "comments": 3
+      "comments": 4
     },
     {
       "id": "s2",
@@ -286,6 +323,24 @@
       "likes": 0,
       "comments": 0,
       "likedBy": []
+    },
+    {
+      "id": "58ca",
+      "userId": "0e67",
+      "userName": "Ronny Salas",
+      "userAvatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774825669/dv36wuoqgpxvkkfxi5tx.jpg",
+      "time": "Justo ahora",
+      "fecha": "2026-05-12T19:21:35.950Z",
+      "tag": "Pérdida de Peso",
+      "title": "hola ",
+      "text": "muy guapos",
+      "category": "Pérdida de Peso",
+      "image": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1778613674/thfqszpenrio9fnt7lvo.jpg",
+      "likes": 1,
+      "comments": 0,
+      "likedBy": [
+        "0e67"
+      ]
     }
   ],
   "trendingTopics": [
@@ -365,7 +420,6 @@
       "categoria": "Espalda",
       "videoUrl": "https://www.youtube.com/embed/aAggnpPyR6E?si=FaNyPHsiJ2J-3N7j"
     },
-
     {
       "id": "e4",
       "nombre": "Peso Muerto",
@@ -376,7 +430,6 @@
       "categoria": "Piernas",
       "videoUrl": "https://www.youtube.com/embed/0XL4cZR2Ink?si=LDmwMH4WdnSpkPmA"
     },
-
     {
       "id": "e5",
       "nombre": "Press Militar",
@@ -633,6 +686,15 @@
       "userAvatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774390526/rldqwumojedsbdfoojao.jpg",
       "text": "Hola",
       "fecha": "2026-03-29T22:32:41.160Z"
+    },
+    {
+      "id": "2ccb",
+      "storyId": "s1",
+      "userId": "0e67",
+      "userName": "Ronny Salas",
+      "userAvatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774825669/dv36wuoqgpxvkkfxi5tx.jpg",
+      "text": "feo",
+      "fecha": "2026-05-12T19:28:24.922Z"
     }
   ],
   "reports": [
@@ -690,6 +752,17 @@
       "otherText": "",
       "status": "pending",
       "fecha": "2026-03-28T03:08:03.718Z"
+    },
+    {
+      "id": "ca96",
+      "storyId": "s3",
+      "reporterId": "eb3d",
+      "reporterName": "admin",
+      "reason": "Otro",
+      "subReason": "",
+      "otherText": "ranses de hecho un pedo",
+      "status": "pending",
+      "fecha": "2026-05-12T19:53:48.165Z"
     }
   ]
 }

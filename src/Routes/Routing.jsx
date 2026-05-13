@@ -9,7 +9,6 @@ import DashboardAdmin from '../Pages/DashboardAdmin';
 import DashboardCliente from '../Pages/DashboardCliente';
 import Testimonios from '../Pages/Testimonios';
 import Ejercicios from '../Pages/Ejercicios';
-import Dietas from '../Pages/Dietas';
 import PerfilUsuario from '../Pages/PerfilUsuario';
 
 const Routing = () => {
@@ -22,7 +21,6 @@ const Routing = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/ejercicios" element={<Ejercicios />} />
                 <Route path="/contacto" element={<Contacto />} />
-                <Route path="/dietas" element={<Dietas />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/registro" element={<Registro />} />
                 <Route 

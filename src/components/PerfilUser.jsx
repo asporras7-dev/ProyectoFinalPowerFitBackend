@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
-import { getUserById, updateUser } from '../services/userService';
+import { getUserById, updateUser, getAllUsers } from '../services/userService';
 import { getStoriesByUserId } from '../services/testimonioService';
 import { ThumbsUp, MessageSquare, Award, ArrowLeft, Grid, Edit2, Save, X, Upload } from 'lucide-react';
 import SubirImagen from './SubirImagen';
@@ -79,6 +79,41 @@ const PerfilUser = () => {
         }
     };
 
+    const handleFollow = async () => {
+        if (!currentUser || !user) return;
+
+        const isFollowing = currentUser.following?.includes(user.id);
+        let newFollowing;
+        let newFollowers;
+
+        if (isFollowing) {
+            newFollowing = currentUser.following.filter(id => id !== user.id);
+            newFollowers = (user.followers || []).filter(id => id !== currentUser.id);
+        } else {
+            newFollowing = [...(currentUser.following || []), user.id];
+            newFollowers = [...(user.followers || []), currentUser.id];
+        }
+
+        try {
+            // Update Current User
+            const updatedCurrentUser = await updateUser(currentUser.id, { ...currentUser, following: newFollowing });
+            // Update Target User
+            const updatedTargetUser = await updateUser(user.id, { ...user, followers: newFollowers });
+            
+            // Update states
+            refreshUser(updatedCurrentUser);
+            setUser(updatedTargetUser);
+
+            // Update localStorage for persistence
+            localStorage.setItem('user', JSON.stringify(updatedCurrentUser));
+            window.dispatchEvent(new Event('userUpdated'));
+            
+        } catch (error) {
+            console.error("Error al seguir/dejar de seguir:", error);
+            alert("No se pudo completar la acción social.");
+        }
+    };
+
     if (loading) {
         return (
             <div className="success-stories-page" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -142,7 +177,14 @@ const PerfilUser = () => {
                         <div className="profile-stats-section">
                             <div className="profile-username-row">
                                 <h2>{user.nombre}</h2>
-                                {!isOwnProfile && <button className="btn-follow">Seguir</button>}
+                                {!isOwnProfile && (
+                                    <button 
+                                        className={`btn-follow ${currentUser?.following?.includes(user.id) ? 'following' : ''}`}
+                                        onClick={handleFollow}
+                                    >
+                                        {currentUser?.following?.includes(user.id) ? 'Siguiendo' : 'Seguir'}
+                                    </button>
+                                )}
                             </div>
 
                             <div className="profile-numbers">
@@ -151,11 +193,11 @@ const PerfilUser = () => {
                                     <span>Posts</span>
                                 </div>
                                 <div className="stat-box">
-                                    <strong>{Math.floor(Math.random() * 500)}</strong>
+                                    <strong>{user.followers?.length || 0}</strong>
                                     <span>Seguidores</span>
                                 </div>
                                 <div className="stat-box">
-                                    <strong>{Math.floor(Math.random() * 300)}</strong>
+                                    <strong>{user.following?.length || 0}</strong>
                                     <span>Seguidos</span>
                                 </div>
                             </div>

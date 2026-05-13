@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import {
-  Dumbbell, Users, Mail, BarChart2, ChevronRight, Plus, Dumbbell as DumbbellIcon
+  Dumbbell, Users, Mail, BarChart2, ChevronRight, Plus, Dumbbell as DumbbellIcon, Play, X
 } from 'lucide-react';
 import { UserContext } from '../context/UserContext';
 import { getAllUsers } from '../services/userService';
@@ -18,6 +18,9 @@ const DashboardAdministrador = ({ changeTab, openAddModal }) => {
     totalMessages: 0,
     totalReports: 0,
   });
+  const [exercises, setExercises] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedTechnique, setSelectedTechnique] = useState(null);
 
   const adminName = user?.nombre || user?.email?.split('@')[0] || 'admin';
 
@@ -40,6 +43,7 @@ const DashboardAdministrador = ({ changeTab, openAddModal }) => {
           totalMessages: 0,
           totalReports: 0,
         });
+        setExercises(exercises);
       } catch (error) {
         console.error('Error fetching stats:', error);
       }
@@ -132,17 +136,18 @@ const DashboardAdministrador = ({ changeTab, openAddModal }) => {
               <p>Administra la biblioteca de movimientos y rutinas.</p>
             </div>
           </div>
-          <button className="dao-btn-add" onClick={openAddModal}>
-            <Plus size={16} />
-            Agregar Ejercicio
-          </button>
         </div>
 
         {/* Mini search bar + filter row */}
         <div className="dao-section__filters">
           <div className="dao-search-box">
             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-            <input type="text" placeholder="Buscar por nombre o categoría..." readOnly onClick={() => changeTab('exercises')} />
+            <input 
+                type="text" 
+                placeholder="Buscar por nombre o categoría..." 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
           <button className="dao-filter-select" onClick={() => changeTab('exercises')}>
             Todas las categorías
@@ -161,19 +166,101 @@ const DashboardAdministrador = ({ changeTab, openAddModal }) => {
           ))}
         </div>
 
-        {/* Empty state */}
-        <div className="dao-empty-state">
-          <Dumbbell size={48} strokeWidth={1} />
-          <p>No se encontraron ejercicios</p>
-          <span>Aún no hay ejercicios en la biblioteca.</span>
-          <button className="dao-btn-add dao-btn-add--outline" onClick={openAddModal}>
-            <Plus size={16} />
-            Agregar el primer ejercicio
-          </button>
+        {/* Exercise List */}
+        <div className="dao-exercise-list">
+            {exercises
+                .filter(ex => 
+                    ex.nombre.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                    ex.categoria.toLowerCase().includes(searchTerm.toLowerCase())
+                )
+                .slice(0, 10) // Show only first 10 in overview
+                .map(ex => (
+                    <div key={ex.id} className="dao-table-row">
+                        <div className="dao-col-thumb">
+                            <img src={ex.imagen} alt="" />
+                        </div>
+                        <div className="dao-col-name">
+                            <strong>{ex.nombre}</strong>
+                        </div>
+                        <div className="dao-col-cat">
+                            <span className="dao-badge">{ex.categoria}</span>
+                        </div>
+                        <div className="dao-col-muscle">
+                            {ex.musculo}
+                        </div>
+                        <div className="dao-col-lvl">
+                            <span className={`dao-lvl-tag dao-lvl-${ex.nivel.toLowerCase()}`}>{ex.nivel}</span>
+                        </div>
+                        <div className="dao-col-actions">
+                            <button className="dao-action-btn" onClick={() => setSelectedTechnique(ex)} title="Ver técnica">
+                                <Play size={16} fill="currentColor" />
+                            </button>
+                        </div>
+                    </div>
+                ))
+            }
         </div>
+
+        {/* Empty state (only if no exercises at all) */}
+        {exercises.length === 0 && (
+            <div className="dao-empty-state">
+              <Dumbbell size={48} strokeWidth={1} />
+              <p>No se encontraron ejercicios</p>
+              <span>Aún no hay ejercicios en la biblioteca.</span>
+            </div>
+        )}
       </div>
+
+      <TechniqueModal exercise={selectedTechnique} onClose={() => setSelectedTechnique(null)} />
     </div>
   );
 };
+
+/* Técnica Modal Helper Component (Local to this file to avoid conflicts) */
+const TechniqueModal = ({ exercise, onClose }) => {
+    if (!exercise) return null;
+    return (
+      <div className="modal-overlay" onClick={onClose} style={{ zIndex: 3000 }}>
+        <div className="modal-content animate-fade-in" onClick={e => e.stopPropagation()} style={{ maxWidth: '600px', padding: '0', overflow: 'hidden', textAlign: 'left' }}>
+          <div className="modal-header" style={{ padding: '20px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h2 style={{ margin: 0, fontSize: '1.25rem', color: 'white' }}>Técnica: {exercise.nombre}</h2>
+            <button className="close-btn" onClick={onClose} style={{ background: 'transparent', border: 'none', color: '#888', cursor: 'pointer' }}><X size={24} /></button>
+          </div>
+          <div className="modal-body" style={{ padding: '0' }}>
+            {exercise.videoUrl ? (
+              <div className="video-responsive">
+                <iframe 
+                  width="100%" 
+                  height="350" 
+                  src={exercise.videoUrl} 
+                  title={exercise.nombre}
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                ></iframe>
+              </div>
+            ) : (
+              <div style={{ textAlign: 'center', padding: '60px 40px', color: '#555' }}>
+                <DumbbellIcon size={64} style={{ opacity: 0.1, marginBottom: '20px' }} />
+                <p>El video de técnica para este ejercicio aún no está disponible.</p>
+              </div>
+            )}
+            <div style={{ padding: '20px', background: 'rgba(255,255,255,0.02)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+                    <div>
+                        <span style={{ fontSize: '0.75rem', color: '#666', textTransform: 'uppercase' }}>Músculo Principal</span>
+                        <p style={{ margin: '4px 0 0 0', fontWeight: 'bold', color: 'white' }}>{exercise.musculo}</p>
+                    </div>
+                    <div>
+                        <span style={{ fontSize: '0.75rem', color: '#666', textTransform: 'uppercase' }}>Nivel de Dificultad</span>
+                        <p style={{ margin: '4px 0 0 0', fontWeight: 'bold', color: 'white' }}>{exercise.nivel}</p>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
 export default DashboardAdministrador;

@@ -13,13 +13,14 @@
   width: 260px;
   background: var(--bg-card);
   padding: 2rem 1rem;
+  padding-top: calc(var(--nav-height) + 1.5rem);
   border-right: 1px solid var(--glass-border);
   display: flex;
   flex-direction: column;
   position: fixed;
-  height: calc(100vh - var(--nav-height));
+  height: 100vh;
   z-index: 10;
-  top: var(--nav-height);
+  top: 0;
   left: 0;
   overflow-y: auto;
   transition: transform 0.3s ease;
@@ -1824,6 +1825,81 @@ hr {
   font-size: 0.82rem;
   color: #555;
   margin-bottom: 0.75rem;
+}
+
+/* Table rows */
+.dao-table-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 120px 150px 100px 100px;
+  gap: 0.5rem;
+  padding: 1rem 0.5rem;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.2s;
+}
+
+.dao-table-row:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+.dao-col-thumb img {
+  width: 50px;
+  height: 38px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.dao-col-name strong {
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+.dao-badge {
+  background: rgba(255,255,255,0.06);
+  color: #aaa;
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: capitalize;
+}
+
+.dao-col-muscle {
+  font-size: 0.82rem;
+  color: #888;
+}
+
+.dao-lvl-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.dao-lvl-principiante { background: rgba(5, 205, 153, 0.12); color: #05cd99; }
+.dao-lvl-intermedio { background: rgba(255, 181, 71, 0.12); color: #ffb547; }
+.dao-lvl-avanzado { background: rgba(220, 38, 38, 0.12); color: #ef4444; }
+.dao-lvl-experto { background: rgba(139, 92, 246, 0.12); color: #a78bfa; }
+
+.dao-action-btn {
+  background: rgba(255,255,255,0.05);
+  border: none;
+  color: #dc2626;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dao-action-btn:hover {
+  background: #dc2626;
+  color: #fff;
+  transform: scale(1.1);
 }
 
 /* ── Responsive ── */

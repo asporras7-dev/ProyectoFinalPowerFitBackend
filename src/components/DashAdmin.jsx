@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import {
   LayoutDashboard, Users, Dumbbell, Mail, Home,
-  X, Menu, AlertTriangle,
+  X, Menu, AlertTriangle, Settings,
   Image as ImageIcon, Plus
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ import AdminUsers from './AdminUsers';
 import AdminExercises from './AdminExercises';
 import AdminMessages from './AdminMessages';
 import AdminReports from './AdminReports';
+import AdminSettings from './AdminSettings';
 import { crearEjercicio } from '../services/exerciseService';
 import Swal from 'sweetalert2';
 import '../Styles/dashboard.css';
@@ -59,6 +60,7 @@ const DashAdmin = () => {
     { id: 'messages', icon: Mail,           label: 'Mensajes' },
     { id: 'reports',  icon: AlertTriangle,  label: 'Reportes' },
     { id: 'exercises',icon: Dumbbell,       label: 'Ejercicios' },
+    { id: 'settings', icon: Settings,       label: 'Ajustes' },
   ];
 
 
@@ -71,6 +73,7 @@ const DashAdmin = () => {
       case 'exercises': return <AdminExercises openAddModal={openAddModal} />;
       case 'messages':  return <AdminMessages />;
       case 'reports':   return <AdminReports />;
+      case 'settings':  return <AdminSettings />;
       default:          return <DashboardAdministrador changeTab={setActiveTab} openAddModal={openAddModal} />;
     }
   };
@@ -87,7 +90,11 @@ const DashAdmin = () => {
         {/* Admin info */}
         <div className="da-sidebar__profile">
           <div className="da-sidebar__avatar">
-            <span>{adminInitial}</span>
+            {user?.avatar ? (
+              <img src={user.avatar} alt="Admin" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+            ) : (
+              <span>{adminInitial}</span>
+            )}
           </div>
           <div className="da-sidebar__profile-info">
             <span className="da-sidebar__name">{adminName}</span>
