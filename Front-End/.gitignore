@@ -28,3 +28,4 @@ dist-ssr
 Chatbot.env
 server/node_modules/
 server/.env
+db.json
