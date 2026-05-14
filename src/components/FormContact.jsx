@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Mail, Phone, Send, MessageSquare, History, Target, Users, Instagram, Facebook, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { saveContactMessage } from '../services/userService';
 import emailjs from '@emailjs/browser';
+import { UserContext } from '../context/UserContext';
 import '../styles/Contacto.css';
 
 const FormContact = () => {
@@ -15,14 +16,7 @@ const FormContact = () => {
         pais: ''
     });
     const [loading, setLoading] = useState(false);
-    const [currentUser, setCurrentUser] = useState(null);
-
-    useEffect(() => {
-        const stored = localStorage.getItem('user');
-        if (stored) {
-            try { setCurrentUser(JSON.parse(stored)); } catch { setCurrentUser(null); }
-        }
-    }, []);
+    const { user: currentUser } = useContext(UserContext);
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -286,16 +280,18 @@ const FormContact = () => {
                         </div>
                     </div>
 
-                    <div className="about-footer-card">
-                        <Users size={48} className="text-primary" />
-                        <h3>Únete a nuestra comunidad</h3>
-                        <p>
-                            Forma parte de los miles de usuarios que ya están transformando su mentalidad con PowerFIT.
-                        </p>
-                        <Link to="/registro" className="btn-submit" style={{ textDecoration: 'none', width: 'auto', padding: '1rem 2.5rem' }}>
-                            Comenzar ahora
-                        </Link>
-                    </div>
+                    {!currentUser && (
+                        <div className="about-footer-card">
+                            <Users size={48} className="text-primary" />
+                            <h3>Únete a nuestra comunidad</h3>
+                            <p>
+                                Forma parte de los miles de usuarios que ya están transformando su mentalidad con PowerFIT.
+                            </p>
+                            <Link to="/registro" className="btn-submit" style={{ textDecoration: 'none', width: 'auto', padding: '1rem 2.5rem' }}>
+                                Comenzar ahora
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

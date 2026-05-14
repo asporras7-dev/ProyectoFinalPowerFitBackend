@@ -19,7 +19,7 @@
       "deficitEstimado": 450,
       "avatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774390526/rldqwumojedsbdfoojao.jpg",
       "followers": [
-         "0e67"
+        "0e67"
       ],
       "following": [],
       "cover": ""
@@ -341,6 +341,22 @@
       "likedBy": [
         "0e67"
       ]
+    },
+    {
+      "id": "f8ba",
+      "userId": "0e67",
+      "userName": "Ronny Salas",
+      "userAvatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1778622464/vuv30vdhmbhglssqxyx0.jpg",
+      "time": "Justo ahora",
+      "fecha": "2026-05-14T15:15:50.105Z",
+      "tag": "Ganancia de Músculo",
+      "title": "Soy muy pro",
+      "text": "estoy mamadisimo",
+      "category": "Ganancia de Músculo",
+      "image": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1778771749/fgial8euioa5yfpr30mt.jpg",
+      "likes": 0,
+      "comments": 0,
+      "likedBy": []
     }
   ],
   "trendingTopics": [
@@ -764,5 +780,6 @@
       "status": "pending",
       "fecha": "2026-05-12T19:53:48.165Z"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
