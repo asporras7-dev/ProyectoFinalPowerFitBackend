@@ -45,9 +45,9 @@ const MensajeContactoController = {
         try {
             const { id } = req.params;
             const { nombre, telefono_Contacto, correo, mensaje, pais, fecha, Usuario_idUsuario } = req.body;
-            const mensaje = await MensajeContacto.findByPk(id);
+            const mensajeEncontrado = await MensajeContacto.findByPk(id);
 
-            if (!mensaje) {
+            if (!mensajeEncontrado) {
                 return res.status(404).json({ message: 'MensajeContacto no encontrado' });
             }
 
@@ -55,8 +55,8 @@ const MensajeContactoController = {
                 return res.status(400).json({ error: 'El nombre, mensaje, Usuario_idUsuario es requerido' });
             }
 
-            await mensaje.update({ nombre, telefono_Contacto, correo, mensaje, pais, fecha, Usuario_idUsuario });
-            res.status(200).json(mensaje);
+            await mensajeEncontrado.update({ nombre, telefono_Contacto, correo, mensaje, pais, fecha, Usuario_idUsuario });
+            res.status(200).json(mensajeEncontrado);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

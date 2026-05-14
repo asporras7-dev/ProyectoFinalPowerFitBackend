@@ -2,13 +2,15 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const PublicacionComentario = sequelize.define('PublicacionComentario', {
-    publicaciones_idpublicaciones: {
+    pub_id: {
         type: DataTypes.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        field: 'publicaciones_idpublicaciones' // Keep original column name in DB
     },
-    Comentario_idComentario: {
+    com_id: {
         type: DataTypes.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        field: 'Comentario_idComentario' // Keep original column name in DB
     }
 }, {
     tableName: 'publicaciones_Comentarios',

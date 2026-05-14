@@ -2,13 +2,15 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const RutinaEjercicio = sequelize.define('RutinaEjercicio', {
-    Rutina_idRutina: {
+    rut_id: {
         type: DataTypes.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        field: 'Rutina_idRutina'
     },
-    Ejercicios_idEjercicios: {
+    ej_id: {
         type: DataTypes.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        field: 'Ejercicios_idEjercicios'
     },
     repeticiones: {
         type: DataTypes.INTEGER

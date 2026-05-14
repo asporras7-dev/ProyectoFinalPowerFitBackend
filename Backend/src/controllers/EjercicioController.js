@@ -3,6 +3,22 @@ const Ejercicio = require('../models/Ejercicio');
 const EjercicioController = {
     getAll: async (req, res) => {
         try {
+            const { page, limit } = req.query;
+            if (page && limit) {
+                const limitNum = parseInt(limit, 10) || 10;
+                const offsetNum = (parseInt(page, 10) - 1) * limitNum;
+                const { count, rows } = await Ejercicio.findAndCountAll({
+                    limit: limitNum,
+                    offset: offsetNum
+                });
+                return res.status(200).json({
+                    data: rows,
+                    total: count,
+                    totalPages: Math.ceil(count / limitNum),
+                    currentPage: parseInt(page, 10) || 1
+                });
+            }
+
             const ejercicios = await Ejercicio.findAll();
 
             if (!ejercicios || ejercicios.length === 0) {

@@ -29,13 +29,29 @@ const PublicacionController = {
     },
     create: async (req, res) => {
         try {
-            const { tiempo_Publicacion, titulo, texto, imagen, categoria_Publicaciones_idcategoria_Publicaciones, Usuario_idUsuario } = req.body;
+            const { tiempo_Publicacion, titulo, texto, imagen, categoria_nombre, Usuario_idUsuario } = req.body;
 
             if (!titulo || !texto || !Usuario_idUsuario) {
                 return res.status(400).json({ error: 'El titulo, texto, Usuario_idUsuario es requerido' });
             }
 
-            const nuevo = await Publicacion.create({ tiempo_Publicacion, titulo, texto, imagen, categoria_Publicaciones_idcategoria_Publicaciones, Usuario_idUsuario });
+            let catId = 1; // Fallback
+            if (categoria_nombre) {
+                const { CategoriaPublicacion } = require('../index');
+                const cat = await CategoriaPublicacion.findOne({ where: { nombre: categoria_nombre } });
+                if (cat) {
+                    catId = cat.idcategoria_Publicaciones;
+                }
+            }
+
+            const nuevo = await Publicacion.create({ 
+                tiempo_Publicacion, 
+                titulo, 
+                texto, 
+                imagen, 
+                categoria_Publicaciones_idcategoria_Publicaciones: catId, 
+                Usuario_idUsuario 
+            });
             res.status(201).json(nuevo);
         } catch (error) {
             res.status(500).json({ error: error.message });

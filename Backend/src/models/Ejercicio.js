@@ -18,7 +18,18 @@ const Ejercicio = sequelize.define('Ejercicio', {
         type: DataTypes.STRING(120)
     },
     video: {
+        type: DataTypes.TEXT,
+        field: 'video'
+    },
+    videoUrl: { // Map to the same field or separate if needed
+        type: DataTypes.TEXT,
+        field: 'video' 
+    },
+    imagen: {
         type: DataTypes.TEXT
+    },
+    tiempo: {
+        type: DataTypes.STRING(45)
     },
     repeticiones: {
         type: DataTypes.INTEGER

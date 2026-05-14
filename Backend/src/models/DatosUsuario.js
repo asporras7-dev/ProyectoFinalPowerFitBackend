@@ -11,16 +11,16 @@ const DatosUsuario = sequelize.define('DatosUsuario', {
         type: DataTypes.STRING(45)
     },
     altura: {
-        type: DataTypes.DECIMAL(3, 2)
+        type: DataTypes.DECIMAL(10, 2)
     },
     peso: {
-        type: DataTypes.DECIMAL(3, 2)
+        type: DataTypes.DECIMAL(10, 2)
     },
     lugarEntrenamiento: {
         type: DataTypes.STRING(100)
     },
     pesoMeta: {
-        type: DataTypes.DECIMAL(3, 2)
+        type: DataTypes.DECIMAL(10, 2)
     },
     plazoSemanas: {
         type: DataTypes.INTEGER
