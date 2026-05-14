@@ -57,12 +57,8 @@ const ChatComponent = () => {
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
 
-<<<<<<< HEAD
     const updatedMessages = [...messages, newUserMessage];
     setMessages(updatedMessages);
-=======
-    setMessages((prev) => [...prev, newUserMessage]);
->>>>>>> efdb674001fa2137cc4dbc32ea723fff38516a86
     setInputText('');
     setIsTyping(true);
 

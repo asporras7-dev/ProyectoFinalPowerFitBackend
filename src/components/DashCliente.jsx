@@ -31,8 +31,8 @@ import {
   Camera
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { obtenerTodosEjercicios } from '../services/exerciseService';
-import { updateUser, getAllUsers } from '../services/userService';
+import { obtenerTodosEjercicios } from '../Services/exerciseService';
+import { updateUser, getAllUsers } from '../Services/userService';
 import { UserContext } from '../context/UserContext';
 import Swal from 'sweetalert2';
 import SubirImagen from './SubirImagen';
@@ -324,7 +324,6 @@ const DashCliente = () => {
             <Settings size={20} />
             Ajustes
           </button>
-<<<<<<< HEAD
           <button
             className={`menu-item ${activeTab === 'community' ? 'active' : ''}`}
             onClick={() => handleActiveTab('community')}
@@ -332,14 +331,6 @@ const DashCliente = () => {
             <Users size={20} />
             Comunidad & Perfil
           </button>
-=======
-          <Link to="/chatbot" style={{ textDecoration: 'none' }}>
-            <button className="menu-item">
-              <Activity size={20} />
-              Chat IA
-            </button>
-          </Link>
->>>>>>> efdb674001fa2137cc4dbc32ea723fff38516a86
           <hr style={{ margin: '1rem 0', border: 'none', borderTop: '1px solid rgba(255,255,255,0.1)' }} />
           <Link to="/" style={{ textDecoration: 'none' }}>
             <button className="menu-item">

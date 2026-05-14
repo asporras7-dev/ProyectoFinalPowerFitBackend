@@ -1,0 +1,631 @@
+{
+  "usuarios": [
+    {
+      "id": "c695",
+      "email": "ransesalfwdcostarica@gmail.com",
+      "password": "R4nses_2008",
+      "nombre": "Ranses Alvir",
+      "edad": "20",
+      "rol": "admin",
+      "edadFisica": "20",
+      "sexo": "m",
+      "altura": "170",
+      "peso": "96",
+      "lugarEntrenamiento": "gym",
+      "alergias": "No",
+      "pesoMeta": 72,
+      "plazoSemanas": 8,
+      "pesoActual": "96",
+      "deficitEstimado": 450,
+      "avatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774390526/rldqwumojedsbdfoojao.jpg"
+    },
+    {
+      "id": "0e67",
+      "email": "Rsalasfwdcostarica@gmail.com",
+      "password": "1234",
+      "nombre": "Ronny Salas",
+      "edad": "17",
+      "rol": "client",
+      "edadFisica": "17",
+      "sexo": "m",
+      "altura": "180",
+      "peso": "70",
+      "lugarEntrenamiento": "gym",
+      "alergias": "ninguna",
+      "pesoMeta": 65,
+      "plazoSemanas": 8,
+      "pesoActual": "67",
+      "deficitEstimado": 450,
+      "avatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774365274/admk4azg1ovszeyfysoe.jpg",
+      "semanasEnProgreso": 1,
+      "ultimoFeedbackDieta": "muy bien ",
+      "ultimoFeedbackEjercicio": "no mucho",
+      "ejerciciosElegidos": [
+        "e1",
+        "e2",
+        "e3",
+        "e8",
+        "e9"
+      ]
+    },
+    {
+      "id": "eb3d",
+      "email": "admin@admin.com",
+      "password": "admin",
+      "nombre": "admin",
+      "edad": "22",
+      "rol": "admin"
+    },
+    {
+      "id": "ac2b",
+      "email": "jporrasfwdcostarica@gmail.com",
+      "password": "j1234",
+      "nombre": "Jheycob",
+      "edad": "22",
+      "rol": "client",
+      "edadFisica": "22",
+      "sexo": "m",
+      "altura": "180",
+      "peso": "76",
+      "lugarEntrenamiento": "gym",
+      "alergias": "Alergia a todo",
+      "pesoMeta": 70,
+      "plazoSemanas": 8,
+      "pesoActual": "76",
+      "deficitEstimado": 450
+    },
+    {
+      "id": "b508",
+      "email": "ransesalvir75@gmail.com",
+      "password": "R4nses_2008",
+      "nombre": "Ranses Alvir",
+      "edad": "20",
+      "rol": "client",
+      "edadFisica": "20",
+      "sexo": "m",
+      "altura": "170",
+      "peso": "95",
+      "lugarEntrenamiento": "home",
+      "alergias": "",
+      "pesoMeta": 67,
+      "plazoSemanas": 8,
+      "pesoActual": "94.5",
+      "deficitEstimado": 450,
+      "avatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774535316/cvwwxdbvnbxtr6sho1ky.jpg",
+      "semanasEnProgreso": 2,
+      "ultimoFeedbackDieta": "Genial",
+      "ultimoFeedbackEjercicio": "Excelente",
+      "ejerciciosElegidos": [
+        "e1",
+        "e3"
+      ]
+    },
+    {
+      "id": "ebaa",
+      "email": "ransesalvir75@gmail.com",
+      "password": "R4nses_2008",
+      "nombre": "RANSES MATIAS",
+      "edad": "20",
+      "rol": "client",
+      "edadFisica": "20",
+      "sexo": "m",
+      "altura": "190",
+      "peso": "120",
+      "lugarEntrenamiento": "gym",
+      "alergias": "",
+      "pesoMeta": 70,
+      "plazoSemanas": 8,
+      "pesoActual": "120",
+      "deficitEstimado": 450
+    },
+    {
+      "id": "d709",
+      "email": "pepe@pepe",
+      "password": "pepe",
+      "nombre": "Pepe",
+      "edad": "20",
+      "rol": "client",
+      "edadFisica": "20",
+      "sexo": "m",
+      "altura": "190",
+      "peso": "180",
+      "lugarEntrenamiento": "home",
+      "alergias": "",
+      "pesoMeta": 70,
+      "plazoSemanas": 8,
+      "pesoActual": "180",
+      "deficitEstimado": 450,
+      "ejerciciosElegidos": [
+        "e1"
+      ]
+    }
+  ],
+  "contactos": [
+    {
+      "id": "5156",
+      "nombre": "RANSES MATIAS",
+      "contacto": "60184472",
+      "email": "ransesalvir75@gmail.com",
+      "mensaje": "HOLA BROOO ",
+      "pais": "Costa Rica ",
+      "fecha": "2026-03-24T22:12:43.534Z"
+    }
+  ],
+  "stories": [
+    {
+      "id": "s1",
+      "userId": "u1",
+      "userName": "Sarah Jenkins",
+      "userAvatar": "https://i.pravatar.cc/150?u=sarah",
+      "time": "Hace 2 días",
+      "tag": "Programa de Alta Intensidad",
+      "title": "¡Perdí 10kg en 3 meses! Mi viaje.",
+      "text": "La consistencia fue clave. Seguí el programa de alta intensidad y me mantuve firme con el plan de comidas religiosamente. Las primeras semanas fueron las más difíciles, pero una vez que empecé a ver resultados, no hubo vuelta atrás.",
+      "category": "Pérdida de Peso",
+      "imageBefore": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80",
+      "imageAfter": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80",
+      "likes": 2,
+      "likedBy": [
+        "c695"
+      ],
+      "comments": 3
+    },
+    {
+      "id": "s2",
+      "userId": "u2",
+      "userName": "David Chen",
+      "userAvatar": "https://i.pravatar.cc/150?u=david",
+      "time": "Hace 5 horas",
+      "tag": "Entrenamiento de Fuerza",
+      "title": "De Delgado a Fuerte: 1 Año de Progreso",
+      "text": "Solía tener problemas para ganar peso. El programa de fuerza personalizado aquí lo cambió todo. Me enfoqué en movimientos compuestos y aumenté mi ingesta calórica. ¡Es un maratón, no un sprint!",
+      "category": "Ganancia de Músculo",
+      "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80",
+      "likes": 1,
+      "likedBy": [
+        "b508"
+      ],
+      "comments": 0
+    },
+    {
+      "id": "s3",
+      "userId": "u3",
+      "userName": "Emma Wilson",
+      "userAvatar": "https://i.pravatar.cc/150?u=emma",
+      "time": "Hace 1 semana",
+      "tag": "Guía Nutricional",
+      "title": "Cómo arreglé mi relación con la comida",
+      "text": "Los consejos de expertos me ayudaron a darme cuenta de que la restricción no es la solución. Aprender sobre macros y balance fue un cambio radical por mi salud mental y física.",
+      "category": "Consejos de Expertos",
+      "likes": 0,
+      "likedBy": [],
+      "comments": 45
+    },
+    {
+      "id": "4dca",
+      "userId": "0947",
+      "userName": "pepe",
+      "userAvatar": "https://i.pravatar.cc/150?u=0947",
+      "time": "Justo ahora",
+      "tag": "Ganancia de Músculo",
+      "title": "Press Al fallo 👌",
+      "text": "Aumento de masa muscular en otro nivel 🗣️",
+      "category": "Ganancia de Músculo",
+      "image": null,
+      "likes": 1,
+      "likedBy": [
+        "c695"
+      ],
+      "comments": 2
+    },
+    {
+      "id": "9d31",
+      "userId": "c695",
+      "userName": "Ranses Alvir",
+      "userAvatar": "https://i.pravatar.cc/150?u=c695",
+      "time": "Justo ahora",
+      "tag": "Pérdida de Peso",
+      "title": "fdsfsfsfs",
+      "text": "sdfssdf",
+      "category": "Pérdida de Peso",
+      "image": null,
+      "likes": 0,
+      "likedBy": [],
+      "comments": 1
+    },
+    {
+      "id": "08a2",
+      "userId": "d709",
+      "userName": "Pepe",
+      "userAvatar": "https://i.pravatar.cc/150?u=d709",
+      "time": "Justo ahora",
+      "fecha": "2026-03-29T23:01:20.633Z",
+      "tag": "Pérdida de Peso",
+      "title": "JAJAJAJAJA",
+      "text": "Perdí peso bro",
+      "category": "Pérdida de Peso",
+      "image": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774825277/q2pir0zdiadssokev030.jpg",
+      "likes": 0,
+      "comments": 0,
+      "likedBy": []
+    }
+  ],
+  "trendingTopics": [
+    {
+      "id": "1",
+      "topic": "#AyunoIntermitente",
+      "count": "2.4k miembros"
+    },
+    {
+      "id": "2",
+      "topic": "#EquipoEntrenamientoCasa",
+      "count": "1.8k miembros"
+    },
+    {
+      "id": "3",
+      "topic": "#ObjetivosDeProteina",
+      "count": "890 miembros"
+    },
+    {
+      "id": "4",
+      "topic": "#RetoVerano2024",
+      "count": "3.1k miembros"
+    }
+  ],
+  "topContributors": [
+    {
+      "id": "1",
+      "name": "Marcus V.",
+      "role": "Entrenador de Élite",
+      "points": "1.2k pts",
+      "avatar": "https://i.pravatar.cc/150?u=marcus"
+    },
+    {
+      "id": "2",
+      "name": "Elena Ross",
+      "role": "Experta en Transformación",
+      "points": "980 pts",
+      "avatar": "https://i.pravatar.cc/150?u=elena"
+    },
+    {
+      "id": "3",
+      "name": "Tyler Swift",
+      "role": "Gurú de la Nutrición",
+      "points": "850 pts",
+      "avatar": "https://i.pravatar.cc/150?u=tyler"
+    }
+  ],
+  "routines": [],
+  "ejercicios": [
+    {
+      "id": "e1",
+      "nombre": "Press de Banca",
+      "nivel": "AVANZADO",
+      "musculo": "PECHO",
+      "tiempo": "45 SEG",
+      "imagen": "https://plus.unsplash.com/premium_photo-1682094035772-a5ccdb07d9b0?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "categoria": "Pecho",
+      "videoUrl": "https://www.youtube.com/embed/vthMCtgVtFw"
+    },
+    {
+      "id": "e2",
+      "nombre": "Sentadilla Libre",
+      "nivel": "INTERMEDIO",
+      "musculo": "PIERNAS",
+      "tiempo": "60 SEG",
+      "imagen": "/exercises/squat.png",
+      "categoria": "Piernas"
+    },
+    {
+      "id": "e3",
+      "nombre": "Dominadas Pronas",
+      "nivel": "EXPERTO",
+      "musculo": "ESPALDA",
+      "tiempo": "30 SEG",
+      "imagen": "/exercises/pullups.png",
+      "categoria": "Espalda"
+    },
+    {
+      "id": "e4",
+      "nombre": "Peso Muerto",
+      "nivel": "AVANZADO",
+      "musculo": "FULL BODY",
+      "tiempo": "50 SEG",
+      "imagen": "/exercises/deadlift.png",
+      "categoria": "Piernas"
+    },
+    {
+      "id": "e5",
+      "nombre": "Press Militar",
+      "nivel": "INTERMEDIO",
+      "musculo": "HOMBROS",
+      "tiempo": "40 SEG",
+      "imagen": "/exercises/military-press.png",
+      "categoria": "Hombros"
+    },
+    {
+      "id": "e6",
+      "nombre": "Remo con Barra",
+      "nivel": "AVANZADO",
+      "musculo": "ESPALDA",
+      "tiempo": "45 SEG",
+      "imagen": "/exercises/barbell-row.png",
+      "categoria": "Espalda"
+    },
+    {
+      "id": "e7",
+      "nombre": "Curl de Bíceps",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "BRAZOS",
+      "tiempo": "35 SEG",
+      "imagen": "/exercises/curl-biceps.jpg",
+      "categoria": "Brazos"
+    },
+    {
+      "id": "e8",
+      "nombre": "Aperturas con Mancuernas",
+      "nivel": "INTERMEDIO",
+      "musculo": "PECHO",
+      "tiempo": "45 SEG",
+      "imagen": "/exercises/aperturas-mancuernas.jpg",
+      "categoria": "Pecho"
+    },
+    {
+      "id": "e9",
+      "nombre": "Push Ups",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "PECHO",
+      "tiempo": "60 SEG",
+      "imagen": "https://images.unsplash.com/photo-1598971457999-ca4ef48a9a71?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "categoria": "Pecho"
+    },
+    {
+      "id": "e10",
+      "nombre": "Jalón al Pecho",
+      "nivel": "INTERMEDIO",
+      "musculo": "ESPALDA",
+      "tiempo": "40 SEG",
+      "imagen": "/exercises/jalon-pecho.jpg",
+      "categoria": "Espalda"
+    },
+    {
+      "id": "e11",
+      "nombre": "Prensa de Piernas",
+      "nivel": "INTERMEDIO",
+      "musculo": "CUÁDRICEPS",
+      "tiempo": "50 SEG",
+      "imagen": "/exercises/prensa-piernas.jpg",
+      "categoria": "Piernas"
+    },
+    {
+      "id": "e12",
+      "nombre": "Elevaciones Laterales",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "HOMBROS",
+      "tiempo": "45 SEG",
+      "imagen": "/exercises/elevaciones-laterales.jpg",
+      "categoria": "Hombros"
+    },
+    {
+      "id": "e13",
+      "nombre": "Press Arnold",
+      "nivel": "AVANZADO",
+      "musculo": "HOMBROS",
+      "tiempo": "40 SEG",
+      "imagen": "/exercises/press-arnold.jpg",
+      "categoria": "Hombros"
+    },
+    {
+      "id": "e14",
+      "nombre": "Press Francés",
+      "nivel": "INTERMEDIO",
+      "musculo": "TRÍCEPS",
+      "tiempo": "40 SEG",
+      "imagen": "/exercises/press-frances.jpg",
+      "categoria": "Brazos"
+    },
+    {
+      "id": "e15",
+      "nombre": "Plancha Abdominal",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "CORE",
+      "tiempo": "60 SEG",
+      "imagen": "https://plus.unsplash.com/premium_photo-1672352100050-65cb2ee4d818?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "categoria": "Core"
+    },
+    {
+      "id": "e16",
+      "nombre": "Hip Thrust",
+      "nivel": "INTERMEDIO",
+      "musculo": "GLÚTEOS",
+      "tiempo": "45 SEG",
+      "imagen": "/exercises/hip-thrust.jpg",
+      "categoria": "Glúteos"
+    },
+    {
+      "id": "e17",
+      "nombre": "Zancadas (Lunges)",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "PIERNAS",
+      "tiempo": "45 SEG",
+      "imagen": "/exercises/zancadas.jpg",
+      "categoria": "Piernas"
+    },
+    {
+      "id": "e18",
+      "nombre": "Crunch Abdominal",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "CORE",
+      "tiempo": "30 SEG",
+      "imagen": "/exercises/crunch.jpg",
+      "categoria": "Core"
+    },
+    {
+      "id": "e19",
+      "nombre": "Patada de Glúteo",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "GLÚTEOS",
+      "tiempo": "50 SEG",
+      "imagen": "/exercises/patada-gluteo.jpg",
+      "categoria": "Glúteos"
+    },
+    {
+      "id": "e20",
+      "nombre": "Burpees",
+      "nivel": "AVANZADO",
+      "musculo": "FULL BODY",
+      "tiempo": "60 SEG",
+      "imagen": "https://static.nike.com/a/images/f_auto,cs_srgb/w_1536,c_limit/4399d325-3fd7-41f8-ac24-219ee6751668/%C2%BFqu%C3%A9-es-un-burpee-los-entrenadores-personales-lo-explican.jpg",
+      "categoria": "Core"
+    },
+    {
+      "id": "e21",
+      "nombre": "Russian Twists",
+      "nivel": "INTERMEDIO",
+      "musculo": "OBLICUOS",
+      "tiempo": "45 SEG",
+      "imagen": "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=800&q=80",
+      "categoria": "Core"
+    },
+    {
+      "id": "e22",
+      "nombre": "Martillo con Mancuernas",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "BÍCEPS",
+      "tiempo": "40 SEG",
+      "imagen": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&q=80",
+      "categoria": "Brazos"
+    },
+    {
+      "id": "e23",
+      "nombre": "Remo en Polea Baja",
+      "nivel": "INTERMEDIO",
+      "musculo": "ESPALDA",
+      "tiempo": "45 SEG",
+      "imagen": "https://plus.unsplash.com/premium_photo-1664299683145-d5ae24790f8e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "categoria": "Espalda"
+    },
+    {
+      "id": "e24",
+      "nombre": "Extensión de Cuádriceps",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "CUÁDRICEPS",
+      "tiempo": "40 SEG",
+      "imagen": "/exercises/extension-cuadriceps.jpg",
+      "categoria": "Piernas"
+    },
+    {
+      "id": "e25",
+      "nombre": "Face Pulls",
+      "nivel": "INTERMEDIO",
+      "musculo": "HOMBRO POSTERIOR",
+      "tiempo": "45 SEG",
+      "imagen": "/exercises/face-pull.jpg",
+      "categoria": "Hombros"
+    }
+  ],
+  "comentarios": [
+    {
+      "id": "1194",
+      "storyId": "s1",
+      "userId": "b508",
+      "userName": "Ranses Alvir",
+      "userAvatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774470389/th9skn53ww8ra175uzis.jpg",
+      "text": "Holaaaa",
+      "fecha": "2026-03-25T21:11:09.589Z"
+    },
+    {
+      "id": "7c36",
+      "storyId": "s1",
+      "userId": "c695",
+      "userName": "Ranses Alvir",
+      "userAvatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774294985/zg1lbikveirdjmc2orli.jpg",
+      "text": "JAJAJAJA",
+      "fecha": "2026-03-25T21:34:26.882Z"
+    },
+    {
+      "id": "7984",
+      "storyId": "4dca",
+      "userId": "c695",
+      "userName": "Ranses Alvir",
+      "userAvatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774294985/zg1lbikveirdjmc2orli.jpg",
+      "text": "hola",
+      "fecha": "2026-03-26T20:57:46.058Z"
+    },
+    {
+      "id": "c2b6",
+      "storyId": "4dca",
+      "userId": "b508",
+      "userName": "Ranses Alvir",
+      "userAvatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774535316/cvwwxdbvnbxtr6sho1ky.jpg",
+      "text": "Hola",
+      "fecha": "2026-03-28T02:43:41.825Z"
+    },
+    {
+      "id": "04d3",
+      "storyId": "s1",
+      "userId": "c695",
+      "userName": "Ranses Alvir",
+      "userAvatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774390526/rldqwumojedsbdfoojao.jpg",
+      "text": "Hola",
+      "fecha": "2026-03-29T22:32:41.160Z"
+    }
+  ],
+  "reports": [
+    {
+      "id": "e68f",
+      "storyId": "9d31",
+      "reporterId": "b508",
+      "reporterName": "Ranses Alvir",
+      "reason": "Acoso o bullying",
+      "subReason": "Amenazas",
+      "otherText": "",
+      "status": "pending",
+      "fecha": "2026-03-28T03:04:12.980Z"
+    },
+    {
+      "id": "4d42",
+      "storyId": "9d31",
+      "reporterId": "b508",
+      "reporterName": "Ranses Alvir",
+      "reason": "Spam o publicidad no deseada",
+      "subReason": "Bots o cuentas falsas",
+      "otherText": "",
+      "status": "pending",
+      "fecha": "2026-03-28T03:04:32.192Z"
+    },
+    {
+      "id": "4eb9",
+      "storyId": "9d31",
+      "reporterId": "b508",
+      "reporterName": "Ranses Alvir",
+      "reason": "Discurso de odio",
+      "subReason": "Xenofobia",
+      "otherText": "",
+      "status": "pending",
+      "fecha": "2026-03-28T03:05:59.257Z"
+    },
+    {
+      "id": "8627",
+      "storyId": "4dca",
+      "reporterId": "c695",
+      "reporterName": "Ranses Alvir",
+      "reason": "Contenido inapropiado",
+      "subReason": "Desnudos o contenido sexual",
+      "otherText": "",
+      "status": "pending",
+      "fecha": "2026-03-28T03:06:33.446Z"
+    },
+    {
+      "id": "19fb",
+      "storyId": "9d31",
+      "reporterId": "b508",
+      "reporterName": "Ranses Alvir",
+      "reason": "Discurso de odio",
+      "subReason": "Xenofobia",
+      "otherText": "",
+      "status": "pending",
+      "fecha": "2026-03-28T03:08:03.718Z"
+    }
+  ]
+}
