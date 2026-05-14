@@ -5,8 +5,8 @@ import { fetchStoriesData, createStory, deleteStory, updateStoryLikes, fetchComm
 import { getAllUsers, updateUser } from '../Services/userService';
 import { Link } from 'react-router-dom';
 import SubirImagen from './SubirImagen';
-import '../styles/SuccessStories.css';
-
+import '../Styles/SuccessStories.css';
+import MotivationalQuote from './MotivationalQuote';
 import Swal from 'sweetalert2';
 import FormPublicaciones from './FormPublicaciones';
 

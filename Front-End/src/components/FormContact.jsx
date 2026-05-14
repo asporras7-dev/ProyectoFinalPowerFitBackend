@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, Phone, Send, MessageSquare, History, Target, Users, Instagram, Facebook, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { saveContactMessage } from '../Services/userService';
 import emailjs from '@emailjs/browser';
-import { UserContext } from '../context/UserContext';
 import '../styles/Contacto.css';
 
 const FormContact = () => {
@@ -16,7 +15,14 @@ const FormContact = () => {
         pais: ''
     });
     const [loading, setLoading] = useState(false);
-    const { user: currentUser } = useContext(UserContext);
+    const [currentUser, setCurrentUser] = useState(null);
+
+    useEffect(() => {
+        const stored = localStorage.getItem('user');
+        if (stored) {
+            try { setCurrentUser(JSON.parse(stored)); } catch { setCurrentUser(null); }
+        }
+    }, []);
 
     const handleChange = (e) => {
         const { id, value } = e.target;
