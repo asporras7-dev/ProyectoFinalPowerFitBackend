@@ -9,13 +9,7 @@ import {
 } from 'lucide-react';
 import '../styles/Chatbot.css';
 
-const systemPrompt = `ACTÚA COMO UN PREPARADOR FÍSICO PROFESIONAL Y COACH DE SALUD.
-Tu misión es REFORZAR y profundizar en la solicitud del usuario bajo estas reglas:
-1. Respuestas cortas, concretas y directas al punto.
-2. Usa evidencia científica (PubMed) para validar tus consejos.
-3. Mantén un tono motivador pero estrictamente profesional.
-4. REGLA DE REFUERZO: Si el usuario pide algo específico, analízalo desde una perspectiva experta y dales consejos que potencien su solicitud (ej: si piden una rutina de pecho, añade un consejo sobre retracción escapular o cadencia).
-5. REGLA DE CONTEXTO: Si la información es insuficiente para una recomendación segura, DEBES preguntar por su nivel, objetivos o limitaciones antes de responder.`;
+
 
 const ChatComponent = () => {
   const { user } = useContext(UserContext);
@@ -32,6 +26,7 @@ const ChatComponent = () => {
     const saved = localStorage.getItem("historialChatFitness");
     return saved ? JSON.parse(saved) : [];
   });
+  const [currentChatId, setCurrentChatId] = useState(null);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -46,6 +41,7 @@ const ChatComponent = () => {
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }
     ]);
+    setCurrentChatId(null);
   };
 
   useEffect(() => {
@@ -57,11 +53,12 @@ const ChatComponent = () => {
 
     const newUserMessage = {
       role: 'user',
-      content: "Busca la informacion en PubMed" + text,
+      content: text,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
 
-    setMessages((prev) => [...prev, newUserMessage]);
+    const updatedMessages = [...messages, newUserMessage];
+    setMessages(updatedMessages);
     setInputText('');
     setIsTyping(true);
 
@@ -72,29 +69,43 @@ const ChatComponent = () => {
 
       const contextoUsuario = `El usuario tiene un nivel ${nivel} y su objetivo es ${objetivo}. Adapta todas las recomendaciones a este perfil.`;
 
-      const promptFinal = `${systemPrompt}\n\nContexto del usuario:\n${contextoUsuario}\n\nMensaje del usuario:\n${text}`;
+      const reply = await sendMessage(updatedMessages, contextoUsuario);
       
-      const reply = await sendMessage(promptFinal);
-      
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'bot',
-          content: reply,
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        }
-      ]);
+      const newBotMessage = {
+        role: 'bot',
+        content: reply,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+
+      const finalMessages = [...updatedMessages, newBotMessage];
+      setMessages(finalMessages);
 
       // Guardar en el historial
-      const nuevoChat = {
-        id: Date.now(),
-        pregunta: text,
-        respuesta: reply,
-        fecha: new Date().toISOString()
-      };
-      
       setHistorialChat((prev) => {
-        const nuevoHistorial = [nuevoChat, ...prev].slice(0, 20);
+        let nuevoHistorial = [...prev];
+        let targetChatId = currentChatId;
+        
+        if (!targetChatId) {
+          targetChatId = Date.now();
+          setCurrentChatId(targetChatId);
+          const nuevoChat = {
+            id: targetChatId,
+            title: text,
+            messages: finalMessages,
+            fecha: new Date().toISOString()
+          };
+          nuevoHistorial = [nuevoChat, ...nuevoHistorial].slice(0, 20);
+        } else {
+          const chatIndex = nuevoHistorial.findIndex(c => c.id === targetChatId);
+          if (chatIndex > -1) {
+            nuevoHistorial[chatIndex] = {
+              ...nuevoHistorial[chatIndex],
+              messages: finalMessages,
+              fecha: new Date().toISOString()
+            };
+          }
+        }
+        
         localStorage.setItem("historialChatFitness", JSON.stringify(nuevoHistorial));
         return nuevoHistorial;
       });
@@ -152,20 +163,10 @@ const ChatComponent = () => {
                   key={chat.id} 
                   className="nav-item"
                   onClick={() => {
-                    setMessages([
-                      {
-                        role: 'user',
-                        content: chat.pregunta,
-                        time: new Date(chat.fecha).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                      },
-                      {
-                        role: 'bot',
-                        content: chat.respuesta,
-                        time: new Date(chat.fecha).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                      }
-                    ]);
+                    setCurrentChatId(chat.id);
+                    setMessages(chat.messages || []);
                   }}
-                  title={chat.pregunta}
+                  title={chat.title || chat.pregunta}
                 >
                   <MessageSquare size={18} /> 
                   <span style={{ 
@@ -174,7 +175,7 @@ const ChatComponent = () => {
                     textOverflow: 'ellipsis',
                     maxWidth: '180px'
                   }}>
-                    {chat.pregunta}
+                    {chat.title || chat.pregunta}
                   </span>
                 </div>
               ))
