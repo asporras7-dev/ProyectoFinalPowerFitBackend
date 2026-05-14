@@ -8,15 +8,17 @@ const PerfilSeguidores = sequelize.define('PerfilSeguidores', {
         references: {
             model: 'Perfil',
             key: 'idPerfil'
-        }
+        },
+        allowNull: false
     },
     seguidor_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         references: {
-            model: 'Perfil',
+            model: 'perfil',
             key: 'idPerfil'
-        }
+        },
+        allowNull: false
     }
 }, {
     tableName: 'Perfil_has_Perfil',

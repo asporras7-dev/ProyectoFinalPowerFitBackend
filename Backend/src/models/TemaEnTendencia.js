@@ -12,7 +12,8 @@ const TemaEnTendencia = sequelize.define('TemaEnTendencia', {
         allowNull: false
     },
     miembros: {
-        type: DataTypes.STRING(100)
+        type: DataTypes.STRING(100),
+        allowNull: false
     }
 }, {
     tableName: 'temaEnTendencia',

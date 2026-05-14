@@ -12,7 +12,8 @@ const RolContribuidor = sequelize.define('RolContribuidor', {
         allowNull: false
     },
     descripcion_Rol: {
-        type: DataTypes.STRING(45)
+        type: DataTypes.STRING(45),
+        allowNull: false
     }
 }, {
     tableName: 'rol_Contribuidor',

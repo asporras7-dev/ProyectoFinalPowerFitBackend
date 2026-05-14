@@ -5,7 +5,8 @@ const DetalleRazonReporte = sequelize.define('DetalleRazonReporte', {
     iddetalle_Razon_Reporte: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     nombre: {
         type: DataTypes.STRING(150),

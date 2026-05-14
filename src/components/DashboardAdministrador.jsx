@@ -103,6 +103,7 @@ const DashboardAdministrador = ({ changeTab, openAddModal }) => {
         </div>
       </div>
 
+<<<<<<< HEAD
       {/* Stat cards */}
       <div className="dao-stats">
         {statCards.map(({ label, value, sub, icon: Icon, tab, color }) => (
@@ -113,6 +114,27 @@ const DashboardAdministrador = ({ changeTab, openAddModal }) => {
           >
             <div className={`dao-stat-card__icon dao-stat-card__icon--${color}`}>
               <Icon size={22} />
+=======
+        fetchStats();
+
+        // Listen for new exercises added to refresh stats
+        const handleRefresh = () => fetchStats();
+        window.addEventListener('refreshExercises', handleRefresh);
+        return () => window.removeEventListener('refreshExercises', handleRefresh);
+    }, []);
+
+    return (
+        <div className="dashboard-overview animate-fade-in">
+            <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                    <h1>Overview</h1>
+                    <p>Resumen general de la plataforma</p>
+                </div>
+                <button className="btn-primary" onClick={openAddModal}>
+                    <Plus size={20} />
+                    Agregar Ejercicio
+                </button>
+>>>>>>> efdb674001fa2137cc4dbc32ea723fff38516a86
             </div>
             <div className="dao-stat-card__body">
               <span className="dao-stat-card__label">{label}</span>

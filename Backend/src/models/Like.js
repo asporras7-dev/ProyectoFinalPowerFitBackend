@@ -5,7 +5,8 @@ const Like = sequelize.define('Like', {
     idlikes: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     Usuario_idUsuario: {
         type: DataTypes.INTEGER,

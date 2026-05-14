@@ -5,10 +5,12 @@ const Contribuidor = sequelize.define('Contribuidor', {
     idContribuidor: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     puntos: {
-        type: DataTypes.STRING(45)
+        type: DataTypes.STRING(45),
+        allowNull: false
     },
     Usuario_idUsuario: {
         type: DataTypes.INTEGER,
@@ -19,7 +21,7 @@ const Contribuidor = sequelize.define('Contribuidor', {
         allowNull: false
     }
 }, {
-    tableName: 'Contribuidor',
+    tableName: 'contribuidor',
     timestamps: false
 });
 

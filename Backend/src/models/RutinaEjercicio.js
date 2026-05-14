@@ -11,13 +11,16 @@ const RutinaEjercicio = sequelize.define('RutinaEjercicio', {
         primaryKey: true
     },
     repeticiones: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
     sets: {
-        type: DataTypes.STRING(45)
+        type: DataTypes.STRING(45),
+        allowNull: false
     },
     tiempo_Entre_Sets: {
-        type: DataTypes.STRING(45)
+        type: DataTypes.STRING(45),
+        allowNull: false
     }
 }, {
     tableName: 'Rutina_Ejercicios',

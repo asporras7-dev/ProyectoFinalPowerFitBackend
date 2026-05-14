@@ -20,13 +20,16 @@ const Reporte = sequelize.define('Reporte', {
         allowNull: false
     },
     descripcion: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: false
     },
     estado: {
-        type: DataTypes.STRING(45)
+        type: DataTypes.STRING(45),
+        allowNull: false
     },
     fecha_Y_Hora: {
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
+        allowNull: false
     }
 }, {
     tableName: 'Reporte',

@@ -12,19 +12,24 @@ const MensajeContacto = sequelize.define('MensajeContacto', {
         allowNull: false
     },
     telefono_Contacto: {
-        type: DataTypes.STRING(45)
+        type: DataTypes.STRING(45),
+        allowNull: false
     },
     correo: {
-        type: DataTypes.STRING(150)
+        type: DataTypes.STRING(150),
+        allowNull: false
     },
     mensaje: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: false
     },
     pais: {
-        type: DataTypes.STRING(100)
+        type: DataTypes.STRING(100),
+        allowNull: false
     },
     fecha: {
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
+        allowNull: false
     },
     Usuario_idUsuario: {
         type: DataTypes.INTEGER,

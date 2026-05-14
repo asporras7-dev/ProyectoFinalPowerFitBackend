@@ -33,6 +33,8 @@ const Ejercicios = () => {
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [techniqueExercise, setTechniqueExercise] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const exercisesPerPage = 8;
 
     // Form state
     const [newExercise, setNewExercise] = useState({
@@ -79,7 +81,16 @@ const Ejercicios = () => {
         }
 
         setFilteredExercises(result);
+        setCurrentPage(1); // Reset to first page when filters change
     }, [searchTerm, activeCategory, exercises]);
+
+    // Pagination logic
+    const indexOfLastExercise = currentPage * exercisesPerPage;
+    const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
+    const currentExercises = filteredExercises.slice(indexOfFirstExercise, indexOfLastExercise);
+    const totalPages = Math.ceil(filteredExercises.length / exercisesPerPage);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const [exerciseToEdit, setExerciseToEdit] = useState(null);
 
@@ -238,7 +249,7 @@ const Ejercicios = () => {
             </section>
 
             <div className="exercises-grid">
-                {filteredExercises.map((exercise, index) => (
+                {currentExercises.map((exercise, index) => (
                     <div
                         key={exercise.id}
                         className="exercise-card animate-fade-up"
@@ -283,6 +294,40 @@ const Ejercicios = () => {
                     </div>
                 ))}
             </div>
+
+            {/* Modern Pagination UI */}
+            {totalPages > 1 && (
+                <div className="modern-pagination animate-fade-up">
+                    <button 
+                        className={`pagination-arrow ${currentPage === 1 ? 'disabled' : ''}`}
+                        onClick={() => currentPage > 1 && paginate(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >
+                        <ChevronRight size={24} style={{ transform: 'rotate(180deg)' }} />
+                    </button>
+
+                    <div className="pagination-pages">
+                        {[...Array(totalPages)].map((_, i) => (
+                            <button 
+                                key={i + 1} 
+                                className={`page-dot ${currentPage === i + 1 ? 'active' : ''}`}
+                                onClick={() => paginate(i + 1)}
+                            >
+                                <span className="dot-number">{i + 1}</span>
+                                <div className="dot-glow"></div>
+                            </button>
+                        ))}
+                    </div>
+
+                    <button 
+                        className={`pagination-arrow ${currentPage === totalPages ? 'disabled' : ''}`}
+                        onClick={() => currentPage < totalPages && paginate(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                    >
+                        <ChevronRight size={24} />
+                    </button>
+                </div>
+            )}
 
             {filteredExercises.length === 0 && (
                 <div style={{ textAlign: 'center', padding: '50px', color: 'var(--text-dim)' }}>

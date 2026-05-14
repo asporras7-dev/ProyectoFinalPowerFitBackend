@@ -241,6 +241,15 @@
       "mensaje": "adasdasdadada",
       "pais": "j",
       "fecha": "2026-03-27T20:21:21.555Z"
+    },
+    {
+      "id": "a9ec",
+      "nombre": "Test User",
+      "contacto": "12345678",
+      "email": "test@example.com",
+      "mensaje": "This is a test message to verify usability.",
+      "pais": "Costa Rica",
+      "fecha": "2026-05-14T16:37:11.467Z"
     }
   ],
   "stories": [
@@ -673,6 +682,316 @@
       "imagen": "https://cdn.mos.cms.futurecdn.net/3ZAEXcd7cA3W2fMrVQY9EE-1200-80.jpg",
       "categoria": "Hombros",
       "videoUrl": "https://www.youtube.com/embed/0Po47vvj9g4?si=q0JbinJM_pKj7vae"
+    },
+    {
+      "id": "e26",
+      "nombre": "Press Inclinado con Mancuernas",
+      "nivel": "AVANZADO",
+      "musculo": "PECHO SUPERIOR",
+      "tiempo": "45 SEG",
+      "imagen": "https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?w=800&q=80",
+      "categoria": "Pecho",
+      "videoUrl": "https://www.youtube.com/embed/8iPEnn-ltC8"
+    },
+    {
+      "id": "e27",
+      "nombre": "Fondos en Paralelas",
+      "nivel": "AVANZADO",
+      "musculo": "PECHO Y TRÍCEPS",
+      "tiempo": "40 SEG",
+      "imagen": "https://images.unsplash.com/photo-1598971639058-fab3c3109a56?w=800&q=80",
+      "categoria": "Pecho",
+      "videoUrl": "https://www.youtube.com/embed/2z8JmcrW-As"
+    },
+    {
+      "id": "e28",
+      "nombre": "Sentadilla Búlgara",
+      "nivel": "INTERMEDIO",
+      "musculo": "CUÁDRICEPS Y GLÚTEOS",
+      "tiempo": "50 SEG",
+      "imagen": "https://images.unsplash.com/photo-1434608519344-49d77a699e1d?w=800&q=80",
+      "categoria": "Piernas",
+      "videoUrl": "https://www.youtube.com/embed/2C-uNgidnvM"
+    },
+    {
+      "id": "e29",
+      "nombre": "Remo con Mancuerna",
+      "nivel": "INTERMEDIO",
+      "musculo": "DORSAL",
+      "tiempo": "45 SEG",
+      "imagen": "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=800&q=80",
+      "categoria": "Espalda",
+      "videoUrl": "https://www.youtube.com/embed/pYcpY20QaE8"
+    },
+    {
+      "id": "e30",
+      "nombre": "Curl Concentrado",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "BÍCEPS",
+      "tiempo": "35 SEG",
+      "imagen": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&q=80",
+      "categoria": "Brazos",
+      "videoUrl": "https://www.youtube.com/embed/Jvj2wV0vOYU"
+    },
+    {
+      "id": "e31",
+      "nombre": "Patada de Tríceps",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "TRÍCEPS",
+      "tiempo": "35 SEG",
+      "imagen": "https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=800&q=80",
+      "categoria": "Brazos",
+      "videoUrl": "https://www.youtube.com/embed/6SS6K3lAwZ8"
+    },
+    {
+      "id": "e32",
+      "nombre": "Plancha Lateral",
+      "nivel": "INTERMEDIO",
+      "musculo": "OBLICUOS",
+      "tiempo": "45 SEG",
+      "imagen": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80",
+      "categoria": "Core",
+      "videoUrl": "https://www.youtube.com/embed/XB_7En-zf_M"
+    },
+    {
+      "id": "e33",
+      "nombre": "Reverse Fly",
+      "nivel": "INTERMEDIO",
+      "musculo": "DELTOIDES POSTERIOR",
+      "tiempo": "40 SEG",
+      "imagen": "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&q=80",
+      "categoria": "Hombros",
+      "videoUrl": "https://www.youtube.com/embed/oMKdg8RU-7s"
+    },
+    {
+      "id": "e34",
+      "nombre": "Superman",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "LUMBAR",
+      "tiempo": "30 SEG",
+      "imagen": "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=800&q=80",
+      "categoria": "Espalda",
+      "videoUrl": "https://www.youtube.com/embed/z6PJMT2y8GQ"
+    },
+    {
+      "id": "e35",
+      "nombre": "Sentadilla Sumo",
+      "nivel": "INTERMEDIO",
+      "musculo": "ADUCTORES Y GLÚTEOS",
+      "tiempo": "50 SEG",
+      "imagen": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800&q=80",
+      "categoria": "Piernas",
+      "videoUrl": "https://www.youtube.com/embed/0VuS4YDNV2I"
+    },
+    {
+      "id": "e36",
+      "nombre": "Fondos de Tríceps en Banco",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "TRÍCEPS",
+      "tiempo": "40 SEG",
+      "imagen": "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=800&q=80",
+      "categoria": "Brazos",
+      "videoUrl": "https://www.youtube.com/embed/0326dy_-CzM"
+    },
+    {
+      "id": "e37",
+      "nombre": "Remo al Mentón",
+      "nivel": "INTERMEDIO",
+      "musculo": "TRAPECIO Y HOMBROS",
+      "tiempo": "40 SEG",
+      "imagen": "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=800&q=80",
+      "categoria": "Hombros",
+      "videoUrl": "https://www.youtube.com/embed/kO5pMVUMCAE"
+    },
+    {
+      "id": "e38",
+      "nombre": "Curl de Pierna Tumbado",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "ISQUIOTIBIALES",
+      "tiempo": "45 SEG",
+      "imagen": "https://images.unsplash.com/photo-1487956382158-bb926046304a?w=800&q=80",
+      "categoria": "Piernas",
+      "videoUrl": "https://www.youtube.com/embed/ELOCsoDSmrg"
+    },
+    {
+      "id": "e39",
+      "nombre": "Abdominales en V",
+      "nivel": "AVANZADO",
+      "musculo": "ABDOMEN COMPLETO",
+      "tiempo": "40 SEG",
+      "imagen": "https://images.unsplash.com/photo-1600881333168-2ef49b341f30?w=800&q=80",
+      "categoria": "Core",
+      "videoUrl": "https://www.youtube.com/embed/iP2fjvG0g3w"
+    },
+    {
+      "id": "e40",
+      "nombre": "Pull-Over con Mancuerna",
+      "nivel": "AVANZADO",
+      "musculo": "DORSAL Y PECHO",
+      "tiempo": "45 SEG",
+      "imagen": "https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d?w=800&q=80",
+      "categoria": "Espalda",
+      "videoUrl": "https://www.youtube.com/embed/5ZwGfMcFOI0"
+    },
+    {
+      "id": "e41",
+      "nombre": "Sentadilla Goblet",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "CUÁDRICEPS Y CORE",
+      "tiempo": "50 SEG",
+      "imagen": "https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?w=800&q=80",
+      "categoria": "Piernas",
+      "videoUrl": "https://www.youtube.com/embed/MxsFDhcyFyE"
+    },
+    {
+      "id": "e42",
+      "nombre": "Peso Muerto Rumano",
+      "nivel": "INTERMEDIO",
+      "musculo": "ISQUIOTIBIALES Y GLÚTEOS",
+      "tiempo": "50 SEG",
+      "imagen": "https://images.unsplash.com/photo-1534368786749-b63e05c90863?w=800&q=80",
+      "categoria": "Piernas",
+      "videoUrl": "https://www.youtube.com/embed/JCXUYuzwNrM"
+    },
+    {
+      "id": "e43",
+      "nombre": "Glute Bridge",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "GLÚTEOS E ISQUIOTIBIALES",
+      "tiempo": "40 SEG",
+      "imagen": "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80",
+      "categoria": "Glúteos",
+      "videoUrl": "https://www.youtube.com/embed/wPM8icPu6H8"
+    },
+    {
+      "id": "e44",
+      "nombre": "Step-Ups con Mancuernas",
+      "nivel": "INTERMEDIO",
+      "musculo": "CUÁDRICEPS Y GLÚTEOS",
+      "tiempo": "45 SEG",
+      "imagen": "https://images.unsplash.com/photo-1549576490-b0b4831ef60a?w=800&q=80",
+      "categoria": "Glúteos",
+      "videoUrl": "https://www.youtube.com/embed/WCFCdxzFBa4"
+    },
+    {
+      "id": "e45",
+      "nombre": "Flexión Diamante",
+      "nivel": "AVANZADO",
+      "musculo": "TRÍCEPS Y PECHO",
+      "tiempo": "40 SEG",
+      "imagen": "https://images.unsplash.com/photo-1616279969856-759f316a5ac1?w=800&q=80",
+      "categoria": "Pecho",
+      "videoUrl": "https://www.youtube.com/embed/J0DXBSpghaI"
+    },
+    {
+      "id": "e46",
+      "nombre": "Mountain Climbers",
+      "nivel": "INTERMEDIO",
+      "musculo": "CORE Y CARDIO",
+      "tiempo": "60 SEG",
+      "imagen": "https://images.unsplash.com/photo-1547483238-f400e65ccd56?w=800&q=80",
+      "categoria": "Core",
+      "videoUrl": "https://www.youtube.com/embed/nmwgirgXLYM"
+    },
+    {
+      "id": "e47",
+      "nombre": "Good Morning",
+      "nivel": "AVANZADO",
+      "musculo": "LUMBAR E ISQUIOTIBIALES",
+      "tiempo": "45 SEG",
+      "imagen": "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=800&q=80",
+      "categoria": "Espalda",
+      "videoUrl": "https://www.youtube.com/embed/YA-h3n9L4YU"
+    },
+    {
+      "id": "e48",
+      "nombre": "Skullcrusher con Barra",
+      "nivel": "INTERMEDIO",
+      "musculo": "TRÍCEPS",
+      "tiempo": "40 SEG",
+      "imagen": "https://images.unsplash.com/photo-1581009137042-c552e485697a?w=800&q=80",
+      "categoria": "Brazos",
+      "videoUrl": "https://www.youtube.com/embed/d_KZxkY_0cM"
+    },
+    {
+      "id": "e49",
+      "nombre": "Encogimiento de Hombros",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "TRAPECIO",
+      "tiempo": "35 SEG",
+      "imagen": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80",
+      "categoria": "Hombros",
+      "videoUrl": "https://www.youtube.com/embed/cJRVVxmytaM"
+    },
+    {
+      "id": "e50",
+      "nombre": "Abducción de Cadera",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "GLÚTEO MEDIO",
+      "tiempo": "40 SEG",
+      "imagen": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80",
+      "categoria": "Glúteos",
+      "videoUrl": "https://www.youtube.com/embed/kDqklk2ZFWI"
+    },
+    {
+      "id": "e51",
+      "nombre": "Pull-Up Supino",
+      "nivel": "AVANZADO",
+      "musculo": "BÍCEPS Y DORSAL",
+      "tiempo": "35 SEG",
+      "imagen": "https://images.unsplash.com/photo-1604480132736-44c188fe4d20?w=800&q=80",
+      "categoria": "Espalda",
+      "videoUrl": "https://www.youtube.com/embed/eGo4IYlbE5g"
+    },
+    {
+      "id": "e52",
+      "nombre": "Rodillo Abdominal",
+      "nivel": "AVANZADO",
+      "musculo": "ABDOMEN COMPLETO",
+      "tiempo": "40 SEG",
+      "imagen": "https://images.unsplash.com/photo-1603287681836-b174ce5074c2?w=800&q=80",
+      "categoria": "Core",
+      "videoUrl": "https://www.youtube.com/embed/7DMsXdB5-L4"
+    },
+    {
+      "id": "e53",
+      "nombre": "Press de Pecho en Polea",
+      "nivel": "INTERMEDIO",
+      "musculo": "PECHO",
+      "tiempo": "45 SEG",
+      "imagen": "https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?w=800&q=80",
+      "categoria": "Pecho",
+      "videoUrl": "https://www.youtube.com/embed/H7YAw2zfEf0"
+    },
+    {
+      "id": "e54",
+      "nombre": "Sentadilla con Salto",
+      "nivel": "AVANZADO",
+      "musculo": "PIERNAS Y CARDIO",
+      "tiempo": "45 SEG",
+      "imagen": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&q=80",
+      "categoria": "Piernas",
+      "videoUrl": "https://www.youtube.com/embed/Azl5tkCzDcc"
+    },
+    {
+      "id": "e55",
+      "nombre": "Curl de Muñeca",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "ANTEBRAZO",
+      "tiempo": "30 SEG",
+      "imagen": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80",
+      "categoria": "Brazos",
+      "videoUrl": "https://www.youtube.com/embed/8PwpJMie4uE"
+    },
+    {
+      "id": "e56",
+      "nombre": "Aducción de Cadera",
+      "nivel": "PRINCIPIANTE",
+      "musculo": "ADUCTORES",
+      "tiempo": "40 SEG",
+      "imagen": "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=800&q=80",
+      "categoria": "Glúteos",
+      "videoUrl": "https://www.youtube.com/embed/0MsAKoMjNcI"
     }
   ],
   "comentarios": [

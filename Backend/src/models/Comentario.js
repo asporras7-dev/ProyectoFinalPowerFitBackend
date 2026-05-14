@@ -5,17 +5,19 @@ const Comentario = sequelize.define('Comentario', {
     idComentario: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     texto: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: false
     },
     Usuario_idUsuario: {
         type: DataTypes.INTEGER,
         allowNull: false
     }
 }, {
-    tableName: 'Comentario',
+    tableName: 'comentario',
     timestamps: false
 });
 

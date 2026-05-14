@@ -21,10 +21,12 @@ const Usuario = sequelize.define('Usuario', {
         allowNull: false
     },
     edad: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
     Rol_idRol: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 }, {
     tableName: 'Usuario',

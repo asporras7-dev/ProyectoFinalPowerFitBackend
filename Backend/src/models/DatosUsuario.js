@@ -8,28 +8,36 @@ const DatosUsuario = sequelize.define('DatosUsuario', {
         autoIncrement: true
     },
     sexo: {
-        type: DataTypes.STRING(45)
+        type: DataTypes.STRING(45),
+        allowNull: false
     },
     altura: {
-        type: DataTypes.DECIMAL(3, 2)
+        type: DataTypes.DECIMAL(3, 2),
+        allowNull: false
     },
     peso: {
-        type: DataTypes.DECIMAL(3, 2)
+        type: DataTypes.DECIMAL(3, 2),
+        allowNull: false
     },
     lugarEntrenamiento: {
-        type: DataTypes.STRING(100)
+        type: DataTypes.STRING(100),
+        allowNull: false
     },
     pesoMeta: {
-        type: DataTypes.DECIMAL(3, 2)
+        type: DataTypes.DECIMAL(3, 2),
+        allowNull: false
     },
     plazoSemanas: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
     decifitEstimado: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
     imagen: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: false
     },
     Usuario_idUsuario: {
         type: DataTypes.INTEGER,

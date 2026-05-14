@@ -12,19 +12,24 @@ const Ejercicio = sequelize.define('Ejercicio', {
         allowNull: false
     },
     nivel: {
-        type: DataTypes.STRING(45)
+        type: DataTypes.STRING(45),
+        allowNull: false
     },
     musculo: {
-        type: DataTypes.STRING(120)
+        type: DataTypes.STRING(120),
+        allowNull: false
     },
     video: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: false
     },
     repeticiones: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
     series: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 }, {
     tableName: 'Ejercicios',

@@ -8,22 +8,28 @@ const Publicacion = sequelize.define('Publicacion', {
         autoIncrement: true
     },
     tiempo_Publicacion: {
-        type: DataTypes.STRING(150)
+        type: DataTypes.STRING(150),
+        allowNull: false
     },
     titulo: {
-        type: DataTypes.STRING(150)
+        type: DataTypes.STRING(150),
+        allowNull: false
     },
     texto: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: false
     },
     imagen: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: false
     },
     categoria_Publicaciones_idcategoria_Publicaciones: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
     Usuario_idUsuario: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 }, {
     tableName: 'publicaciones',

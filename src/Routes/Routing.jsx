@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import PageTransition from '../components/PageTransition';
 import Home from '../Pages/Home';
 import Contacto from '../Pages/Contacto';
 import Login from '../Pages/Login';
@@ -17,6 +18,7 @@ const Routing = () => {
     return (
         <Router>
             <Navbar />
+<<<<<<< HEAD
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/ejercicios" element={<Ejercicios />} />
@@ -32,6 +34,26 @@ const Routing = () => {
                 <Route path="/comunidad" element={<Testimonios />} />
                 <Route path="/perfil/:id" element={<PerfilUsuario />} />
             </Routes>
+=======
+            <PageTransition>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/ejercicios" element={<Ejercicios />} />
+                    <Route path="/contacto" element={<Contacto />} />
+                    <Route path="/dietas" element={<Dietas />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/registro" element={<Registro />} />
+                    <Route 
+                        path="/chatbot" 
+                        element={isLogged ? <Chatbot /> : <Navigate to="/login" />} 
+                    />
+                    <Route path="/admin" element={<DashboardAdmin />} />
+                    <Route path="/dashboard" element={<DashboardCliente />} />
+                    <Route path="/comunidad" element={<Testimonios />} />
+                    <Route path="/perfil/:id" element={<PerfilUsuario />} />
+                </Routes>
+            </PageTransition>
+>>>>>>> efdb674001fa2137cc4dbc32ea723fff38516a86
         </Router>
     );
 };
