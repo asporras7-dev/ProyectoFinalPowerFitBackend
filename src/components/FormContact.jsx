@@ -3,7 +3,6 @@ import { Mail, Phone, Send, MessageSquare, History, Target, Users, Instagram, Fa
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { saveContactMessage } from '../services/userService';
-import emailjs from '@emailjs/browser';
 import '../styles/Contacto.css';
 
 const FormContact = () => {

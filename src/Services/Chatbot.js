@@ -1,11 +1,11 @@
-export async function sendMessage(message) {
+export async function sendMessage(messages, contextoUsuario) {
   try {
     const res = await fetch("http://localhost:3023/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({ messages, contextoUsuario }),
     });
 
     const data = await res.json();

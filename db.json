@@ -19,7 +19,7 @@
       "deficitEstimado": 450,
       "avatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774390526/rldqwumojedsbdfoojao.jpg",
       "followers": [
-         "0e67"
+        "0e67"
       ],
       "following": [],
       "cover": ""
@@ -176,6 +176,24 @@
       ],
       "following": [],
       "cover": ""
+    },
+    {
+      "id": "80e1",
+      "email": "juanito@juanito",
+      "password": "12345678",
+      "nombre": "Juanito Golondrina",
+      "edad": "20",
+      "rol": "client",
+      "edadFisica": "20",
+      "sexo": "m",
+      "altura": "190",
+      "peso": "100",
+      "lugarEntrenamiento": "gym",
+      "alergias": "no",
+      "pesoMeta": 115,
+      "plazoSemanas": 8,
+      "pesoActual": "100",
+      "deficitEstimado": 450
     }
   ],
   "contactos": [
