@@ -1,12 +1,26 @@
-import { Zap, Calendar, Utensils, Dumbbell, Activity, TrendingUp } from 'lucide-react';
+import { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../context/UserContext';
+import { Zap, Calendar, Utensils, Dumbbell, Activity, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
 import '../styles/Home.css';
 import { Link } from 'react-router-dom';
-import MotivationalQuote from './MotivationalQuote';
+
+const videoBackground = "https://res.cloudinary.com/dho2o1hmc/video/upload/v1778602962/Nuevo_proyecto_ssj42q.mp4";
 
 const HomeComponent = () => {
+    const { user } = useContext(UserContext);
+
     return (
         <div className="home-wrapper">
-            <div className="hero-background-layer">
+            <div className="hero-video-background">
+                <video 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline 
+                    className="hero-video"
+                >
+                    <source src={videoBackground} type="video/mp4" />
+                </video>
                 <div className="hero-overlay"></div>
             </div>
 
@@ -14,33 +28,22 @@ const HomeComponent = () => {
                 {/* Hero Section */}
                 <section className="hero">
                     <div className="hero-left animate-fade-in">
-
-
                         <h1 className="hero-title">
                             TRANSFORMA<br />TU VIDA,<br />
                             <span className="italic-red">SUPERA TUS LÍMITES</span>
                         </h1>
                         <p className="hero-subtitle delay-100">
-                            Descubre los mejores planes de entrenamiento y dietas personalizadas para alcanzar la mejor versión de ti mismo. Inicia hoy mismo tu cambio radical.
+                            Descubre los mejores planes de entrenamiento personalizados para alcanzar la mejor versión de ti mismo. Inicia hoy mismo tu cambio radical.
                         </p>
                         <div className="hero-buttons delay-200">
-                            <Link to="/registro" className="btn btn-red">
-                                Empieza Ahora
-                            </Link>
-                            <Link to="/dietas" className="btn btn-outline">
-                                Ver Dietas
-                            </Link>
+                            {!user && (
+                                <Link to="/registro" className="btn btn-red">
+                                    Empieza Ahora
+                                </Link>
+                            )}
                         </div>
 
-                        <div className="social-proof delay-300">
-                            <div className="avatar-group">
-                                <div className="avatar"><img src="https://i.pravatar.cc/100?img=11" alt="user" /></div>
-                                <div className="avatar"><img src="https://i.pravatar.cc/100?img=12" alt="user" /></div>
-                                <div className="avatar"><img src="https://i.pravatar.cc/100?img=13" alt="user" /></div>
-                                <div className="avatar text-avatar">+2k</div>
-                            </div>
-                            <span className="proof-text">Únete a más de <strong>2,000 usuarios</strong> activos</span>
-                        </div>
+                    
                     </div>
 
                     <div className="hero-right animate-fade-in delay-300">
@@ -54,16 +57,16 @@ const HomeComponent = () => {
                         </div>
 
                         <div className="glass-stat-card card-middle">
-                            <div className="icon-box"><Calendar size={24} /></div>
+                            <div className="icon-box"><Calendar size={30} /></div>
                             <div className="stat-info">
                                 <span className="stat-label">Resultados</span>
                                 <h4 className="stat-value">30 días</h4>
-                                <span className="stat-sub negative">Garantizado por contrato</span>
+                                <span className="stat-sub negative">Garantizado</span>
                             </div>
                         </div>
 
                         <div className="glass-stat-card card-bottom">
-                            <div className="icon-box"><Utensils size={24} /></div>
+                            <div className="icon-box"><Utensils size={20} /></div>
                             <div className="stat-info">
                                 <span className="stat-label">Nutrición</span>
                                 <h4 className="stat-value">Custom</h4>
@@ -73,7 +76,7 @@ const HomeComponent = () => {
                     </div>
                 </section>
 
-                <MotivationalQuote />
+                
 
                 {/* Features Section */}
                 <section className="features-section">

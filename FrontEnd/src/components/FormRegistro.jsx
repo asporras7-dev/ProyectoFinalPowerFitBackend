@@ -145,4 +145,4 @@ function FormRegistro({ userData, onNext }) {
   );
 }
 
-export default FormRegistro;
+export default FormRegistro;

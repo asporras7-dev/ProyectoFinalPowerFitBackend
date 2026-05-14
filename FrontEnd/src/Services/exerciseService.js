@@ -1,4 +1,5 @@
-const BASE_URL = "http://localhost:3001";
+import { API_BASE_URL } from './apiConfig';
+const BASE_URL = API_BASE_URL;
 
 //Obtener todos los ejercicios
 export const obtenerTodosEjercicios = async () => {
@@ -7,9 +8,33 @@ export const obtenerTodosEjercicios = async () => {
     if (!response.ok) {
       throw new Error(`Error: ${response.statusText}`);
     }
-    return await response.json();
+    const data = await response.json();
+    return data.map(ex => ({
+      id: ex.idEjercicios,
+      ...ex
+    }));
   } catch (error) {
     console.error("Error fetching exercises:", error);
+    throw error;
+  }
+};
+
+export const getPaginatedExercises = async (page = 1, limit = 10) => {
+  try {
+    const response = await fetch(`${BASE_URL}/ejercicios?page=${page}&limit=${limit}`);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+    const data = await response.json();
+    return {
+      ...data,
+      data: data.data.map(ex => ({
+        id: ex.idEjercicios,
+        ...ex
+      }))
+    };
+  } catch (error) {
+    console.error("Error fetching paginated exercises:", error);
     throw error;
   }
 };

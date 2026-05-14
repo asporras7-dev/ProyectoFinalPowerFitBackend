@@ -5,8 +5,18 @@ import { fetchStoriesData, createStory, deleteStory, updateStoryLikes, fetchComm
 import { getAllUsers, updateUser } from '../Services/userService';
 import { Link } from 'react-router-dom';
 import SubirImagen from './SubirImagen';
+<<<<<<< HEAD:src/components/TestimonioComponent.jsx
+<<<<<<< HEAD
 import '../styles/SuccessStories.css';
+
+=======
+import '../Styles/SuccessStories.css';
 import MotivationalQuote from './MotivationalQuote';
+>>>>>>> efdb674001fa2137cc4dbc32ea723fff38516a86
+=======
+import '../Styles/SuccessStories.css';
+import MotivationalQuote from './MotivationalQuote';
+>>>>>>> b11006d6ca1e11e510683bb4e337ace1f2043bcb:Front-End/src/components/TestimonioComponent.jsx
 import Swal from 'sweetalert2';
 import FormPublicaciones from './FormPublicaciones';
 
@@ -337,6 +347,7 @@ const TestimonioComponent = () => {
 
     useEffect(() => {
         loadData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const loadData = async () => {
@@ -645,7 +656,7 @@ const TestimonioComponent = () => {
                     </div>
                 </header>
 
-                <MotivationalQuote />
+                
 
                 <div className="stories-layout">
                     {/* Main Feed */}

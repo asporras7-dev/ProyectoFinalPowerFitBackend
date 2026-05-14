@@ -1,9 +1,14 @@
+/* eslint-disable react-refresh/only-export-components, react-hooks/set-state-in-effect */
 import React, { createContext, useState, useEffect } from 'react';
+import { API_BASE_URL } from '../Services/apiConfig';
+import { getUserById } from '../Services/userService';
+import toast from 'react-hot-toast';
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -12,15 +17,28 @@ export const UserProvider = ({ children }) => {
             setUser(parsedUser);
 
             // Sync with backend to get latest data (including avatar)
-            fetch(`http://localhost:3001/usuarios/${parsedUser.id}`)
-                .then(res => res.json())
+            getUserById(parsedUser.id)
                 .then(latestUser => {
                     if (latestUser && latestUser.id) {
                         localStorage.setItem('user', JSON.stringify(latestUser));
                         setUser(latestUser);
+                    } else {
+                        localStorage.removeItem('user');
+                        setUser(null);
+                        toast.error("Sesión inválida o expirada. Inicia sesión nuevamente.");
                     }
                 })
-                .catch(err => console.error("Sync error:", err));
+                .catch(err => {
+                    console.error("Sync error, user might not exist anymore:", err);
+                    localStorage.removeItem('user');
+                    setUser(null);
+                    toast.error("Sesión inválida o expirada. Inicia sesión nuevamente.");
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        } else {
+            setLoading(false);
         }
     }, []);
 
@@ -49,7 +67,7 @@ export const UserProvider = ({ children }) => {
     };
 
     return (
-        <UserContext.Provider value={{ user, setUser, login, logout, refreshUser }}>
+        <UserContext.Provider value={{ user, setUser, login, logout, refreshUser, loading }}>
             {children}
         </UserContext.Provider>
     );

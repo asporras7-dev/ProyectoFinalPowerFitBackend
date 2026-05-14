@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { getAllRoutines, updateRoutineStatus, deleteRoutine } from '../Services/routineService';
 import { Check, X, Trash2 } from 'lucide-react';
+import Swal from 'sweetalert2';
 
 const AdminRoutines = () => {
   const [routines, setRoutines] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all'); // all, pending, approved, rejected
+  const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
     loadRoutines();
@@ -18,6 +20,14 @@ const AdminRoutines = () => {
       setRoutines(data);
     } catch (error) {
       console.error("Error loading routines", error);
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudieron cargar las rutinas.',
+        icon: 'error',
+        background: '#171212',
+        color: '#fff',
+        confirmButtonColor: '#8b0000'
+      });
     } finally {
       setLoading(false);
     }
@@ -25,22 +35,74 @@ const AdminRoutines = () => {
 
   const handleStatusChange = async (routineId, newStatus) => {
     try {
+      setProcessing(true);
       const updated = await updateRoutineStatus(routineId, newStatus);
       setRoutines(routines.map(r => r.id === routineId ? updated : r));
-    } catch (error) {
-      alert("Error al actualizar la rutina");
+      
+      Swal.fire({
+        title: 'Estado Actualizado',
+        text: `La rutina ha sido ${newStatus === 'approved' ? 'aprobada' : 'rechazada'}.`,
+        icon: 'success',
+        timer: 1500,
+        showConfirmButton: false,
+        background: '#171212',
+        color: '#fff'
+      });
+    } catch {
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo actualizar el estado de la rutina.',
+        icon: 'error',
+        background: '#171212',
+        color: '#fff',
+        confirmButtonColor: '#8b0000'
+      });
+    } finally {
+      setProcessing(false);
     }
   };
 
   const handleDelete = async (routineId) => {
-    if (window.confirm('¿Estás seguro que deseas eliminar esta rutina de forma permanente?')) {
-      try {
-        await deleteRoutine(routineId);
-        setRoutines(routines.filter(r => r.id !== routineId));
-      } catch (error) {
-        alert("Error al eliminar la rutina");
+    Swal.fire({
+      title: '¿Eliminar Rutina?',
+      text: "Esta acción borrará la rutina de forma permanente.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#8b0000',
+      cancelButtonColor: '#333',
+      confirmButtonText: 'Sí, Eliminar',
+      cancelButtonText: 'Cancelar',
+      background: '#171212',
+      color: '#fff'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          setProcessing(true);
+          await deleteRoutine(routineId);
+          setRoutines(routines.filter(r => r.id !== routineId));
+          
+          Swal.fire({
+            title: 'Eliminado',
+            text: 'La rutina ha sido removida.',
+            icon: 'success',
+            background: '#171212',
+            color: '#fff',
+            confirmButtonColor: '#8b0000'
+          });
+        } catch {
+          Swal.fire({
+            title: 'Error',
+            text: 'No se pudo eliminar la rutina.',
+            icon: 'error',
+            background: '#171212',
+            color: '#fff',
+            confirmButtonColor: '#8b0000'
+          });
+        } finally {
+          setProcessing(false);
+        }
       }
-    }
+    });
   };
 
   const filteredRoutines = routines.filter(r => filter === 'all' ? true : r.status === filter);
@@ -115,6 +177,7 @@ const AdminRoutines = () => {
                           className="btn-action approve"
                           onClick={() => handleStatusChange(routine.id, 'approved')}
                           title="Aprobar"
+                          disabled={processing}
                         >
                           <Check size={18} />
                         </button>
@@ -124,6 +187,7 @@ const AdminRoutines = () => {
                           className="btn-action reject"
                           onClick={() => handleStatusChange(routine.id, 'rejected')}
                           title="Rechazar"
+                          disabled={processing}
                         >
                           <X size={18} />
                         </button>
@@ -132,6 +196,7 @@ const AdminRoutines = () => {
                         className="btn-action delete"
                         onClick={() => handleDelete(routine.id)}
                         title="Eliminar"
+                        disabled={processing}
                       >
                         <Trash2 size={18} />
                       </button>

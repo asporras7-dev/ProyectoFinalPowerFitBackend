@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock, CheckCircle, X } from "lucide-react";
 import { loginUser } from "../Services/userService";
+import { UserContext } from "../context/UserContext";
+import Swal from 'sweetalert2';
 import "../styles/Login.css";
 
 function FormLogin() {
+  const { login } = useContext(UserContext);
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -30,7 +33,14 @@ function FormLogin() {
     if (!formData.email?.trim() || !formData.password?.trim()) {
       const msg = "Por favor, completa todos los campos.";
       setError(msg);
-      alert(msg);
+      Swal.fire({
+        title: 'Campos Incompletos',
+        text: msg,
+        icon: 'warning',
+        background: '#171212',
+        color: '#fff',
+        confirmButtonColor: '#8b0000'
+      });
       return;
     }
 
@@ -38,8 +48,8 @@ function FormLogin() {
     try {
       const user = await loginUser(formData.email, formData.password);
 
-      // Store user info in localStorage
-      localStorage.setItem("user", JSON.stringify(user));
+      // Store user info in context and localStorage
+      login(user);
 
       setNotificationMsg(`¡Bienvenido ${user.nombre || user.email}!`);
       setIsNotificationOpen(true);
@@ -48,9 +58,9 @@ function FormLogin() {
       // but here we can just wait 1.5s or handle on close
       setTimeout(() => {
         if (user.rol === "admin") {
-          window.location.href = "/admin";
+          navigate("/admin");
         } else {
-          window.location.href = "/dashboard";
+          navigate("/dashboard");
         }
       }, 1500);
     } catch (err) {

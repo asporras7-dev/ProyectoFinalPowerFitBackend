@@ -64,39 +64,7 @@ const MetaUsuario = ({ userData, onBack }) => {
     <>
       <div className="meta-usuario-layout">
         <div className="meta-main-container">
-          {/* Left Sidebar */}
-          <aside className="meta-sidebar">
-            <div className="sidebar-section">
-              <span className="section-label">MI SALUD</span>
-              <span className="section-sublabel">Plan Personalizado</span>
-            </div>
 
-            <nav className="sidebar-nav">
-              <button className="nav-item">
-                <Home size={20} />
-                <span>Inicio</span>
-              </button>
-              <button className="nav-item active">
-                <Target size={20} />
-                <span>Metas</span>
-              </button>
-              <button className="nav-item">
-                <BarChart3 size={20} />
-                <span>Progreso</span>
-              </button>
-              <button className="nav-item">
-                <User size={20} />
-                <span>Perfil</span>
-              </button>
-            </nav>
-
-            <div className="sidebar-quote">
-              <p className="quote-label">Consejo del día</p>
-              <p className="quote-text">
-                "La constancia vence a la Intensidad."
-              </p>
-            </div>
-          </aside>
 
           {/* Central Content */}
           <main className="meta-content">
@@ -127,17 +95,17 @@ const MetaUsuario = ({ userData, onBack }) => {
 
               <div className="lose-section">
                 <div className="lose-header">
-                  <span>Peso total a perder</span>
-                  <span className="lose-amount">{weightToLose} kg</span>
+                  <span>{currentWeight >= targetWeight ? 'Peso total a perder' : 'Peso total a ganar'}</span>
+                  <span className="lose-amount">{Math.abs(weightToLose)} kg</span>
                 </div>
                 <div className="range-container">
                   <input
                     type="range"
                     className="weight-range"
                     min="0"
-                    max="20"
+                    max="30"
                     step="0.5"
-                    value={weightToLose}
+                    value={Math.abs(weightToLose)}
                     readOnly
                   />
                 </div>
@@ -160,17 +128,19 @@ const MetaUsuario = ({ userData, onBack }) => {
               </div>
 
               <div className="deficit-estimation">
-                <div className="deficit-header">
-                  <BarChart3 size={18} className="red-icon" />
-                  <span>Estimación de Déficit</span>
+                <div className="deficit-info-group">
+                  <div className="deficit-header">
+                    <BarChart3 size={18} className="red-icon" />
+                    <span>Estimación de Déficit</span>
+                  </div>
+                  <div className="deficit-footer">
+                    <Info size={14} className="info-icon" />
+                    <span>Recomendado: Pérdida saludable</span>
+                  </div>
                 </div>
                 <div className="deficit-value">
                   <span className="negative">-450</span>
                   <span className="unit">kcal / día</span>
-                </div>
-                <div className="deficit-footer">
-                  <Info size={14} className="info-icon" />
-                  <span>Recomendado: Pérdida saludable</span>
                 </div>
               </div>
 
@@ -192,26 +162,7 @@ const MetaUsuario = ({ userData, onBack }) => {
             </div>
           </main>
 
-          {/* Right Widgets */}
-          <aside className="meta-widgets">
-            <div className="widget-card activity-widget">
-              <div className="widget-header">
-                <Flame size={18} className="red-icon" />
-                <span>Actividad</span>
-              </div>
-              <div className="activity-list">
-                <div className="activity-item">
-                  <div className="activity-icon-box food">
-                    <Utensils size={16} />
-                  </div>
-                  <div className="activity-info">
-                    <p className="activity-title">Nutrición</p>
-                    <p className="activity-time">Plan listo</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </aside>
+
         </div>
       </div>
 

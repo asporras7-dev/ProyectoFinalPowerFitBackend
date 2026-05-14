@@ -31,7 +31,7 @@ const AdminReports = () => {
             const story = await getStoryById(storyId);
             setSelectedStory(story);
             setShowStoryModal(true);
-        } catch (error) {
+        } catch {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -68,8 +68,15 @@ const AdminReports = () => {
                     color: '#fff',
                     confirmButtonColor: '#8b0000'
                 });
-            } catch (error) {
-                alert('Error al eliminar el reporte');
+            } catch {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No se pudo eliminar el reporte.',
+                    background: '#171212',
+                    color: '#fff',
+                    confirmButtonColor: '#8b0000'
+                });
             }
         }
     };
@@ -101,8 +108,15 @@ const AdminReports = () => {
                     confirmButtonColor: '#8b0000'
                 });
                 if (selectedStory?.id === storyId) setShowStoryModal(false);
-            } catch (error) {
-                alert('Error al eliminar la publicación');
+            } catch {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No se pudo eliminar la publicación.',
+                    background: '#171212',
+                    color: '#fff',
+                    confirmButtonColor: '#8b0000'
+                });
             }
         }
     };

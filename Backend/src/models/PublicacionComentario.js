@@ -2,12 +2,12 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const PublicacionComentario = sequelize.define('PublicacionComentario', {
-    publicaciones_idpublicaciones: {
+    pub_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false
     },
-    Comentario_idComentario: {
+    com_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false

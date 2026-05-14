@@ -108,13 +108,15 @@ Perfil.belongsToMany(Perfil, {
     through: PerfilSeguidores, 
     as: 'Following', 
     foreignKey: 'Perfil_idPerfil', 
-    otherKey: 'Perfil_idPerfil1' 
+    otherKey: 'Perfil_idPerfil1',
+    uniqueKey: 'perf_seg_unique'
 });
 Perfil.belongsToMany(Perfil, { 
     through: PerfilSeguidores, 
     as: 'Followers', 
     foreignKey: 'Perfil_idPerfil1', 
-    otherKey: 'Perfil_idPerfil' 
+    otherKey: 'Perfil_idPerfil',
+    uniqueKey: 'perf_seg_unique'
 });
 
 module.exports = {

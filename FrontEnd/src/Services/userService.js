@@ -1,4 +1,5 @@
-const BASE_URL = "http://localhost:3001";
+import { API_BASE_URL } from './apiConfig';
+const BASE_URL = API_BASE_URL;
 
 // Helper to handle endpoint names (usuarios is the one in db.json)
 const multiFetch = async (endpoint, options = {}) => {
@@ -7,12 +8,19 @@ const multiFetch = async (endpoint, options = {}) => {
 
 export const registerUser = async (userData) => {
   try {
-    const response = await multiFetch("", {
+    const mappedData = {
+      nombre: userData.nombre,
+      correo: userData.email,
+      contrasenia: userData.password,
+      edad: userData.edad || null,
+      Rol_idRol: userData.rol === 'admin' ? 1 : 2 // Mapping role to IDs
+    };
+    const response = await fetch(`${BASE_URL}/usuarios`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify(mappedData),
     });
 
     if (!response.ok) {
@@ -28,20 +36,41 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (email, password) => {
   try {
-    const response = await multiFetch("");
+    const response = await fetch(`${BASE_URL}/usuarios/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ correo: email, contrasenia: password }),
+    });
 
     if (!response.ok) {
-      throw new Error(`Error del servidor (${response.status}). Asegúrate de que npm run backend esté activo.`);
+      if (response.status === 401) {
+        throw new Error("Credenciales inválidas. Revisa tu correo y contraseña.");
+      }
+      throw new Error(`Error del servidor (${response.status}). Asegúrate de que el backend esté activo.`);
     }
 
-    const users = await response.json();
-    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
-
-    if (!user) {
-      throw new Error("Credenciales inválidas. Revisa tu correo y contraseña.");
-    }
-
-    return user;
+    const user = await response.json();
+    return {
+      id: user.idUsuario,
+      email: user.correo,
+      nombre: user.nombre,
+      rol: user.Rol ? user.Rol.nombre : (user.Rol_idRol === 1 ? 'admin' : 'client'),
+      ...user,
+      ...(user.DatosUsuario || {}),
+      pesoActual: user.DatosUsuario?.peso,
+      deficitEstimado: user.DatosUsuario?.decifitEstimado,
+      semanasEnProgreso: user.DatosUsuario?.semanas_En_Progreso || 1,
+      ultimoFeedbackDieta: user.DatosUsuario?.ultimo_Feedback_Dieta,
+      ultimoFeedbackEjercicio: user.DatosUsuario?.ultimo_Feedback_Ejercicio,
+      ...(user.Perfil || {}),
+      avatar: user.Perfil?.foto_Perfil || user.avatar || '',
+      cover: user.Perfil?.foto_Portada || user.cover || '',
+      following: user.Perfil?.Following?.map(p => p.Usuario_idUsuario) || [],
+      followers: user.Perfil?.Followers?.map(p => p.Usuario_idUsuario) || [],
+      ejerciciosElegidos: user.DatosUsuario?.Rutinas?.[0]?.Ejercicios?.map(e => e.idEjercicios) || []
+    };
   } catch (error) {
     console.error("Login error:", error);
     throw error;
@@ -52,12 +81,42 @@ export const getAllUsers = async () => {
   try {
     const response = await multiFetch("");
     if (!response.ok) {
-      t
+      throw new Error("Error fetching users");
     }
-    return await response.json();
+    const usersRaw = await response.json();
+    return usersRaw.map(user => ({
+      id: user.idUsuario,
+      email: user.correo,
+      nombre: user.nombre,
+      rol: user.Rol_idRol === 1 ? 'admin' : 'client',
+      ...user
+    }));
   } catch (error) {
     console.error("Error fetching all users:", error);
-    thr
+    throw error;
+  }
+};
+
+export const getPaginatedUsers = async (page = 1, limit = 10) => {
+  try {
+    const response = await multiFetch(`?page=${page}&limit=${limit}`);
+    if (!response.ok) {
+      throw new Error("Error fetching paginated users");
+    }
+    const data = await response.json();
+    return {
+      ...data,
+      data: data.data.map(user => ({
+        id: user.idUsuario,
+        email: user.correo,
+        nombre: user.nombre,
+        rol: user.Rol_idRol === 1 ? 'admin' : 'client',
+        ...user
+      }))
+    };
+  } catch (error) {
+    console.error("Error fetching paginated users:", error);
+    throw error;
   }
 };
 
@@ -77,12 +136,13 @@ export const deleteUser = async (userId) => {
 
 export const checkUserExists = async (email) => {
   try {
-    const response = await multiFetch("");
+    // Optimization: Use server-side filtering
+    const response = await fetch(`${BASE_URL}/usuarios?email=${encodeURIComponent(email)}`);
     if (!response.ok) {
       throw new Error("Error fetching users");
     }
     const users = await response.json();
-    return users.some(user => user.email === email);
+    return users.length > 0;
   } catch (error) {
     console.error("Check user error:", error);
     throw error;
@@ -113,7 +173,7 @@ export const updateUser = async (userId, userData) => {
 
 export const saveContactMessage = async (messageData) => {
   try {
-    const response = await fetch(`${BASE_URL}/contactos`, {
+    const response = await fetch(`${BASE_URL}/mensajes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -138,7 +198,26 @@ export const getUserById = async (userId) => {
     if (!response.ok) {
       throw new Error("Error fetching user");
     }
-    return await response.json();
+    const user = await response.json();
+    return {
+      id: user.idUsuario,
+      email: user.correo,
+      nombre: user.nombre,
+      rol: user.Rol ? user.Rol.nombre : (user.Rol_idRol === 1 ? 'admin' : 'client'),
+      ...user,
+      ...(user.DatosUsuario || {}),
+      pesoActual: user.DatosUsuario?.peso,
+      deficitEstimado: user.DatosUsuario?.decifitEstimado,
+      semanasEnProgreso: user.DatosUsuario?.semanas_En_Progreso || 1,
+      ultimoFeedbackDieta: user.DatosUsuario?.ultimo_Feedback_Dieta,
+      ultimoFeedbackEjercicio: user.DatosUsuario?.ultimo_Feedback_Ejercicio,
+      ...(user.Perfil || {}),
+      avatar: user.Perfil?.foto_Perfil || user.avatar || '',
+      cover: user.Perfil?.foto_Portada || user.cover || '',
+      following: user.Perfil?.Following?.map(p => p.Usuario_idUsuario) || [],
+      followers: user.Perfil?.Followers?.map(p => p.Usuario_idUsuario) || [],
+      ejerciciosElegidos: user.DatosUsuario?.Rutinas?.[0]?.Ejercicios?.map(e => e.idEjercicios) || []
+    };
   } catch (error) {
     console.error("Error fetching user by ID:", error);
     throw error;
@@ -147,7 +226,7 @@ export const getUserById = async (userId) => {
 
 export const getAllContactMessages = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/contactos`);
+    const response = await fetch(`${BASE_URL}/mensajes`);
     if (!response.ok) {
       throw new Error("Error fetching contact messages");
     }
@@ -160,7 +239,7 @@ export const getAllContactMessages = async () => {
 
 export const deleteContactMessage = async (messageId) => {
   try {
-    const response = await fetch(`${BASE_URL}/contactos/${messageId}`, {
+    const response = await fetch(`${BASE_URL}/mensajes/${messageId}`, {
       method: "DELETE",
     });
     if (!response.ok) {

@@ -23,6 +23,9 @@ const Ejercicio = sequelize.define('Ejercicio', {
         type: DataTypes.TEXT,
         allowNull: false
     },
+    tiempo: {
+        type: DataTypes.STRING(45)
+    },
     repeticiones: {
         type: DataTypes.INTEGER,
         allowNull: false

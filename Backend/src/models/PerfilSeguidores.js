@@ -5,6 +5,7 @@ const PerfilSeguidores = sequelize.define('PerfilSeguidores', {
     perfil_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        field: 'Perfil_idPerfil',
         references: {
             model: 'Perfil',
             key: 'idPerfil'
@@ -14,6 +15,7 @@ const PerfilSeguidores = sequelize.define('PerfilSeguidores', {
     seguidor_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        field: 'Perfil_idPerfil1',
         references: {
             model: 'perfil',
             key: 'idPerfil'

@@ -4,7 +4,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: var(--nav-height) 2.5rem 2.5rem 2.5rem;
+    padding: 2.5rem;
+    padding-top: calc(var(--nav-height) + 2.5rem);
     background: #191414;
     /* very dark brown/red */
     position: relative;

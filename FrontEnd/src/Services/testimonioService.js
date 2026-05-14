@@ -1,10 +1,11 @@
-const API_URL = 'http://localhost:3001';
+import { API_BASE_URL } from './apiConfig';
+const API_URL = API_BASE_URL;
 
 export const fetchStoriesData = async () => {
     const [storiesRes, contributorsRes, topicsRes, commentsRes] = await Promise.all([
-        fetch(`${API_URL}/stories`),
-        fetch(`${API_URL}/topContributors`),
-        fetch(`${API_URL}/trendingTopics`),
+        fetch(`${API_URL}/publicaciones`),
+        fetch(`${API_URL}/contribuidores`),
+        fetch(`${API_URL}/temas`),
         fetch(`${API_URL}/comentarios`)
     ]);
 
@@ -12,7 +13,7 @@ export const fetchStoriesData = async () => {
         throw new Error('Error al cargar la información.');
     }
 
-    const storiesData = await storiesRes.json();
+    const storiesDataRaw = await storiesRes.json();
     const contributorsData = await contributorsRes.json();
     const topicsData = await topicsRes.json();
     
@@ -21,6 +22,20 @@ export const fetchStoriesData = async () => {
         commentsData = await commentsRes.json();
     }
     
+    // Map backend fields to frontend fields
+    const storiesData = storiesDataRaw.map(s => ({
+        id: s.idpublicaciones,
+        title: s.titulo,
+        text: s.texto,
+        image: s.imagen,
+        time: s.tiempo_Publicacion,
+        userId: s.Usuario_idUsuario,
+        category: s.CategoriaPublicacion ? s.CategoriaPublicacion.nombre : 'Pérdida de Peso',
+        tag: s.CategoriaPublicacion ? s.CategoriaPublicacion.nombre : 'Pérdida de Peso',
+        likes: s.likes || 0,
+        comments: 0 // Will be calculated below
+    }));
+
     // Attach accurate comments count to each story
     storiesData.forEach(story => {
         const storyComments = commentsData.filter(c => String(c.storyId) === String(story.id));
@@ -31,30 +46,56 @@ export const fetchStoriesData = async () => {
 };
 
 export const createStory = async (storyPayload) => {
-    const response = await fetch(`${API_URL}/stories`, {
+    const mappedPayload = {
+        titulo: storyPayload.title,
+        texto: storyPayload.text,
+        imagen: storyPayload.image,
+        categoria_nombre: storyPayload.category,
+        Usuario_idUsuario: storyPayload.userId,
+        tiempo_Publicacion: new Date().toISOString()
+    };
+    const response = await fetch(`${API_URL}/publicaciones`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(storyPayload)
+        body: JSON.stringify(mappedPayload)
     });
 
     if (!response.ok) {
         throw new Error('Hubo un error al publicar tu historia.');
     }
 
-    return await response.json();
+    const rawStory = await response.json();
+    return {
+        id: rawStory.idpublicaciones,
+        title: rawStory.titulo,
+        text: rawStory.texto,
+        image: rawStory.imagen,
+        time: rawStory.tiempo_Publicacion,
+        fecha: rawStory.tiempo_Publicacion,
+        userId: rawStory.Usuario_idUsuario,
+        category: storyPayload.category,
+        tag: storyPayload.category,
+        userName: storyPayload.userName,
+        userAvatar: storyPayload.userAvatar,
+        likes: 0,
+        comments: 0,
+        likedBy: []
+    };
 };
 
 export const updateStoryLikes = async (storyId, newLikes, likedBy) => {
-    const response = await fetch(`${API_URL}/stories/${storyId}`, {
-        method: 'PATCH',
+    // In the real backend, likes might be handled by a separate /likes endpoint or incremented.
+    // For now, we update the publicacion.
+    const response = await fetch(`${API_URL}/publicaciones/${storyId}`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ 
-            likes: newLikes,
-            likedBy: likedBy
+            likes: newLikes
+            // likedBy mapping might be needed if the backend supports it
         })
     });
 
@@ -66,7 +107,7 @@ export const updateStoryLikes = async (storyId, newLikes, likedBy) => {
 };
 
 export const deleteStory = async (storyId) => {
-    const response = await fetch(`${API_URL}/stories/${storyId}`, {
+    const response = await fetch(`${API_URL}/publicaciones/${storyId}`, {
         method: 'DELETE'
     });
 
@@ -100,8 +141,8 @@ export const addComment = async (commentPayload) => {
 };
 
 export const updateStoryCommentsCount = async (storyId, newCount) => {
-    const response = await fetch(`${API_URL}/stories/${storyId}`, {
-        method: 'PATCH',
+    const response = await fetch(`${API_URL}/publicaciones/${storyId}`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -115,19 +156,30 @@ export const updateStoryCommentsCount = async (storyId, newCount) => {
 
 export const getStoriesByUserId = async (userId) => {
     const [storiesRes, commentsRes] = await Promise.all([
-        fetch(`${API_URL}/stories?userId=${userId}`),
+        fetch(`${API_URL}/publicaciones?Usuario_idUsuario=${userId}`),
         fetch(`${API_URL}/comentarios`)
     ]);
     if (!storiesRes.ok) {
         throw new Error('Error al cargar las historias del usuario.');
     }
     
-    const stories = await storiesRes.json();
+    const storiesRaw = await storiesRes.json();
     let commentsData = [];
     if (commentsRes.ok) {
         commentsData = await commentsRes.json();
     }
     
+    const stories = storiesRaw.map(s => ({
+        id: s.idpublicaciones,
+        title: s.titulo,
+        text: s.texto,
+        image: s.imagen,
+        time: s.tiempo_Publicacion,
+        userId: s.Usuario_idUsuario,
+        likes: s.likes || 0,
+        comments: 0
+    }));
+
     stories.forEach(story => {
         story.comments = commentsData.filter(c => String(c.storyId) === String(story.id)).length;
     });
@@ -136,13 +188,15 @@ export const getStoriesByUserId = async (userId) => {
 };
 
 export const createReport = async (reportPayload) => {
-    const response = await fetch(`${API_URL}/reports`, {
+    const response = await fetch(`${API_URL}/reportes`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            ...reportPayload,
+            publicaciones_idpublicaciones: reportPayload.storyId,
+            Usuario_idUsuario: reportPayload.reporterId,
+            razones_Reporte_idrazones_Reporte: 1, // Default reason
             status: 'pending',
             fecha: new Date().toISOString()
         })
@@ -154,7 +208,7 @@ export const createReport = async (reportPayload) => {
 };
 
 export const getAllReports = async () => {
-    const response = await fetch(`${API_URL}/reports`);
+    const response = await fetch(`${API_URL}/reportes`);
     if (!response.ok) {
         throw new Error('Error al cargar los reportes.');
     }
@@ -162,7 +216,7 @@ export const getAllReports = async () => {
 };
 
 export const deleteReport = async (reportId) => {
-    const response = await fetch(`${API_URL}/reports/${reportId}`, {
+    const response = await fetch(`${API_URL}/reportes/${reportId}`, {
         method: 'DELETE'
     });
     if (!response.ok) {
@@ -172,7 +226,7 @@ export const deleteReport = async (reportId) => {
 };
 
 export const getStoryById = async (storyId) => {
-    const response = await fetch(`${API_URL}/stories/${storyId}`);
+    const response = await fetch(`${API_URL}/publicaciones/${storyId}`);
     if (!response.ok) {
         throw new Error('Error al cargar la historia.');
     }

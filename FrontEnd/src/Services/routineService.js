@@ -1,8 +1,9 @@
-const BASE_URL = "http://localhost:3001";
+import { API_BASE_URL } from './apiConfig';
+const BASE_URL = API_BASE_URL;
 
 export const getAllRoutines = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/routines`);
+    const response = await fetch(`${BASE_URL}/rutinas`);
     if (!response.ok) {
       throw new Error("Error fetching routines");
     }
@@ -16,7 +17,7 @@ export const getAllRoutines = async () => {
 export const updateRoutineStatus = async (routineId, newStatus) => {
   try {
     // First fetch the specific routine
-    const getResponse = await fetch(`${BASE_URL}/routines/${routineId}`);
+    const getResponse = await fetch(`${BASE_URL}/rutinas/${routineId}`);
     if (!getResponse.ok) {
       throw new Error("Error fetching routine");
     }
@@ -25,7 +26,7 @@ export const updateRoutineStatus = async (routineId, newStatus) => {
     // Update the status
     const updatedRoutine = { ...routine, status: newStatus };
 
-    const putResponse = await fetch(`${BASE_URL}/routines/${routineId}`, {
+    const putResponse = await fetch(`${BASE_URL}/rutinas/${routineId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +47,7 @@ export const updateRoutineStatus = async (routineId, newStatus) => {
 
 export const deleteRoutine = async (routineId) => {
   try {
-    const response = await fetch(`${BASE_URL}/routines/${routineId}`, {
+    const response = await fetch(`${BASE_URL}/rutinas/${routineId}`, {
       method: "DELETE",
     });
     if (!response.ok) {

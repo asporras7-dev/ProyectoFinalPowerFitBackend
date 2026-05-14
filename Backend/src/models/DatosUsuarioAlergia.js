@@ -2,12 +2,12 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const DatosUsuarioAlergia = sequelize.define('DatosUsuarioAlergia', {
-    datos_Usuario_iddatos_Usuario: {
+    user_data_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false
     },
-    Alergias_idAlergias: {
+    alergia_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false

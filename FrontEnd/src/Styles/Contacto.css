@@ -2,7 +2,7 @@
 
 /* ===== BASE ===== */
 .contacto-container {
-    padding: var(--nav-height) 2rem 6rem;
+    padding: 2rem 2rem 6rem;
     max-width: 1280px;
     margin: 0 auto;
     min-height: 100vh;

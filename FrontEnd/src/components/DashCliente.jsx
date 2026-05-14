@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState, useContext } from 'react';
 import {
   LayoutDashboard,
@@ -22,12 +23,18 @@ import {
   Menu,
   TrendingUp,
   ClipboardList,
-  Play
+  Play,
+  Users,
+  Heart,
+  MessageCircle,
+  Share2,
+  Camera
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { obtenerTodosEjercicios } from '../Services/exerciseService';
-import { updateUser } from '../Services/userService';
+import { updateUser, getAllUsers } from '../Services/userService';
 import { UserContext } from '../context/UserContext';
+import { API_BASE_URL } from '../Services/apiConfig';
 import Swal from 'sweetalert2';
 import SubirImagen from './SubirImagen';
 import '../styles/DashboardCliente.css';
@@ -47,10 +54,29 @@ const DashCliente = () => {
     feedbackEjercicio: '',
     semanasEnProgreso: user?.semanasEnProgreso || 1
   });
+  const [allUsers, setAllUsers] = useState([]);
+  const [stories, setStories] = useState([]);
 
   const handleActiveTab = (tab) => {
     setActiveTab(tab);
     setIsMobileMenuOpen(false);
+  };
+
+  const loadData = async () => {
+    try {
+      const [exData, usersData, storiesData] = await Promise.all([
+        obtenerTodosEjercicios(),
+        getAllUsers(),
+        fetch(`${API_BASE_URL}/publicaciones`).then(res => res.json())
+      ]);
+      setExercises(exData);
+      setAllUsers(usersData);
+      setStories(storiesData);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error loading data:", error);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -60,20 +86,9 @@ const DashCliente = () => {
         ...prev,
         semanasEnProgreso: user.semanasEnProgreso || 1
       }));
-      loadExercises();
+      loadData();
     }
   }, [user]);
-
-  const loadExercises = async () => {
-    try {
-      const data = await obtenerTodosEjercicios();
-      setExercises(data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error loading exercises:", error);
-      setLoading(false);
-    }
-  };
 
   const handleLogout = () => {
     logout();
@@ -81,9 +96,11 @@ const DashCliente = () => {
   };
 
   const calculateIMC = () => {
-    if (!user?.pesoActual || !user?.altura) return 0;
-    const peso = parseFloat(user.pesoActual);
-    const altura = parseFloat(user.altura) / 100;
+    const peso = parseFloat(user?.pesoActual || user?.peso);
+    const altura = parseFloat(user?.altura) / 100;
+    
+    if (!peso || !altura || isNaN(peso) || isNaN(altura)) return "0.0";
+    
     return (peso / (altura * altura)).toFixed(1);
   };
 
@@ -114,7 +131,7 @@ const DashCliente = () => {
         color: '#fff',
         confirmButtonColor: '#8b0000'
       });
-    } catch (error) {
+    } catch {
       Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -189,7 +206,7 @@ const DashCliente = () => {
         color: '#fff',
         confirmButtonColor: '#8b0000'
       });
-    } catch (error) {
+    } catch {
       Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -198,6 +215,64 @@ const DashCliente = () => {
         color: '#fff',
         confirmButtonColor: '#8b0000'
       });
+    }
+  };
+
+  const handleFollow = async (targetUser) => {
+    if (!user || !targetUser) return;
+
+    const isFollowing = user.following?.includes(targetUser.id);
+    let newFollowing;
+    let newFollowers;
+
+    if (isFollowing) {
+      newFollowing = user.following.filter(id => id !== targetUser.id);
+      newFollowers = (targetUser.followers || []).filter(id => id !== user.id);
+    } else {
+      newFollowing = [...(user.following || []), targetUser.id];
+      newFollowers = [...(targetUser.followers || []), user.id];
+    }
+
+    try {
+      // Update current user
+      const updatedUser = await updateUser(user.id, { ...user, following: newFollowing });
+      // Update target user
+      await updateUser(targetUser.id, { ...targetUser, followers: newFollowers });
+      
+      refreshUser(updatedUser);
+      loadData(); // Refresh list
+
+      Swal.fire({
+        icon: 'success',
+        title: isFollowing ? 'Dejaste de seguir' : '¡Ahora sigues a esta persona!',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        background: '#171212',
+        color: '#fff'
+      });
+    } catch (error) {
+      console.error("Error following:", error);
+    }
+  };
+
+  const handleCoverUpload = async (imageUrl) => {
+    try {
+      const updated = await updateUser(user.id, { ...user, cover: imageUrl });
+      refreshUser(updated);
+      Swal.fire({
+        icon: 'success',
+        title: '¡Fondo actualizado!',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        background: '#171212',
+        color: '#fff'
+      });
+    } catch (error) {
+      console.error("Error updating cover:", error);
     }
   };
 
@@ -250,6 +325,13 @@ const DashCliente = () => {
             <Settings size={20} />
             Ajustes
           </button>
+          <button
+            className={`menu-item ${activeTab === 'community' ? 'active' : ''}`}
+            onClick={() => handleActiveTab('community')}
+          >
+            <Users size={20} />
+            Comunidad & Perfil
+          </button>
           <hr style={{ margin: '1rem 0', border: 'none', borderTop: '1px solid rgba(255,255,255,0.1)' }} />
           <Link to="/" style={{ textDecoration: 'none' }}>
             <button className="menu-item">
@@ -286,7 +368,8 @@ const DashCliente = () => {
             <div className="header-title">
               <h1>{activeTab === 'dashboard' ? 'Panel de Rendimiento' :
                 activeTab === 'training' ? 'Biblioteca de Entrenamiento' :
-                  activeTab === 'nutrition' ? 'Recomendaciones Nutricionales' : 'Ajustes de Cuenta'}</h1>
+                  activeTab === 'nutrition' ? 'Recomendaciones Nutricionales' : 
+                  activeTab === 'community' ? 'Mi Perfil de Comunidad' : 'Ajustes de Cuenta'}</h1>
               <p>¡Hola {user.nombre}! Estas {activeTab === 'dashboard' ? 'son tus estadísticas del día.' : 'es tu sección personalizada.'}</p>
             </div>
           </div>
@@ -301,7 +384,7 @@ const DashCliente = () => {
               <div className="hero-card maroon">
                 <div className="card-content">
                   <h3>Progreso de Peso</h3>
-                  <p>Meta: {user.pesoMeta}kg | Actual: {user.pesoActual}kg</p>
+                  <p>Meta: {user.pesoMeta || '--'}kg | Actual: {user.pesoActual || user.peso || '--'}kg</p>
                 </div>
                 <div className="card-icon-box">
                   <Target size={24} />
@@ -325,7 +408,7 @@ const DashCliente = () => {
                   <span>Peso Actual</span>
                   <Scale size={18} />
                 </div>
-                <div className="stat-value">{user.pesoActual} kg</div>
+                <div className="stat-value">{user.pesoActual || user.peso || '--'} kg</div>
                 <div className="stat-change positive">Iniciaste con {user.peso} kg</div>
               </div>
               <div className="stat-card">
@@ -351,7 +434,7 @@ const DashCliente = () => {
                   <span>Altura Registrada</span>
                   <Activity size={18} />
                 </div>
-                <div className="stat-value">{user.altura} cm</div>
+                <div className="stat-value">{user.altura || '--'} cm</div>
                 <div className="progress-bar-mini">
                   <div className="progress-fill" style={{ width: '100%' }}></div>
                 </div>
@@ -553,6 +636,120 @@ const DashCliente = () => {
           </section>
         )}
 
+        {activeTab === 'community' && (
+          <section className="community-view animate-fade-in">
+            <div className="community-profile-header shadow-premium">
+              <div 
+                className="profile-cover" 
+                style={{ 
+                  backgroundImage: user.cover ? `url(${user.cover})` : 'none',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  position: 'relative'
+                }}
+              >
+                <div className="cover-upload-trigger">
+                  <SubirImagen onImageUpload={handleCoverUpload}>
+                    <button className="btn-edit-cover" title="Cambiar portada">
+                      <Camera size={18} /> Cambiar portada
+                    </button>
+                  </SubirImagen>
+                </div>
+              </div>
+              <div className="profile-header-content">
+                <div className="profile-main-info">
+                  <div className="community-avatar-wrapper">
+                    <img src={user.avatar || `https://i.pravatar.cc/150?u=${user.id}`} alt="Me" className="community-avatar-large" />
+                    <SubirImagen onImageUpload={handleCloudinaryUpload}>
+                      <button className="avatar-upload-icon" title="Cambiar foto de perfil">
+                        <Camera size={16} />
+                      </button>
+                    </SubirImagen>
+                  </div>
+                  <div className="profile-names">
+                    <h2>{user.nombre}</h2>
+                    <p>Atleta en PowerFit</p>
+                  </div>
+                </div>
+                <div className="profile-social-stats">
+                  <div className="social-stat">
+                    <strong>{stories.filter(s => s.userId === user.id).length}</strong>
+                    <span>Publicaciones</span>
+                  </div>
+                  <div className="social-stat">
+                    <strong>{user.followers?.length || 0}</strong>
+                    <span>Seguidores</span>
+                  </div>
+                  <div className="social-stat">
+                    <strong>{user.following?.length || 0}</strong>
+                    <span>Siguiendo</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="community-grid">
+              <div className="community-posts-section">
+                <h3>Mis Publicaciones</h3>
+                <div className="community-posts-list">
+                  {stories.filter(s => s.userId === user.id).length > 0 ? (
+                    stories.filter(s => s.userId === user.id).map(story => (
+                      <div key={story.id} className="community-post-card">
+                        <div className="post-card-header">
+                          <img src={user.avatar} alt="" />
+                          <div>
+                            <h4>{user.nombre}</h4>
+                            <span>{story.time}</span>
+                          </div>
+                        </div>
+                        <div className="post-card-body">
+                          <h5>{story.title}</h5>
+                          <p>{story.text}</p>
+                          {story.image && <img src={story.image} alt="post" className="post-image" />}
+                        </div>
+                        <div className="post-card-footer">
+                          <button><Heart size={18} /> {story.likes || 0}</button>
+                          <button><MessageCircle size={18} /> {story.comments || 0}</button>
+                          <button><Share2 size={18} /></button>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="empty-posts">
+                      <p>Aún no has compartido ninguna historia con la comunidad.</p>
+                      <Link to="/comunidad" className="btn-primary-small">Ir al Feed Global</Link>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="community-discover-section">
+                <h3>Descubrir Atletas</h3>
+                <div className="discover-list">
+                  {allUsers
+                    .filter(u => u.id !== user.id && u.rol !== 'admin')
+                    .slice(0, 5)
+                    .map(u => (
+                      <div key={u.id} className="discover-user-card">
+                        <img src={u.avatar || `https://i.pravatar.cc/150?u=${u.id}`} alt={u.nombre} />
+                        <div className="discover-info">
+                          <h4>{u.nombre}</h4>
+                          <span>Atleta Pro</span>
+                        </div>
+                        <button 
+                          className={`btn-follow ${user.following?.includes(u.id) ? 'following' : ''}`}
+                          onClick={() => handleFollow(u)}
+                        >
+                          {user.following?.includes(u.id) ? 'Siguiendo' : 'Seguir'}
+                        </button>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+        
         {activeTab === 'settings' && (
           <section className="settings-view animate-fade-in">
             <div className="settings-card shadow-premium">

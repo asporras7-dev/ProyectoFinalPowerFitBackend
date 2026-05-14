@@ -2,7 +2,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Dumbbell, User, Flame, LogOut, Menu, X } from 'lucide-react';
 import { useState, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
-import '../styles/Navbar.css';
+import '../Styles/Navbar.css';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -38,6 +38,7 @@ const Navbar = () => {
 
                 <div className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
                     <Link to="/ejercicios" className="nav-link" onClick={closeMenu}>Ejercicios</Link>
+                    <Link to="/dietas" className="nav-link" onClick={closeMenu}>Dietas</Link>
                     {user && <Link to="/chatbot" className="nav-link" onClick={closeMenu}>Chat IA</Link>}
                     <Link to="/comunidad" className="nav-link" onClick={closeMenu}>Comunidad</Link>
                     <Link to="/contacto" className="nav-link" onClick={closeMenu}>Sobre Nosotros</Link>

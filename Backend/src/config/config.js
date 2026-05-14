@@ -1,19 +1,21 @@
+require('dotenv').config({ path: require('path').resolve(__dirname, '../../.env') });
+
 module.exports = {
     development: {
-        username: "root",
-        password: "root",
-        database: "powerfit",
-        host: "localhost",
-        dialect: "mysql"
+        username: process.env.DB_USER || "root",
+        password: process.env.DB_PASSWORD || "",
+        database: process.env.DB_NAME || "powerfit",
+        host: process.env.DB_HOST || "localhost",
+        dialect: process.env.DB_DIALECT || "mysql"
     },
     db:{
-        name: "powerfit", //nombre de la base de datos
-        user: "root", //nombre de usuario de la base de datos
-        password: "root", //contraseña de la base de datos
-        host: "localhost",//host de la base de datos
-        dialect: "mysql",//dialecto de la base de datos
+        name: process.env.DB_NAME || "powerfit",
+        user: process.env.DB_USER || "root",
+        password: process.env.DB_PASSWORD || "",
+        host: process.env.DB_HOST || "localhost",
+        dialect: process.env.DB_DIALECT || "mysql",
     },
     server: {
-        port:3000
+        port: process.env.PORT || 3000
     }
 }
