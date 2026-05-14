@@ -39,7 +39,14 @@
       "avatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774365274/admk4azg1ovszeyfysoe.jpg",
       "semanasEnProgreso": 1,
       "ultimoFeedbackDieta": "muy bien ",
-      "ultimoFeedbackEjercicio": "no mucho"
+      "ultimoFeedbackEjercicio": "no mucho",
+      "ejerciciosElegidos": [
+        "e1",
+        "e2",
+        "e3",
+        "e8",
+        "e9"
+      ]
     },
     {
       "id": "eb3d",
@@ -87,7 +94,11 @@
       "avatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774535316/cvwwxdbvnbxtr6sho1ky.jpg",
       "semanasEnProgreso": 2,
       "ultimoFeedbackDieta": "Genial",
-      "ultimoFeedbackEjercicio": "Excelente"
+      "ultimoFeedbackEjercicio": "Excelente",
+      "ejerciciosElegidos": [
+        "e1",
+        "e3"
+      ]
     },
     {
       "id": "ebaa",
@@ -106,6 +117,27 @@
       "plazoSemanas": 8,
       "pesoActual": "120",
       "deficitEstimado": 450
+    },
+    {
+      "id": "d709",
+      "email": "pepe@pepe",
+      "password": "pepe",
+      "nombre": "Pepe",
+      "edad": "20",
+      "rol": "client",
+      "edadFisica": "20",
+      "sexo": "m",
+      "altura": "190",
+      "peso": "180",
+      "lugarEntrenamiento": "home",
+      "alergias": "",
+      "pesoMeta": 70,
+      "plazoSemanas": 8,
+      "pesoActual": "180",
+      "deficitEstimado": 450,
+      "ejerciciosElegidos": [
+        "e1"
+      ]
     }
   ],
   "contactos": [
@@ -153,6 +185,15 @@
       "mensaje": "adasdasdadada",
       "pais": "j",
       "fecha": "2026-03-27T20:21:21.555Z"
+    },
+    {
+      "id": "a9ec",
+      "nombre": "Test User",
+      "contacto": "12345678",
+      "email": "test@example.com",
+      "mensaje": "This is a test message to verify usability.",
+      "pais": "Costa Rica",
+      "fecha": "2026-05-14T16:37:11.467Z"
     }
   ],
   "stories": [
@@ -172,7 +213,7 @@
       "likedBy": [
         "c695"
       ],
-      "comments": 29
+      "comments": 3
     },
     {
       "id": "s2",
@@ -187,7 +228,7 @@
       "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80",
       "likes": 1,
       "likedBy": [
-        "c695"
+        "b508"
       ],
       "comments": 0
     },
@@ -201,7 +242,7 @@
       "title": "Cómo arreglé mi relación con la comida",
       "text": "Los consejos de expertos me ayudaron a darme cuenta de que la restricción no es la solución. Aprender sobre macros y balance fue un cambio radical por mi salud mental y física.",
       "category": "Consejos de Expertos",
-      "likes": 211,
+      "likes": 0,
       "likedBy": [],
       "comments": 45
     },
@@ -216,7 +257,7 @@
       "text": "Aumento de masa muscular en otro nivel 🗣️",
       "category": "Ganancia de Músculo",
       "image": null,
-      "likes": 2,
+      "likes": 1,
       "likedBy": [
         "c695"
       ],
@@ -233,9 +274,25 @@
       "text": "sdfssdf",
       "category": "Pérdida de Peso",
       "image": null,
-      "likes": 5,
+      "likes": 0,
       "likedBy": [],
       "comments": 1
+    },
+    {
+      "id": "08a2",
+      "userId": "d709",
+      "userName": "Pepe",
+      "userAvatar": "https://i.pravatar.cc/150?u=d709",
+      "time": "Justo ahora",
+      "fecha": "2026-03-29T23:01:20.633Z",
+      "tag": "Pérdida de Peso",
+      "title": "JAJAJAJAJA",
+      "text": "Perdí peso bro",
+      "category": "Pérdida de Peso",
+      "image": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774825277/q2pir0zdiadssokev030.jpg",
+      "likes": 0,
+      "comments": 0,
+      "likedBy": []
     }
   ],
   "trendingTopics": [
@@ -875,13 +932,79 @@
       "fecha": "2026-03-26T20:57:46.058Z"
     },
     {
-      "id": "d56c",
+      "id": "c2b6",
       "storyId": "4dca",
-      "userId": "eb3d",
-      "userName": "admin",
-      "userAvatar": "https://i.pravatar.cc/150?u=eb3d",
-      "text": "adios",
-      "fecha": "2026-03-27T19:21:37.503Z"
+      "userId": "b508",
+      "userName": "Ranses Alvir",
+      "userAvatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774535316/cvwwxdbvnbxtr6sho1ky.jpg",
+      "text": "Hola",
+      "fecha": "2026-03-28T02:43:41.825Z"
+    },
+    {
+      "id": "04d3",
+      "storyId": "s1",
+      "userId": "c695",
+      "userName": "Ranses Alvir",
+      "userAvatar": "https://res.cloudinary.com/dg5pkjvvr/image/upload/v1774390526/rldqwumojedsbdfoojao.jpg",
+      "text": "Hola",
+      "fecha": "2026-03-29T22:32:41.160Z"
+    }
+  ],
+  "reports": [
+    {
+      "id": "e68f",
+      "storyId": "9d31",
+      "reporterId": "b508",
+      "reporterName": "Ranses Alvir",
+      "reason": "Acoso o bullying",
+      "subReason": "Amenazas",
+      "otherText": "",
+      "status": "pending",
+      "fecha": "2026-03-28T03:04:12.980Z"
+    },
+    {
+      "id": "4d42",
+      "storyId": "9d31",
+      "reporterId": "b508",
+      "reporterName": "Ranses Alvir",
+      "reason": "Spam o publicidad no deseada",
+      "subReason": "Bots o cuentas falsas",
+      "otherText": "",
+      "status": "pending",
+      "fecha": "2026-03-28T03:04:32.192Z"
+    },
+    {
+      "id": "4eb9",
+      "storyId": "9d31",
+      "reporterId": "b508",
+      "reporterName": "Ranses Alvir",
+      "reason": "Discurso de odio",
+      "subReason": "Xenofobia",
+      "otherText": "",
+      "status": "pending",
+      "fecha": "2026-03-28T03:05:59.257Z"
+    },
+    {
+      "id": "8627",
+      "storyId": "4dca",
+      "reporterId": "c695",
+      "reporterName": "Ranses Alvir",
+      "reason": "Contenido inapropiado",
+      "subReason": "Desnudos o contenido sexual",
+      "otherText": "",
+      "status": "pending",
+      "fecha": "2026-03-28T03:06:33.446Z"
+    },
+    {
+      "id": "19fb",
+      "storyId": "9d31",
+      "reporterId": "b508",
+      "reporterName": "Ranses Alvir",
+      "reason": "Discurso de odio",
+      "subReason": "Xenofobia",
+      "otherText": "",
+      "status": "pending",
+      "fecha": "2026-03-28T03:08:03.718Z"
     }
   ]
 }

@@ -1,0 +1,81 @@
+const Ejercicio = require('../models/Ejercicio');
+
+const EjercicioController = {
+    getAll: async (req, res) => {
+        try {
+            const ejercicios = await Ejercicio.findAll();
+
+            if (!ejercicios || ejercicios.length === 0) {
+                return res.status(404).json({ message: "No se encontraron ejercicios" });
+            }
+            res.status(200).json(ejercicios);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    getById: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const ejercicio = await Ejercicio.findByPk(id);
+
+            if (!ejercicio) {
+                return res.status(404).json({ message: 'Ejercicio no encontrado' });
+            }
+
+            res.status(200).json(ejercicio);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    create: async (req, res) => {
+        try {
+            const { nombre, nivel, musculo, video, repeticiones, series } = req.body;
+
+            if (!nombre) {
+                return res.status(400).json({ error: 'El nombre es requerido' });
+            }
+
+            const nuevo = await Ejercicio.create({ nombre, nivel, musculo, video, repeticiones, series });
+            res.status(201).json(nuevo);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    update: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { nombre, nivel, musculo, video, repeticiones, series } = req.body;
+            const ejercicio = await Ejercicio.findByPk(id);
+
+            if (!ejercicio) {
+                return res.status(404).json({ message: 'Ejercicio no encontrado' });
+            }
+
+            if (!nombre) {
+                return res.status(400).json({ error: 'El nombre es requerido' });
+            }
+
+            await ejercicio.update({ nombre, nivel, musculo, video, repeticiones, series });
+            res.status(200).json(ejercicio);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    delete: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const ejercicio = await Ejercicio.findByPk(id);
+
+            if (!ejercicio) {
+                return res.status(404).json({ message: 'Ejercicio no encontrado' });
+            }
+
+            await ejercicio.destroy();
+            res.status(200).json({ message: 'Ejercicio eliminado correctamente' });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+};
+
+module.exports = EjercicioController;

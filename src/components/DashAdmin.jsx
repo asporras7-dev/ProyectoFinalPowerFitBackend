@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, Users, Activity, Home, Dumbbell, Mail, Menu } from 'lucide-react';
+import { LayoutDashboard, Users, Activity, Home, Dumbbell, Mail, Menu, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import DashboardAdministrador from './DashboardAdministrador';
 import AdminUsers from './AdminUsers';
 import AdminRoutines from './AdminRoutines';
 import AdminExercises from './AdminExercises';
-import { crearEjercicio } from '../Services/exerciseService';
+import { obtenerTodosEjercicios } from '../Services/exerciseService';
 import { Plus, X, Image as ImageIcon } from 'lucide-react';
 import Swal from 'sweetalert2';
 import AdminMessages from './AdminMessages';
-import '../Styles/dashboard.css';
+import AdminReports from './AdminReports';
+import '../styles/dashboard.css';
 
 const DashAdmin = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -74,12 +75,13 @@ const DashAdmin = () => {
         return <DashboardAdministrador changeTab={setActiveTab} openAddModal={openAddModal} />;
       case 'users':
         return <AdminUsers />;
-      case 'routines':
-        return <AdminRoutines />;
+
       case 'exercises':
         return <AdminExercises openAddModal={openAddModal} />;
       case 'messages':
         return <AdminMessages />;
+      case 'reports':
+        return <AdminReports />;
       default:
         return <DashboardAdministrador changeTab={setActiveTab} openAddModal={openAddModal} />;
     }
@@ -117,19 +119,20 @@ const DashAdmin = () => {
             <Users size={20} />
             Usuarios
           </button>
-          <button
-            className={`sidebar-btn ${activeTab === 'routines' ? 'active' : ''}`}
-            onClick={() => handleTabChange('routines')}
-          >
-            <Activity size={20} />
-            Rutinas
-          </button>
+
           <button
             className={`sidebar-btn ${activeTab === 'messages' ? 'active' : ''}`}
             onClick={() => handleTabChange('messages')}
           >
             <Mail size={20} />
             Mensajes
+          </button>
+          <button
+            className={`sidebar-btn ${activeTab === 'reports' ? 'active' : ''}`}
+            onClick={() => handleTabChange('reports')}
+          >
+            <AlertTriangle size={20} />
+            Reportes
           </button>
           <Link to="/chatbot" style={{ textDecoration: 'none' }}>
             <button className="sidebar-btn">

@@ -10,7 +10,7 @@ const Navbar = () => {
     const { user, logout } = useContext(UserContext);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const isDashboard = location.pathname.includes('/dashboard') || location.pathname.includes('/admin');
+    const isDashboard = location.pathname.includes('/dashboard') || location.pathname.includes('/admin') || location.pathname.includes('/chatbot');
 
     const handleLogout = () => {
         logout();
@@ -38,6 +38,7 @@ const Navbar = () => {
 
                 <div className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
                     <Link to="/ejercicios" className="nav-link" onClick={closeMenu}>Ejercicios</Link>
+                    <Link to="/dietas" className="nav-link" onClick={closeMenu}>Dietas</Link>
                     {user && <Link to="/chatbot" className="nav-link" onClick={closeMenu}>Chat IA</Link>}
                     <Link to="/comunidad" className="nav-link" onClick={closeMenu}>Comunidad</Link>
                     <Link to="/contacto" className="nav-link" onClick={closeMenu}>Sobre Nosotros</Link>

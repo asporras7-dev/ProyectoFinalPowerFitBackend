@@ -1,7 +1,7 @@
 .chatbot-wrapper {
   position: relative;
-  min-height: 100vh;
-  padding-top: var(--nav-height, 100px);
+  margin-top: var(--nav-height); /* Subir por encima del fondo y quedar justo debajo del navbar */
+  height: calc(100vh - var(--nav-height));
   background-color: #171112;
   color: #fff;
   display: flex;
@@ -21,86 +21,13 @@
   box-sizing: border-box;
 }
 
-/* Header */
-.chatbot-header {
-  height: 64px;
+/* Main Layout */
+.chatbot-body {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-  border-bottom: 1px solid #2d1b1c;
-  background-color: #1a1213;
-  flex-shrink: 0;
-}
-
-.chatbot-logo-area {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 1.25rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  color: white;
-}
-
-.chatbot-logo-icon {
-  background-color: #fcebeb;
-  color: #832021;
-  border-radius: 8px;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.system-status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: #18221b;
-  color: #aebdb5;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  background-color: #3bb267;
-  border-radius: 50%;
-}
-
-.header-icon-btn {
-  background: transparent;
-  border: none;
-  color: #a0a0a0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.user-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: #ffcfba;
+  flex: 1;
+  height: 100%; /* Ahora llena el wrapper respectivo */
   overflow: hidden;
 }
-
-/* Main Layout */
-/* Consolidated with .chatbot-body above */
 
 /* Sidebar Left */
 .chatbot-sidebar-left {
@@ -546,6 +473,38 @@
 /* Sidebar toggle overlay & mobile nav */
 .sidebar-overlay {
   display: none;
+  position: fixed;
+  inset: 0;
+  top: var(--nav-height-mobile, 60px);
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.sidebar-toggle-input:checked ~ .sidebar-overlay-label .sidebar-overlay {
+  display: block;
+}
+
+.mobile-chat-header {
+  display: none;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #1a1213;
+  border-bottom: 1px solid #2d1b1c;
+  gap: 12px;
+}
+
+.mobile-menu-toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+.mobile-bot-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--primary);
 }
 .mobile-menu-btn {
   display: none;
@@ -588,21 +547,27 @@
 }
 
 @media (max-width: 768px) {
+  .chatbot-wrapper {
+    margin-top: var(--nav-height-mobile);
+    height: calc(100vh - var(--nav-height-mobile));
+  }
+
   .chatbot-sidebar-left {
     position: fixed;
-    top: 0;
+    top: var(--nav-height-mobile);
     left: 0;
-    height: 100vh;
-    z-index: 10001;
+    height: calc(100vh - var(--nav-height-mobile));
+    z-index: 1001; /* Just above navbar background but below its potential dropdowns if needed, or just high enough */
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     background-color: #1a1213;
     width: 280px;
     max-width: 85vw;
     box-shadow: 4px 0 24px rgba(0,0,0,0.5);
+    padding-top: 60px; /* Added padding to avoid clashing with menu icons */
   }
 
-  .chatbot-sidebar-left.mobile-open {
+  .sidebar-toggle-input:checked ~ .chatbot-body .chatbot-sidebar-left {
     transform: translateX(0);
   }
 
@@ -610,29 +575,18 @@
     display: flex;
   }
 
-  .sidebar-overlay {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 10000;
-    backdrop-filter: blur(2px);
-  }
-
-  .mobile-menu-btn {
+  .mobile-chat-header {
     display: flex;
   }
 
-  .chatbot-header {
-    padding: 0 16px;
-  }
-
-  .logo-text {
-    font-size: 1rem;
-  }
-
-  .header-right .system-status {
-    display: none;
+  .sidebar-overlay {
+    /* display is controlled by checkbox state at top level */
+    position: fixed;
+    inset: 0;
+    top: var(--nav-height-mobile, 60px);
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    backdrop-filter: blur(2px);
   }
 
   .chat-messages {
