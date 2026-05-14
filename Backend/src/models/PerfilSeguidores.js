@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const PerfilSeguidores = sequelize.define('PerfilSeguidores', {
-    Perfil_idPerfil: {
+    perfil_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         references: {
@@ -10,7 +10,7 @@ const PerfilSeguidores = sequelize.define('PerfilSeguidores', {
             key: 'idPerfil'
         }
     },
-    Perfil_idPerfil1: {
+    seguidor_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         references: {
