@@ -6,7 +6,7 @@ import {
   Dumbbell, Apple, Clock, CheckCircle, Activity, Utensils,
   BarChart2, Paperclip, Send, Flame, Footprints, Heart, Moon, Menu, X
 } from 'lucide-react';
-import '../styles/Chatbot.css';
+import '../Styles/Chatbot.css';
 
 const ChatComponent = () => {
   const [inputText, setInputText] = useState('');

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Users, Activity, CheckCircle, Clock, Plus } from 'lucide-react';
-import { getAllUsers } from '../services/userService';
+import { getAllUsers } from '../Services/userService';
 import { getAllRoutines } from '../Services/routineService';
 import { obtenerTodosEjercicios, obtenerEjerciciosPorCategoria, crearEjercicio, eliminarEjercicio } from '../Services/exerciseService';
 
@@ -48,9 +48,15 @@ const DashboardAdministrador = ({ changeTab, openAddModal }) => {
 
     return (
         <div className="dashboard-overview animate-fade-in">
-            <div className="dashboard-header">
-                <h1>Overview</h1>
-                <p>Resumen general de la plataforma</p>
+            <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                    <h1>Overview</h1>
+                    <p>Resumen general de la plataforma</p>
+                </div>
+                <button className="btn-primary" onClick={openAddModal}>
+                    <Plus size={20} />
+                    Agregar Ejercicio
+                </button>
             </div>
 
             <div className="overview-grid">

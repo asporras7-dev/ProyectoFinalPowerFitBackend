@@ -2,7 +2,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Dumbbell, User, Flame, LogOut, Menu, X } from 'lucide-react';
 import { useState, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
-import '../styles/Navbar.css';
+import '../Styles/Navbar.css';
 
 const Navbar = () => {
     const navigate = useNavigate();

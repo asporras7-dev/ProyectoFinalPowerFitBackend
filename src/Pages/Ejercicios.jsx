@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import {
     Search,
     Filter,
@@ -10,26 +10,33 @@ import {
     Trash2,
     X,
     Image as ImageIcon,
-    Edit2
+    Edit2,
+    ChevronLeft,
+    ChevronRight
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 import { obtenerTodosEjercicios as getAllExercises, crearEjercicio as createExercise, eliminarEjercicio as deleteExercise, actualizarEjercicio as updateExercise } from '../Services/exerciseService';
-import '../styles/Ejercicios.css';
+import '../Styles/Ejercicios.css';
 
 const Ejercicios = () => {
     const navigate = useNavigate();
+    const { user } = useContext(UserContext);  // ← from global context, always in sync
     const [exercises, setExercises] = useState([]);
     const [filteredExercises, setFilteredExercises] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [activeCategory, setActiveCategory] = useState('Todos');
-    const [user, setUser] = useState(null);
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [techniqueExercise, setTechniqueExercise] = useState(null);
     const [favorites, setFavorites] = useState([]);
     const [exerciseToRemoveFav, setExerciseToRemoveFav] = useState(null);
     const [exerciseToEdit, setExerciseToEdit] = useState(null);
+
+    // Pagination state
+    const ITEMS_PER_PAGE = 8;
+    const [currentPage, setCurrentPage] = useState(1);
 
     // Form state
     const [newExercise, setNewExercise] = useState({
@@ -45,10 +52,6 @@ const Ejercicios = () => {
     const categories = ['Todos', 'Favoritos', 'Pecho', 'Espalda', 'Piernas', 'Hombros', 'Brazos', 'Core', 'Glúteos'];
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
         loadExercises();
     }, []);
 
@@ -82,6 +85,7 @@ const Ejercicios = () => {
         }
 
         setFilteredExercises(result);
+        setCurrentPage(1); // Reset to page 1 when filters change
     }, [searchTerm, activeCategory, exercises, favorites]);
 
     const toggleFavorite = (id) => {
@@ -153,6 +157,30 @@ const Ejercicios = () => {
 
     const isAdmin = user?.rol === 'admin';
 
+    // Pagination calculations
+    const totalPages = Math.ceil(filteredExercises.length / ITEMS_PER_PAGE);
+    const paginatedExercises = filteredExercises.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+    );
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const getPageNumbers = () => {
+        const pages = [];
+        const maxVisible = 8;
+        let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+        let end = Math.min(totalPages, start + maxVisible - 1);
+        if (end - start + 1 < maxVisible) {
+            start = Math.max(1, end - maxVisible + 1);
+        }
+        for (let i = start; i <= end; i++) pages.push(i);
+        return pages;
+    };
+
     if (loading) {
         return (
             <div className="ejercicios-container">
@@ -214,11 +242,11 @@ const Ejercicios = () => {
             </section>
 
             <div className="exercises-grid">
-                {filteredExercises.map((exercise, index) => (
+                {paginatedExercises.map((exercise, index) => (
                     <div
                         key={exercise.id}
                         className="exercise-card animate-fade-up"
-                        style={{ animationDelay: `${0.1 + (index * 0.05)}s` }}
+                        style={{ animationDelay: `${0.05 + (index * 0.05)}s` }}
                     >
                         <div className="card-image-wrapper">
                             <img src={exercise.imagen} alt={exercise.nombre} />
@@ -261,6 +289,41 @@ const Ejercicios = () => {
             {filteredExercises.length === 0 && (
                 <div style={{ textAlign: 'center', padding: '50px', color: 'var(--text-dim)' }}>
                     <p>No se encontraron ejercicios con esos filtros.</p>
+                </div>
+            )}
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+                <div className="pagination-wrapper">
+                    <button
+                        className="pagination-btn pagination-nav"
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >
+                        <ChevronLeft size={18} />
+                        Anterior
+                    </button>
+
+                    <div className="pagination-pages">
+                        {getPageNumbers().map(page => (
+                            <button
+                                key={page}
+                                className={`pagination-btn pagination-page ${currentPage === page ? 'active' : ''}`}
+                                onClick={() => handlePageChange(page)}
+                            >
+                                {page}
+                            </button>
+                        ))}
+                    </div>
+
+                    <button
+                        className="pagination-btn pagination-nav"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                    >
+                        Siguiente
+                        <ChevronRight size={18} />
+                    </button>
                 </div>
             )}
 

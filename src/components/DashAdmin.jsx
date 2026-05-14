@@ -9,7 +9,7 @@ import { crearEjercicio } from '../Services/exerciseService';
 import { Plus, X, Image as ImageIcon } from 'lucide-react';
 import Swal from 'sweetalert2';
 import AdminMessages from './AdminMessages';
-import '../styles/dashboard.css';
+import '../Styles/dashboard.css';
 
 const DashAdmin = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -104,6 +104,13 @@ const DashAdmin = () => {
             Overview
           </button>
           <button
+            className={`sidebar-btn ${activeTab === 'exercises' ? 'active' : ''}`}
+            onClick={() => handleTabChange('exercises')}
+          >
+            <Dumbbell size={20} />
+            Ejercicios
+          </button>
+          <button
             className={`sidebar-btn ${activeTab === 'users' ? 'active' : ''}`}
             onClick={() => handleTabChange('users')}
           >
@@ -124,13 +131,12 @@ const DashAdmin = () => {
             <Mail size={20} />
             Mensajes
           </button>
-          <button
-            className={`sidebar-btn ${activeTab === 'exercises' ? 'active' : ''}`}
-            onClick={() => handleTabChange('exercises')}
-          >
-            <Dumbbell size={20} />
-            Ejercicios
-          </button>
+          <Link to="/chatbot" style={{ textDecoration: 'none' }}>
+            <button className="sidebar-btn">
+              <Activity size={20} />
+              Chat IA
+            </button>
+          </Link>
           <hr style={{ margin: '1rem 0', border: 'none', borderTop: '1px solid #e9edff' }} />
           <Link to="/" style={{ textDecoration: 'none' }}>
             <button className="sidebar-btn">

@@ -25,11 +25,11 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { obtenerTodosEjercicios } from '../Services/exerciseService';
-import { updateUser } from '../services/userService';
+import { updateUser } from '../Services/userService';
 import { UserContext } from '../context/UserContext';
 import Swal from 'sweetalert2';
 import SubirImagen from './SubirImagen';
-import '../styles/DashboardCliente.css';
+import '../Styles/DashboardCliente.css';
 import MotivationalQuote from './MotivationalQuote';
 
 const DashCliente = () => {
@@ -250,6 +250,12 @@ const DashCliente = () => {
             <Settings size={20} />
             Ajustes
           </button>
+          <Link to="/chatbot" style={{ textDecoration: 'none' }}>
+            <button className="menu-item">
+              <Activity size={20} />
+              Chat IA
+            </button>
+          </Link>
           <hr style={{ margin: '1rem 0', border: 'none', borderTop: '1px solid rgba(255,255,255,0.1)' }} />
           <Link to="/" style={{ textDecoration: 'none' }}>
             <button className="menu-item">

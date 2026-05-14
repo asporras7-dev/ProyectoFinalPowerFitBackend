@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-dotenv.config({ path: '../.env' });
+dotenv.config({ path: "./.env" });
 
 const app = express();
 app.use(cors());
@@ -17,7 +17,7 @@ app.post("/chat", async (req, res) => {
     const { message } = req.body;
 
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-2.5-flash",
+      model: "gemini-1.5-flash",
       systemInstruction: "Eres un asistente útil especializado en fitness, salud, y entrenamiento. Solo responde de forma amigable y concisa."
     });
 
