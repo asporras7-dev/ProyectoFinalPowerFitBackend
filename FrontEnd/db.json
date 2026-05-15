@@ -196,7 +196,7 @@
       "deficitEstimado": 450
     }
   ],
-  "contactos": [
+  "mensajes": [
     {
       "id": "5156",
       "nombre": "RANSES MATIAS",
@@ -431,7 +431,7 @@
       "avatar": "https://i.pravatar.cc/150?u=tyler"
     }
   ],
-  "routines": [],
+  "rutinas": [],
   "ejercicios": [
     {
       "id": "e1",
@@ -1050,7 +1050,7 @@
       "fecha": "2026-05-12T19:28:24.922Z"
     }
   ],
-  "reports": [
+  "reportes": [
     {
       "id": "e68f",
       "storyId": "9d31",
