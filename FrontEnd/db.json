@@ -194,6 +194,28 @@
       "plazoSemanas": 8,
       "pesoActual": "100",
       "deficitEstimado": 450
+    },
+    {
+      "id": "b8d8",
+      "email": "Rsalas00@gmail.com",
+      "password": "123456",
+      "nombre": "Ronny Salas ",
+      "edad": "18",
+      "rol": "client",
+      "edadFisica": "18",
+      "sexo": "m",
+      "altura": "180",
+      "peso": "69.9",
+      "lugarEntrenamiento": "gym",
+      "alergias": "ninguno",
+      "pesoMeta": 65,
+      "plazoSemanas": 4,
+      "pesoActual": 70,
+      "deficitEstimado": 450,
+      "followers": [],
+      "following": [],
+      "avatar": "",
+      "cover": ""
     }
   ],
   "mensajes": [

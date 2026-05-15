@@ -40,20 +40,25 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (email, password) => {
   try {
-    // Para json-server, simulamos el login buscando por email y password
-    const response = await fetch(`${BASE_URL}/usuarios?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
+    // Para json-server, los filtros son case-sensitive.
+    // Para evitar problemas, traemos los usuarios y filtramos en JS.
+    const response = await fetch(`${BASE_URL}/usuarios`);
 
     if (!response.ok) {
       throw new Error(`Error del servidor (${response.status}). Asegúrate de que el backend esté activo.`);
     }
 
-    const users = await response.json();
+    const allUsers = await response.json();
     
-    if (users.length === 0) {
+    // Buscamos ignorando mayúsculas/minúsculas en el email
+    const user = allUsers.find(u => 
+      u.email.toLowerCase() === email.toLowerCase() && 
+      u.password === password
+    );
+    
+    if (!user) {
       throw new Error("Credenciales inválidas. Revisa tu correo y contraseña.");
     }
-
-    const user = users[0];
     
     // Mapeo para mantener compatibilidad con el resto de la app
     return {
