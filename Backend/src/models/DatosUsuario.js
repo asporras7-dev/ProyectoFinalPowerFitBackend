@@ -2,36 +2,37 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const DatosUsuario = sequelize.define('DatosUsuario', {
-    iddatos_Usuario: {
+    id_datos_usuario: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     sexo: {
         type: DataTypes.STRING(45),
         allowNull: false
     },
     altura: {
-        type: DataTypes.DECIMAL(3, 2),
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false
     },
     peso: {
-        type: DataTypes.DECIMAL(3, 2),
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false
     },
-    lugarEntrenamiento: {
+    lugar_entrenamiento: {
         type: DataTypes.STRING(100),
         allowNull: false
     },
-    pesoMeta: {
-        type: DataTypes.DECIMAL(3, 2),
+    peso_meta: {
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false
     },
-    plazoSemanas: {
+    plazo_semanas: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    decifitEstimado: {
+    deficit_estimado: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
@@ -39,21 +40,24 @@ const DatosUsuario = sequelize.define('DatosUsuario', {
         type: DataTypes.TEXT,
         allowNull: false
     },
-    Usuario_idUsuario: {
+    id_usuario: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    semanas_En_Progreso: {
-        type: DataTypes.INTEGER
+    semanas_progreso: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
-    ultimo_Feedback_Dieta: {
-        type: DataTypes.STRING(150)
+    feedback_dieta: {
+        type: DataTypes.STRING(150),
+        allowNull: false
     },
-    ultimo_Feedback_Ejercicio: {
-        type: DataTypes.STRING(150)
+    feedback_ejercicio: {
+        type: DataTypes.STRING(150),
+        allowNull: false
     }
 }, {
-    tableName: 'datos_Usuario',
+    tableName: 'datos_usuario',
     timestamps: false
 });
 

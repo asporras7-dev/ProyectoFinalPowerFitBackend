@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const Contribuidor = sequelize.define('Contribuidor', {
-    idContribuidor: {
+    id_contribuidor: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -12,11 +12,11 @@ const Contribuidor = sequelize.define('Contribuidor', {
         type: DataTypes.STRING(45),
         allowNull: false
     },
-    Usuario_idUsuario: {
+    id_usuario: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    rol_Contribuidor_idrol_Contribuidor: {
+    id_rol_contribuidor: {
         type: DataTypes.INTEGER,
         allowNull: false
     }

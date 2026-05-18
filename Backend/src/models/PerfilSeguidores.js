@@ -2,28 +2,26 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const PerfilSeguidores = sequelize.define('PerfilSeguidores', {
-    perfil_id: {
+    id_perfil: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        field: 'Perfil_idPerfil',
-        references: {
-            model: 'Perfil',
-            key: 'idPerfil'
-        },
-        allowNull: false
-    },
-    seguidor_id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        field: 'Perfil_idPerfil1',
+        allowNull: false,
         references: {
             model: 'perfil',
-            key: 'idPerfil'
-        },
-        allowNull: false
+            key: 'id_perfil'
+        }
+    },
+    id_seguidor: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        references: {
+            model: 'perfil',
+            key: 'id_perfil'
+        }
     }
 }, {
-    tableName: 'Perfil_has_Perfil',
+    tableName: 'perfil_seguidor',
     timestamps: false
 });
 
