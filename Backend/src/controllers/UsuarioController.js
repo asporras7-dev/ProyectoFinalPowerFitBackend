@@ -223,7 +223,28 @@ const UsuarioController = {
                 return res.status(401).json({ error: 'Credenciales inválidas' });
             }
 
-            res.status(200).json(usuario);
+            // Generar token JWT
+            const jwt = require('jsonwebtoken');
+            // Obtener el rol real del usuario, por defecto 'client' si no tiene
+            const userRole = usuario.Rol ? usuario.Rol.nombre : (usuario.id_rol === 1 ? 'admin' : 'client');
+            
+            const payload = {
+                id: usuario.id_usuario,
+                correo: usuario.correo,
+                rol: userRole
+            };
+
+            const token = jwt.sign(
+                payload, 
+                process.env.JWT_SECRET || 'mi_secreto_super_seguro_123', 
+                { expiresIn: '24h' }
+            );
+
+            // Devolver el usuario junto con el token
+            res.status(200).json({
+                ...usuario.toJSON(),
+                token: token
+            });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

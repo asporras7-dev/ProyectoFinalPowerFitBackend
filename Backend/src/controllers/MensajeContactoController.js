@@ -44,10 +44,10 @@ const MensajeContactoController = {
     update: async (req, res) => {
         try {
             const { id } = req.params;
-            const { nombre, telefono_Contacto, correo, mensaje, pais, fecha, Usuario_idUsuario } = req.body;
+            const { nombre, telefono, correo, mensaje, pais, fecha, id_usuario } = req.body;
             const mensajeEncontrado = await MensajeContacto.findByPk(id);
 
-            if (!mensajeContacto) {
+            if (!mensajeEncontrado) {
                 return res.status(404).json({ message: 'MensajeContacto no encontrado' });
             }
 
@@ -55,7 +55,7 @@ const MensajeContactoController = {
                 return res.status(400).json({ error: 'El nombre, mensaje, id_usuario es requerido' });
             }
 
-            await mensajeEncontrado.update({ nombre, telefono_Contacto, correo, mensaje, pais, fecha, Usuario_idUsuario });
+            await mensajeEncontrado.update({ nombre, telefono, correo, mensaje, pais, fecha, id_usuario });
             res.status(200).json(mensajeEncontrado);
         } catch (error) {
             res.status(500).json({ error: error.message });
