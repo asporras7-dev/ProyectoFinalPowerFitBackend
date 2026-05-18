@@ -1,9 +1,8 @@
-import { API_BASE_URL } from './apiConfig';
-const BASE_URL = API_BASE_URL;
+const endpointUser = "http://localhost:3001"
 
 // Helper to handle endpoint names (usuarios is the one in db.json)
 const multiFetch = async (endpoint, options = {}) => {
-  return await fetch(`${BASE_URL}/usuarios${endpoint}`, options);
+  return await fetch(`${endpointUser}${endpoint}`, options);
 };
 
 export const registerUser = async (userData) => {
@@ -15,7 +14,7 @@ export const registerUser = async (userData) => {
       edad: userData.edad || null,
       Rol_idRol: userData.rol === 'admin' ? 1 : 2 // Mapping role to IDs
     };
-    const response = await fetch(`${BASE_URL}/usuarios`, {
+    const response = await fetch(`${endpointUser}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +35,7 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (email, password) => {
   try {
-    const response = await fetch(`${BASE_URL}/usuarios/login`, {
+    const response = await fetch(`${endpointUser}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,6 +1,6 @@
 export async function sendMessage(messages, contextoUsuario) {
   try {
-    const res = await fetch("http://localhost:3023/chat", {
+    const res = await fetch("http://localhost:3001/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
