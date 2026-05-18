@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const UsuarioController = require('../controllers/UsuarioController');
+const auth = require('../middlewares/authMiddleware');
 
 router.post('/login', UsuarioController.login);
-router.get('/', UsuarioController.getAll);
-router.get('/:id', UsuarioController.getById);
 router.post('/', UsuarioController.create);
-router.put('/:id', UsuarioController.update);
-router.patch('/:id', UsuarioController.update);
-router.delete('/:id', UsuarioController.delete);
+
+// Rutas protegidas
+router.get('/', auth, UsuarioController.getAll);
+router.get('/:id', auth, UsuarioController.getById);
+router.put('/:id', auth, UsuarioController.update);
+router.patch('/:id', auth, UsuarioController.update);
+router.delete('/:id', auth, UsuarioController.delete);
 
 module.exports = router;

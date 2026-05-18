@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components, react-hooks/set-state-in-effect */
 import React, { createContext, useState, useEffect } from 'react';
-import { API_BASE_URL } from '../Services/apiConfig';
+import { BASE_URL } from '../Services/apiConfig';
 import { getUserById } from '../Services/userService';
 import toast from 'react-hot-toast';
 
