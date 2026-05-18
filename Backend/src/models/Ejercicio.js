@@ -2,43 +2,51 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const Ejercicio = sequelize.define('Ejercicio', {
-    idEjercicios: {
+    id_ejercicio: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     nombre: {
         type: DataTypes.STRING(250),
         allowNull: false
     },
     nivel: {
-        type: DataTypes.STRING(45)
+        type: DataTypes.STRING(45),
+        allowNull: false
     },
     musculo: {
-        type: DataTypes.STRING(120)
+        type: DataTypes.STRING(120),
+        allowNull: false
     },
     video: {
         type: DataTypes.TEXT,
-        field: 'video'
+        allowNull: false
     },
-    videoUrl: { // Map to the same field or separate if needed
+    videoUrl: {
         type: DataTypes.TEXT,
-        field: 'video' 
+        field: 'video', 
+        allowNull: false
     },
     imagen: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: false
     },
     tiempo: {
-        type: DataTypes.STRING(45)
+        type: DataTypes.STRING(45),
+        allowNull: false
     },
     repeticiones: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
     series: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 }, {
-    tableName: 'Ejercicios',
+    tableName: 'ejercicio',
     timestamps: false
 });
 

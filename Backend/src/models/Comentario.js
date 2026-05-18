@@ -2,20 +2,22 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const Comentario = sequelize.define('Comentario', {
-    idComentario: {
+    id_comentario: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     texto: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: false
     },
-    Usuario_idUsuario: {
+    id_usuario: {
         type: DataTypes.INTEGER,
         allowNull: false
     }
 }, {
-    tableName: 'Comentario',
+    tableName: 'comentario',
     timestamps: false
 });
 

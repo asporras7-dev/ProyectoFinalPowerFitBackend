@@ -2,31 +2,38 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const Publicacion = sequelize.define('Publicacion', {
-    idpublicaciones: {
+    id_publicacion: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
-    tiempo_Publicacion: {
-        type: DataTypes.STRING(150)
+    tiempo: {
+        type: DataTypes.STRING(150),
+        allowNull: false
     },
     titulo: {
-        type: DataTypes.STRING(150)
+        type: DataTypes.STRING(150),
+        allowNull: false
     },
     texto: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: false
     },
     imagen: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: false
     },
-    categoria_Publicaciones_idcategoria_Publicaciones: {
-        type: DataTypes.INTEGER
+    id_categoria: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
-    Usuario_idUsuario: {
-        type: DataTypes.INTEGER
+    id_usuario: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 }, {
-    tableName: 'publicaciones',
+    tableName: 'publicacion',
     timestamps: false
 });
 

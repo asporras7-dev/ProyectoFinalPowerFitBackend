@@ -64,13 +64,13 @@ const UsuarioController = {
     },
     create: async (req, res) => {
         try {
-            const { correo, contrasenia, nombre, edad, Rol_idRol } = req.body;
+            const { correo, contrasenia, nombre, edad, id_rol } = req.body;
 
             if (!correo || !contrasenia || !nombre) {
                 return res.status(400).json({ error: 'El correo, contrasenia, nombre es requerido' });
             }
 
-            const nuevo = await Usuario.create({ correo, contrasenia, nombre, edad, Rol_idRol });
+            const nuevo = await Usuario.create({ correo, contrasenia, nombre, edad, id_rol });
             res.status(201).json(nuevo);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -79,7 +79,7 @@ const UsuarioController = {
     update: async (req, res) => {
         try {
             const { id } = req.params;
-            const { correo, contrasenia, nombre, edad, Rol_idRol } = req.body;
+            const { correo, contrasenia, nombre, edad, id_rol } = req.body;
             const usuario = await Usuario.findByPk(id);
 
             if (!usuario) {
@@ -90,60 +90,60 @@ const UsuarioController = {
                 return res.status(400).json({ error: 'El correo, contrasenia, nombre es requerido' });
             }
 
-            await usuario.update({ correo, contrasenia, nombre, edad, Rol_idRol });
+            await usuario.update({ correo, contrasenia, nombre, edad, id_rol });
 
             const { DatosUsuario, Perfil } = require('../index');
 
             // Update or Create DatosUsuario if fields are present
-            let datosUsuario = await DatosUsuario.findOne({ where: { Usuario_idUsuario: id } });
+            let datosUsuario = await DatosUsuario.findOne({ where: { id_usuario: id } });
             
             const updateData = {};
             if (req.body.peso !== undefined) updateData.peso = req.body.peso;
             if (req.body.pesoActual !== undefined) updateData.peso = req.body.pesoActual; 
-            if (req.body.pesoMeta !== undefined) updateData.pesoMeta = req.body.pesoMeta;
+            if (req.body.pesoMeta !== undefined) updateData.peso_meta = req.body.pesoMeta;
             if (req.body.altura !== undefined) updateData.altura = req.body.altura;
-            if (req.body.plazoSemanas !== undefined) updateData.plazoSemanas = req.body.plazoSemanas;
-            if (req.body.deficitEstimado !== undefined) updateData.decifitEstimado = req.body.deficitEstimado;
-            if (req.body.semanasEnProgreso !== undefined) updateData.semanas_En_Progreso = req.body.semanasEnProgreso;
-            if (req.body.ultimoFeedbackDieta !== undefined) updateData.ultimo_Feedback_Dieta = req.body.ultimoFeedbackDieta;
-            if (req.body.ultimoFeedbackEjercicio !== undefined) updateData.ultimo_Feedback_Ejercicio = req.body.ultimoFeedbackEjercicio;
+            if (req.body.plazoSemanas !== undefined) updateData.plazo_semanas = req.body.plazoSemanas;
+            if (req.body.deficitEstimado !== undefined) updateData.deficit_estimado = req.body.deficitEstimado;
+            if (req.body.semanasEnProgreso !== undefined) updateData.semanas_progreso = req.body.semanasEnProgreso;
+            if (req.body.ultimoFeedbackDieta !== undefined) updateData.feedback_dieta = req.body.ultimoFeedbackDieta;
+            if (req.body.ultimoFeedbackEjercicio !== undefined) updateData.feedback_ejercicio = req.body.ultimoFeedbackEjercicio;
             if (req.body.sexo !== undefined) updateData.sexo = req.body.sexo;
-            if (req.body.lugarEntrenamiento !== undefined) updateData.lugarEntrenamiento = req.body.lugarEntrenamiento;
+            if (req.body.lugarEntrenamiento !== undefined) updateData.lugar_entrenamiento = req.body.lugarEntrenamiento;
 
             if (Object.keys(updateData).length > 0) {
                 if (datosUsuario) {
                     await datosUsuario.update(updateData);
                 } else {
-                    await DatosUsuario.create({ ...updateData, Usuario_idUsuario: id });
+                    await DatosUsuario.create({ ...updateData, id_usuario: id });
                 }
             }
 
             // Update or Create Perfil if fields are present
-            let perfil = await Perfil.findOne({ where: { Usuario_idUsuario: id } });
+            let perfil = await Perfil.findOne({ where: { id_usuario: id } });
             
             const perfilUpdate = {};
-            if (req.body.avatar !== undefined) perfilUpdate.foto_Perfil = req.body.avatar;
-            if (req.body.cover !== undefined) perfilUpdate.foto_Portada = req.body.cover;
+            if (req.body.avatar !== undefined) perfilUpdate.foto_perfil = req.body.avatar;
+            if (req.body.cover !== undefined) perfilUpdate.foto_portada = req.body.cover;
             
             if (Object.keys(perfilUpdate).length > 0) {
                 if (perfil) {
                     await perfil.update(perfilUpdate);
                 } else {
-                    perfil = await Perfil.create({ ...perfilUpdate, Usuario_idUsuario: id, biografia: 'Miembro de PowerFit' });
+                    perfil = await Perfil.create({ ...perfilUpdate, id_usuario: id, biografia: 'Miembro de PowerFit' });
                 }
             }
 
             // Update followers/following if provided
             if (req.body.following && Array.isArray(req.body.following)) {
                 const followingPerfiles = await Perfil.findAll({
-                    where: { Usuario_idUsuario: req.body.following }
+                    where: { id_usuario: req.body.following }
                 });
                 if (perfil) await perfil.setFollowing(followingPerfiles);
             }
 
             if (req.body.followers && Array.isArray(req.body.followers)) {
                 const followerPerfiles = await Perfil.findAll({
-                    where: { Usuario_idUsuario: req.body.followers }
+                    where: { id_usuario: req.body.followers }
                 });
                 if (perfil) await perfil.setFollowers(followerPerfiles);
             }
@@ -152,12 +152,12 @@ const UsuarioController = {
             if (req.body.ejerciciosElegidos && Array.isArray(req.body.ejerciciosElegidos)) {
                 const { Rutina } = require('../index');
                 if (!datosUsuario) {
-                    datosUsuario = await DatosUsuario.create({ Usuario_idUsuario: id });
+                    datosUsuario = await DatosUsuario.create({ id_usuario: id });
                 }
                 
-                let rutina = await Rutina.findOne({ where: { datos_Usuario_iddatos_Usuario: datosUsuario.iddatos_Usuario } });
+                let rutina = await Rutina.findOne({ where: { id_datos_usuario: datosUsuario.id_datos_usuario } });
                 if (!rutina) {
-                    rutina = await Rutina.create({ datos_Usuario_iddatos_Usuario: datosUsuario.iddatos_Usuario });
+                    rutina = await Rutina.create({ id_datos_usuario: datosUsuario.id_datos_usuario });
                 }
 
                 await rutina.setEjercicios(req.body.ejerciciosElegidos);

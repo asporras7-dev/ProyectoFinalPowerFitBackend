@@ -2,21 +2,22 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const RazonReporte = sequelize.define('RazonReporte', {
-    idrazones_Reporte: {
+    id_razon: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     nombre: {
         type: DataTypes.STRING(150),
         allowNull: false
     },
-    detalle_Razon_Reporte_iddetalle_Razon_Reporte: {
+    id_detalle_razon: {
         type: DataTypes.INTEGER,
         allowNull: false
     }
 }, {
-    tableName: 'razones_Reporte',
+    tableName: 'razon_reporte',
     timestamps: false
 });
 

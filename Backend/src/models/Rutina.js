@@ -2,17 +2,18 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const Rutina = sequelize.define('Rutina', {
-    idRutina: {
+    id_rutina: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
-    datos_Usuario_iddatos_Usuario: {
+    id_datos_usuario: {
         type: DataTypes.INTEGER,
         allowNull: false
     }
 }, {
-    tableName: 'Rutina',
+    tableName: 'rutina',
     timestamps: false
 });
 

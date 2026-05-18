@@ -28,94 +28,94 @@ const RutinaEjercicio = require('./models/RutinaEjercicio');
 // Define Associations
 
 // Usuario - Rol
-Usuario.belongsTo(Rol, { foreignKey: 'Rol_idRol' });
-Rol.hasMany(Usuario, { foreignKey: 'Rol_idRol' });
+Usuario.belongsTo(Rol, { foreignKey: 'id_rol' });
+Rol.hasMany(Usuario, { foreignKey: 'id_rol' });
 
 // Usuario - Perfil
-Usuario.hasOne(Perfil, { foreignKey: 'Usuario_idUsuario' });
-Perfil.belongsTo(Usuario, { foreignKey: 'Usuario_idUsuario' });
+Usuario.hasOne(Perfil, { foreignKey: 'id_usuario' });
+Perfil.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
 // Usuario - DatosUsuario
-Usuario.hasOne(DatosUsuario, { foreignKey: 'Usuario_idUsuario' });
-DatosUsuario.belongsTo(Usuario, { foreignKey: 'Usuario_idUsuario' });
+Usuario.hasOne(DatosUsuario, { foreignKey: 'id_usuario' });
+DatosUsuario.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
 // Usuario - Comentario
-Usuario.hasMany(Comentario, { foreignKey: 'Usuario_idUsuario' });
-Comentario.belongsTo(Usuario, { foreignKey: 'Usuario_idUsuario' });
+Usuario.hasMany(Comentario, { foreignKey: 'id_usuario' });
+Comentario.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
 // Usuario - Publicacion
-Usuario.hasMany(Publicacion, { foreignKey: 'Usuario_idUsuario' });
-Publicacion.belongsTo(Usuario, { foreignKey: 'Usuario_idUsuario' });
+Usuario.hasMany(Publicacion, { foreignKey: 'id_usuario' });
+Publicacion.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
 // Usuario - Like
-Usuario.hasMany(Like, { foreignKey: 'Usuario_idUsuario' });
-Like.belongsTo(Usuario, { foreignKey: 'Usuario_idUsuario' });
+Usuario.hasMany(Like, { foreignKey: 'id_usuario' });
+Like.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
 // Usuario - MensajeContacto
-Usuario.hasMany(MensajeContacto, { foreignKey: 'Usuario_idUsuario' });
-MensajeContacto.belongsTo(Usuario, { foreignKey: 'Usuario_idUsuario' });
+Usuario.hasMany(MensajeContacto, { foreignKey: 'id_usuario' });
+MensajeContacto.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
 // Usuario - Contribuidor
-Usuario.hasOne(Contribuidor, { foreignKey: 'Usuario_idUsuario' });
-Contribuidor.belongsTo(Usuario, { foreignKey: 'Usuario_idUsuario' });
+Usuario.hasOne(Contribuidor, { foreignKey: 'id_usuario' });
+Contribuidor.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
 // Usuario - Reporte
-Usuario.hasMany(Reporte, { foreignKey: 'Usuario_idUsuario' });
-Reporte.belongsTo(Usuario, { foreignKey: 'Usuario_idUsuario' });
+Usuario.hasMany(Reporte, { foreignKey: 'id_usuario' });
+Reporte.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
 // Contribuidor - RolContribuidor
-Contribuidor.belongsTo(RolContribuidor, { foreignKey: 'rol_Contribuidor_idrol_Contribuidor' });
-RolContribuidor.hasMany(Contribuidor, { foreignKey: 'rol_Contribuidor_idrol_Contribuidor' });
+Contribuidor.belongsTo(RolContribuidor, { foreignKey: 'id_rol_contribuidor' });
+RolContribuidor.hasMany(Contribuidor, { foreignKey: 'id_rol_contribuidor' });
 
 // Publicacion - CategoriaPublicacion
-Publicacion.belongsTo(CategoriaPublicacion, { foreignKey: 'categoria_Publicaciones_idcategoria_Publicaciones' });
-CategoriaPublicacion.hasMany(Publicacion, { foreignKey: 'categoria_Publicaciones_idcategoria_Publicaciones' });
+Publicacion.belongsTo(CategoriaPublicacion, { foreignKey: 'id_categoria' });
+CategoriaPublicacion.hasMany(Publicacion, { foreignKey: 'id_categoria' });
 
 // Publicacion - Comentario (Many to Many)
-Publicacion.belongsToMany(Comentario, { through: PublicacionComentario, foreignKey: 'publicaciones_idpublicaciones', uniqueKey: 'pub_com_unique' });
-Comentario.belongsToMany(Publicacion, { through: PublicacionComentario, foreignKey: 'Comentario_idComentario', uniqueKey: 'pub_com_unique' });
+Publicacion.belongsToMany(Comentario, { through: PublicacionComentario, foreignKey: 'id_publicacion', otherKey: 'id_comentario', uniqueKey: 'pub_com_unique' });
+Comentario.belongsToMany(Publicacion, { through: PublicacionComentario, foreignKey: 'id_comentario', otherKey: 'id_publicacion', uniqueKey: 'pub_com_unique' });
 
 // Publicacion - Like (Many to Many)
-Publicacion.belongsToMany(Like, { through: LikePublicacion, foreignKey: 'publicaciones_idpublicaciones', uniqueKey: 'pub_like_unique' });
-Like.belongsToMany(Publicacion, { through: LikePublicacion, foreignKey: 'likes_idlikes', uniqueKey: 'pub_like_unique' });
+Publicacion.belongsToMany(Like, { through: LikePublicacion, foreignKey: 'id_publicacion', otherKey: 'id_like', uniqueKey: 'pub_like_unique' });
+Like.belongsToMany(Publicacion, { through: LikePublicacion, foreignKey: 'id_like', otherKey: 'id_publicacion', uniqueKey: 'pub_like_unique' });
 
 // Publicacion - Reporte
-Publicacion.hasMany(Reporte, { foreignKey: 'publicaciones_idpublicaciones' });
-Reporte.belongsTo(Publicacion, { foreignKey: 'publicaciones_idpublicaciones' });
+Publicacion.hasMany(Reporte, { foreignKey: 'id_publicacion' });
+Reporte.belongsTo(Publicacion, { foreignKey: 'id_publicacion' });
 
 // Reporte - RazonReporte
-Reporte.belongsTo(RazonReporte, { foreignKey: 'razones_Reporte_idrazones_Reporte' });
-RazonReporte.hasMany(Reporte, { foreignKey: 'razones_Reporte_idrazones_Reporte' });
+Reporte.belongsTo(RazonReporte, { foreignKey: 'id_razon' });
+RazonReporte.hasMany(Reporte, { foreignKey: 'id_razon' });
 
 // RazonReporte - DetalleRazonReporte
-RazonReporte.belongsTo(DetalleRazonReporte, { foreignKey: 'detalle_Razon_Reporte_iddetalle_Razon_Reporte' });
-DetalleRazonReporte.hasMany(RazonReporte, { foreignKey: 'detalle_Razon_Reporte_iddetalle_Razon_Reporte' });
+RazonReporte.belongsTo(DetalleRazonReporte, { foreignKey: 'id_detalle_razon' });
+DetalleRazonReporte.hasMany(RazonReporte, { foreignKey: 'id_detalle_razon' });
 
 // DatosUsuario - Alergia (Many to Many)
-DatosUsuario.belongsToMany(Alergia, { through: DatosUsuarioAlergia, foreignKey: 'datos_Usuario_iddatos_Usuario', uniqueKey: 'user_alergia_unique' });
-Alergia.belongsToMany(DatosUsuario, { through: DatosUsuarioAlergia, foreignKey: 'Alergias_idAlergias', uniqueKey: 'user_alergia_unique' });
+DatosUsuario.belongsToMany(Alergia, { through: DatosUsuarioAlergia, foreignKey: 'id_datos_usuario', otherKey: 'id_alergia', uniqueKey: 'user_alergia_unique' });
+Alergia.belongsToMany(DatosUsuario, { through: DatosUsuarioAlergia, foreignKey: 'id_alergia', otherKey: 'id_datos_usuario', uniqueKey: 'user_alergia_unique' });
 
 // DatosUsuario - Rutina
-DatosUsuario.hasMany(Rutina, { foreignKey: 'datos_Usuario_iddatos_Usuario' });
-Rutina.belongsTo(DatosUsuario, { foreignKey: 'datos_Usuario_iddatos_Usuario' });
+DatosUsuario.hasMany(Rutina, { foreignKey: 'id_datos_usuario' });
+Rutina.belongsTo(DatosUsuario, { foreignKey: 'id_datos_usuario' });
 
 // Rutina - Ejercicio (Many to Many)
-Rutina.belongsToMany(Ejercicio, { through: RutinaEjercicio, foreignKey: 'Rutina_idRutina', uniqueKey: 'rut_ej_unique' });
-Ejercicio.belongsToMany(Rutina, { through: RutinaEjercicio, foreignKey: 'Ejercicios_idEjercicios', uniqueKey: 'rut_ej_unique' });
+Rutina.belongsToMany(Ejercicio, { through: RutinaEjercicio, foreignKey: 'id_rutina', otherKey: 'id_ejercicio', uniqueKey: 'rut_ej_unique' });
+Ejercicio.belongsToMany(Rutina, { through: RutinaEjercicio, foreignKey: 'id_ejercicio', otherKey: 'id_rutina', uniqueKey: 'rut_ej_unique' });
 
 // Perfil - Perfil (Followers/Following)
 Perfil.belongsToMany(Perfil, { 
     through: PerfilSeguidores, 
     as: 'Following', 
-    foreignKey: 'Perfil_idPerfil', 
-    otherKey: 'Perfil_idPerfil1',
+    foreignKey: 'id_perfil', 
+    otherKey: 'id_seguidor',
     uniqueKey: 'perf_seg_unique'
 });
 Perfil.belongsToMany(Perfil, { 
     through: PerfilSeguidores, 
     as: 'Followers', 
-    foreignKey: 'Perfil_idPerfil1', 
-    otherKey: 'Perfil_idPerfil',
+    foreignKey: 'id_seguidor', 
+    otherKey: 'id_perfil',
     uniqueKey: 'perf_seg_unique'
 });
 

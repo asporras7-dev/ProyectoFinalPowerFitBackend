@@ -29,13 +29,13 @@ const PerfilController = {
     },
     create: async (req, res) => {
         try {
-            const { Usuario_idUsuario } = req.body;
+            const { id_usuario } = req.body;
 
-            if (!Usuario_idUsuario) {
-                return res.status(400).json({ error: 'El Usuario_idUsuario es requerido' });
+            if (!id_usuario) {
+                return res.status(400).json({ error: 'El id_usuario es requerido' });
             }
 
-            const nuevo = await Perfil.create({ Usuario_idUsuario });
+            const nuevo = await Perfil.create({ id_usuario });
             res.status(201).json(nuevo);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -44,18 +44,18 @@ const PerfilController = {
     update: async (req, res) => {
         try {
             const { id } = req.params;
-            const { Usuario_idUsuario } = req.body;
+            const { id_usuario } = req.body;
             const perfil = await Perfil.findByPk(id);
 
             if (!perfil) {
                 return res.status(404).json({ message: 'Perfil no encontrado' });
             }
 
-            if (!Usuario_idUsuario) {
-                return res.status(400).json({ error: 'El Usuario_idUsuario es requerido' });
+            if (!id_usuario) {
+                return res.status(400).json({ error: 'El id_usuario es requerido' });
             }
 
-            await perfil.update({ Usuario_idUsuario });
+            await perfil.update({ id_usuario });
             res.status(200).json(perfil);
         } catch (error) {
             res.status(500).json({ error: error.message });

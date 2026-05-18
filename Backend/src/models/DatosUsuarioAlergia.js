@@ -2,18 +2,18 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const DatosUsuarioAlergia = sequelize.define('DatosUsuarioAlergia', {
-    user_data_id: {
+    id_datos_usuario: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        field: 'datos_Usuario_iddatos_Usuario'
+        allowNull: false
     },
-    alergia_id: {
+    id_alergia: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        field: 'Alergias_idAlergias'
+        allowNull: false
     }
 }, {
-    tableName: 'datos_Usuario_Alergias',
+    tableName: 'datos_usuario_alergia',
     timestamps: false
 });
 

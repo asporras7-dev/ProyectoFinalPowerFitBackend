@@ -29,13 +29,13 @@ const ReporteController = {
     },
     create: async (req, res) => {
         try {
-            const { Usuario_idUsuario, publicaciones_idpublicaciones, razones_Reporte_idrazones_Reporte, descripcion, estado, fecha_Y_Hora } = req.body;
+            const { id_usuario, id_publicacion, id_razon, descripcion, estado, fecha_hora } = req.body;
 
-            if (!Usuario_idUsuario || !publicaciones_idpublicaciones || !razones_Reporte_idrazones_Reporte) {
-                return res.status(400).json({ error: 'El Usuario_idUsuario, publicaciones_idpublicaciones, razones_Reporte_idrazones_Reporte es requerido' });
+            if (!id_usuario || !id_publicacion || !id_razon) {
+                return res.status(400).json({ error: 'El id_usuario, id_publicacion, id_razon es requerido' });
             }
 
-            const nuevo = await Reporte.create({ Usuario_idUsuario, publicaciones_idpublicaciones, razones_Reporte_idrazones_Reporte, descripcion, estado, fecha_Y_Hora });
+            const nuevo = await Reporte.create({ id_usuario, id_publicacion, id_razon, descripcion, estado, fecha_hora });
             res.status(201).json(nuevo);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -44,18 +44,18 @@ const ReporteController = {
     update: async (req, res) => {
         try {
             const { id } = req.params;
-            const { Usuario_idUsuario, publicaciones_idpublicaciones, razones_Reporte_idrazones_Reporte, descripcion, estado, fecha_Y_Hora } = req.body;
+            const { id_usuario, id_publicacion, id_razon, descripcion, estado, fecha_hora } = req.body;
             const reporte = await Reporte.findByPk(id);
 
             if (!reporte) {
                 return res.status(404).json({ message: 'Reporte no encontrado' });
             }
 
-            if (!Usuario_idUsuario || !publicaciones_idpublicaciones || !razones_Reporte_idrazones_Reporte) {
-                return res.status(400).json({ error: 'El Usuario_idUsuario, publicaciones_idpublicaciones, razones_Reporte_idrazones_Reporte es requerido' });
+            if (!id_usuario || !id_publicacion || !id_razon) {
+                return res.status(400).json({ error: 'El id_usuario, id_publicacion, id_razon es requerido' });
             }
 
-            await reporte.update({ Usuario_idUsuario, publicaciones_idpublicaciones, razones_Reporte_idrazones_Reporte, descripcion, estado, fecha_Y_Hora });
+            await reporte.update({ id_usuario, id_publicacion, id_razon, descripcion, estado, fecha_hora });
             res.status(200).json(reporte);
         } catch (error) {
             res.status(500).json({ error: error.message });

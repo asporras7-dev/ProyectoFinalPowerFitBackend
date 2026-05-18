@@ -29,13 +29,13 @@ const LikeController = {
     },
     create: async (req, res) => {
         try {
-            const { Usuario_idUsuario } = req.body;
+            const { id_usuario } = req.body;
 
-            if (!Usuario_idUsuario) {
-                return res.status(400).json({ error: 'El Usuario_idUsuario es requerido' });
+            if (!id_usuario) {
+                return res.status(400).json({ error: 'El id_usuario es requerido' });
             }
 
-            const nuevo = await Like.create({ Usuario_idUsuario });
+            const nuevo = await Like.create({ id_usuario });
             res.status(201).json(nuevo);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -44,18 +44,18 @@ const LikeController = {
     update: async (req, res) => {
         try {
             const { id } = req.params;
-            const { Usuario_idUsuario } = req.body;
+            const { id_usuario } = req.body;
             const like = await Like.findByPk(id);
 
             if (!like) {
                 return res.status(404).json({ message: 'Like no encontrado' });
             }
 
-            if (!Usuario_idUsuario) {
-                return res.status(400).json({ error: 'El Usuario_idUsuario es requerido' });
+            if (!id_usuario) {
+                return res.status(400).json({ error: 'El id_usuario es requerido' });
             }
 
-            await like.update({ Usuario_idUsuario });
+            await like.update({ id_usuario });
             res.status(200).json(like);
         } catch (error) {
             res.status(500).json({ error: error.message });

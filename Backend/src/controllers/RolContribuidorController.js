@@ -29,13 +29,13 @@ const RolContribuidorController = {
     },
     create: async (req, res) => {
         try {
-            const { nombre, descripcion_Rol } = req.body;
+            const { nombre, descripcion } = req.body;
 
             if (!nombre) {
                 return res.status(400).json({ error: 'El nombre es requerido' });
             }
 
-            const nuevo = await RolContribuidor.create({ nombre, descripcion_Rol });
+            const nuevo = await RolContribuidor.create({ nombre, descripcion });
             res.status(201).json(nuevo);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -44,7 +44,7 @@ const RolContribuidorController = {
     update: async (req, res) => {
         try {
             const { id } = req.params;
-            const { nombre, descripcion_Rol } = req.body;
+            const { nombre, descripcion } = req.body;
             const rolContribuidor = await RolContribuidor.findByPk(id);
 
             if (!rolContribuidor) {
@@ -55,7 +55,7 @@ const RolContribuidorController = {
                 return res.status(400).json({ error: 'El nombre es requerido' });
             }
 
-            await rolContribuidor.update({ nombre, descripcion_Rol });
+            await rolContribuidor.update({ nombre, descripcion });
             res.status(200).json(rolContribuidor);
         } catch (error) {
             res.status(500).json({ error: error.message });

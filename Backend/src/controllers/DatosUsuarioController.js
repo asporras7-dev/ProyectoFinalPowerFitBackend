@@ -29,13 +29,13 @@ const DatosUsuarioController = {
     },
     create: async (req, res) => {
         try {
-            const { sexo, altura, peso, lugarEntrenamiento, pesoMeta, plazoSemanas, decifitEstimado, imagen, Usuario_idUsuario, semanas_En_Progreso, ultimo_Feedback_Dieta, ultimo_Feedback_Ejercicio } = req.body;
+            const { sexo, altura, peso, lugar_entrenamiento, peso_meta, plazo_semanas, deficit_estimado, imagen, id_usuario, semanas_progreso, feedback_dieta, feedback_ejercicio } = req.body;
 
-            if (!Usuario_idUsuario) {
-                return res.status(400).json({ error: 'El Usuario_idUsuario es requerido' });
+            if (!id_usuario) {
+                return res.status(400).json({ error: 'El id_usuario es requerido' });
             }
 
-            const nuevo = await DatosUsuario.create({ sexo, altura, peso, lugarEntrenamiento, pesoMeta, plazoSemanas, decifitEstimado, imagen, Usuario_idUsuario, semanas_En_Progreso, ultimo_Feedback_Dieta, ultimo_Feedback_Ejercicio });
+            const nuevo = await DatosUsuario.create({ sexo, altura, peso, lugar_entrenamiento, peso_meta, plazo_semanas, deficit_estimado, imagen, id_usuario, semanas_progreso, feedback_dieta, feedback_ejercicio });
             res.status(201).json(nuevo);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -44,18 +44,18 @@ const DatosUsuarioController = {
     update: async (req, res) => {
         try {
             const { id } = req.params;
-            const { sexo, altura, peso, lugarEntrenamiento, pesoMeta, plazoSemanas, decifitEstimado, imagen, Usuario_idUsuario, semanas_En_Progreso, ultimo_Feedback_Dieta, ultimo_Feedback_Ejercicio } = req.body;
+            const { sexo, altura, peso, lugar_entrenamiento, peso_meta, plazo_semanas, deficit_estimado, imagen, id_usuario, semanas_progreso, feedback_dieta, feedback_ejercicio } = req.body;
             const datosUsuario = await DatosUsuario.findByPk(id);
 
             if (!datosUsuario) {
                 return res.status(404).json({ message: 'DatosUsuario no encontrado' });
             }
 
-            if (!Usuario_idUsuario) {
-                return res.status(400).json({ error: 'El Usuario_idUsuario es requerido' });
+            if (!id_usuario) {
+                return res.status(400).json({ error: 'El id_usuario es requerido' });
             }
 
-            await datosUsuario.update({ sexo, altura, peso, lugarEntrenamiento, pesoMeta, plazoSemanas, decifitEstimado, imagen, Usuario_idUsuario, semanas_En_Progreso, ultimo_Feedback_Dieta, ultimo_Feedback_Ejercicio });
+            await datosUsuario.update({ sexo, altura, peso, lugar_entrenamiento, peso_meta, plazo_semanas, deficit_estimado, imagen, id_usuario, semanas_progreso, feedback_dieta, feedback_ejercicio });
             res.status(200).json(datosUsuario);
         } catch (error) {
             res.status(500).json({ error: error.message });

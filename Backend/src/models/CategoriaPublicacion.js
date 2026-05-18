@@ -2,17 +2,18 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const CategoriaPublicacion = sequelize.define('CategoriaPublicacion', {
-    idcategoria_Publicaciones: {
+    id_categoria: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     nombre: {
         type: DataTypes.STRING(150),
         allowNull: false
     }
 }, {
-    tableName: 'categoria_Publicaciones',
+    tableName: 'categoria_publicacion',
     timestamps: false
 });
 

@@ -2,36 +2,42 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const MensajeContacto = sequelize.define('MensajeContacto', {
-    idmensajes_Contacto: {
+    id_mensaje: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     nombre: {
         type: DataTypes.STRING(150),
         allowNull: false
     },
-    telefono_Contacto: {
-        type: DataTypes.STRING(45)
+    telefono: {
+        type: DataTypes.STRING(45),
+        allowNull: false
     },
     correo: {
-        type: DataTypes.STRING(150)
+        type: DataTypes.STRING(150),
+        allowNull: false
     },
     mensaje: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: false
     },
     pais: {
-        type: DataTypes.STRING(100)
+        type: DataTypes.STRING(100),
+        allowNull: false
     },
     fecha: {
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
+        allowNull: false
     },
-    Usuario_idUsuario: {
+    id_usuario: {
         type: DataTypes.INTEGER,
         allowNull: false
     }
 }, {
-    tableName: 'mensajes_Contacto',
+    tableName: 'mensaje_contacto',
     timestamps: false
 });
 

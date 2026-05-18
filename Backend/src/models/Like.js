@@ -2,12 +2,13 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const Like = sequelize.define('Like', {
-    idlikes: {
+    id_like: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
-    Usuario_idUsuario: {
+    id_usuario: {
         type: DataTypes.INTEGER,
         allowNull: false
     }

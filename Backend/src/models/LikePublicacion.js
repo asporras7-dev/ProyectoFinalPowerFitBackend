@@ -2,18 +2,18 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const LikePublicacion = sequelize.define('LikePublicacion', {
-    like_id: {
+    id_like: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        field: 'likes_idlikes'
+        allowNull: false
     },
-    pub_id: {
+    id_publicacion: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        field: 'publicaciones_idpublicaciones'
+        allowNull: false
     }
 }, {
-    tableName: 'likes_publicaciones',
+    tableName: 'like_publicacion',
     timestamps: false
 });
 

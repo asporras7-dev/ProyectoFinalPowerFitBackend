@@ -29,13 +29,13 @@ const ComentarioController = {
     },
     create: async (req, res) => {
         try {
-            const { texto, Usuario_idUsuario } = req.body;
+            const { texto, id_usuario } = req.body;
 
-            if (!texto || !Usuario_idUsuario) {
-                return res.status(400).json({ error: 'El texto, Usuario_idUsuario es requerido' });
+            if (!texto || !id_usuario) {
+                return res.status(400).json({ error: 'El texto, id_usuario es requerido' });
             }
 
-            const nuevo = await Comentario.create({ texto, Usuario_idUsuario });
+            const nuevo = await Comentario.create({ texto, id_usuario });
             res.status(201).json(nuevo);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -44,18 +44,18 @@ const ComentarioController = {
     update: async (req, res) => {
         try {
             const { id } = req.params;
-            const { texto, Usuario_idUsuario } = req.body;
+            const { texto, id_usuario } = req.body;
             const comentario = await Comentario.findByPk(id);
 
             if (!comentario) {
                 return res.status(404).json({ message: 'Comentario no encontrado' });
             }
 
-            if (!texto || !Usuario_idUsuario) {
-                return res.status(400).json({ error: 'El texto, Usuario_idUsuario es requerido' });
+            if (!texto || !id_usuario) {
+                return res.status(400).json({ error: 'El texto, id_usuario es requerido' });
             }
 
-            await comentario.update({ texto, Usuario_idUsuario });
+            await comentario.update({ texto, id_usuario });
             res.status(200).json(comentario);
         } catch (error) {
             res.status(500).json({ error: error.message });

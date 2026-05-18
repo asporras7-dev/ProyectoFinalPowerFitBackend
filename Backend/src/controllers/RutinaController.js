@@ -29,13 +29,13 @@ const RutinaController = {
     },
     create: async (req, res) => {
         try {
-            const { datos_Usuario_iddatos_Usuario } = req.body;
+            const { id_datos_usuario } = req.body;
 
-            if (!datos_Usuario_iddatos_Usuario) {
-                return res.status(400).json({ error: 'El datos_Usuario_iddatos_Usuario es requerido' });
+            if (!id_datos_usuario) {
+                return res.status(400).json({ error: 'El id_datos_usuario es requerido' });
             }
 
-            const nuevo = await Rutina.create({ datos_Usuario_iddatos_Usuario });
+            const nuevo = await Rutina.create({ id_datos_usuario });
             res.status(201).json(nuevo);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -44,18 +44,18 @@ const RutinaController = {
     update: async (req, res) => {
         try {
             const { id } = req.params;
-            const { datos_Usuario_iddatos_Usuario } = req.body;
+            const { id_datos_usuario } = req.body;
             const rutina = await Rutina.findByPk(id);
 
             if (!rutina) {
                 return res.status(404).json({ message: 'Rutina no encontrado' });
             }
 
-            if (!datos_Usuario_iddatos_Usuario) {
-                return res.status(400).json({ error: 'El datos_Usuario_iddatos_Usuario es requerido' });
+            if (!id_datos_usuario) {
+                return res.status(400).json({ error: 'El id_datos_usuario es requerido' });
             }
 
-            await rutina.update({ datos_Usuario_iddatos_Usuario });
+            await rutina.update({ id_datos_usuario });
             res.status(200).json(rutina);
         } catch (error) {
             res.status(500).json({ error: error.message });

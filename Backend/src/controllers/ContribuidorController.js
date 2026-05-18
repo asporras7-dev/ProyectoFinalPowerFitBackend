@@ -29,13 +29,13 @@ const ContribuidorController = {
     },
     create: async (req, res) => {
         try {
-            const { puntos, Usuario_idUsuario, rol_Contribuidor_idrol_Contribuidor } = req.body;
+            const { puntos, id_usuario, id_rol_contribuidor } = req.body;
 
-            if (!Usuario_idUsuario || !rol_Contribuidor_idrol_Contribuidor) {
-                return res.status(400).json({ error: 'El Usuario_idUsuario, rol_Contribuidor_idrol_Contribuidor es requerido' });
+            if (!id_usuario || !id_rol_contribuidor) {
+                return res.status(400).json({ error: 'El id_usuario, id_rol_contribuidor es requerido' });
             }
 
-            const nuevo = await Contribuidor.create({ puntos, Usuario_idUsuario, rol_Contribuidor_idrol_Contribuidor });
+            const nuevo = await Contribuidor.create({ puntos, id_usuario, id_rol_contribuidor });
             res.status(201).json(nuevo);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -44,18 +44,18 @@ const ContribuidorController = {
     update: async (req, res) => {
         try {
             const { id } = req.params;
-            const { puntos, Usuario_idUsuario, rol_Contribuidor_idrol_Contribuidor } = req.body;
+            const { puntos, id_usuario, id_rol_contribuidor } = req.body;
             const contribuidor = await Contribuidor.findByPk(id);
 
             if (!contribuidor) {
                 return res.status(404).json({ message: 'Contribuidor no encontrado' });
             }
 
-            if (!Usuario_idUsuario || !rol_Contribuidor_idrol_Contribuidor) {
-                return res.status(400).json({ error: 'El Usuario_idUsuario, rol_Contribuidor_idrol_Contribuidor es requerido' });
+            if (!id_usuario || !id_rol_contribuidor) {
+                return res.status(400).json({ error: 'El id_usuario, id_rol_contribuidor es requerido' });
             }
 
-            await contribuidor.update({ puntos, Usuario_idUsuario, rol_Contribuidor_idrol_Contribuidor });
+            await contribuidor.update({ puntos, id_usuario, id_rol_contribuidor });
             res.status(200).json(contribuidor);
         } catch (error) {
             res.status(500).json({ error: error.message });
