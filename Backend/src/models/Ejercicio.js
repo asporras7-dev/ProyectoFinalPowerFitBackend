@@ -2,10 +2,11 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const Ejercicio = sequelize.define('Ejercicio', {
-    idEjercicios: {
+    id_ejercicio: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     nombre: {
         type: DataTypes.STRING(250),
@@ -23,8 +24,18 @@ const Ejercicio = sequelize.define('Ejercicio', {
         type: DataTypes.TEXT,
         allowNull: false
     },
+    videoUrl: {
+        type: DataTypes.TEXT,
+        field: 'video', 
+        allowNull: false
+    },
+    imagen: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
     tiempo: {
-        type: DataTypes.STRING(45)
+        type: DataTypes.STRING(45),
+        allowNull: false
     },
     repeticiones: {
         type: DataTypes.INTEGER,
@@ -35,7 +46,7 @@ const Ejercicio = sequelize.define('Ejercicio', {
         allowNull: false
     }
 }, {
-    tableName: 'Ejercicios',
+    tableName: 'ejercicio',
     timestamps: false
 });
 

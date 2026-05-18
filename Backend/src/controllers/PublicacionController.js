@@ -29,10 +29,10 @@ const PublicacionController = {
     },
     create: async (req, res) => {
         try {
-            const { tiempo_Publicacion, titulo, texto, imagen, categoria_nombre, Usuario_idUsuario } = req.body;
+            const { tiempo, titulo, texto, imagen, categoria_nombre, id_usuario } = req.body;
 
-            if (!titulo || !texto || !Usuario_idUsuario) {
-                return res.status(400).json({ error: 'El titulo, texto, Usuario_idUsuario es requerido' });
+            if (!titulo || !texto || !id_usuario) {
+                return res.status(400).json({ error: 'El titulo, texto, id_usuario es requerido' });
             }
 
             let catId = 1; // Fallback
@@ -40,17 +40,17 @@ const PublicacionController = {
                 const { CategoriaPublicacion } = require('../index');
                 const cat = await CategoriaPublicacion.findOne({ where: { nombre: categoria_nombre } });
                 if (cat) {
-                    catId = cat.idcategoria_Publicaciones;
+                    catId = cat.id_categoria;
                 }
             }
 
             const nuevo = await Publicacion.create({ 
-                tiempo_Publicacion, 
+                tiempo, 
                 titulo, 
                 texto, 
                 imagen, 
-                categoria_Publicaciones_idcategoria_Publicaciones: catId, 
-                Usuario_idUsuario 
+                id_categoria: catId, 
+                id_usuario 
             });
             res.status(201).json(nuevo);
         } catch (error) {
@@ -60,18 +60,18 @@ const PublicacionController = {
     update: async (req, res) => {
         try {
             const { id } = req.params;
-            const { tiempo_Publicacion, titulo, texto, imagen, categoria_Publicaciones_idcategoria_Publicaciones, Usuario_idUsuario } = req.body;
+            const { tiempo, titulo, texto, imagen, id_categoria, id_usuario } = req.body;
             const publicacion = await Publicacion.findByPk(id);
 
             if (!publicacion) {
                 return res.status(404).json({ message: 'Publicacion no encontrado' });
             }
 
-            if (!titulo || !texto || !Usuario_idUsuario) {
-                return res.status(400).json({ error: 'El titulo, texto, Usuario_idUsuario es requerido' });
+            if (!titulo || !texto || !id_usuario) {
+                return res.status(400).json({ error: 'El titulo, texto, id_usuario es requerido' });
             }
 
-            await publicacion.update({ tiempo_Publicacion, titulo, texto, imagen, categoria_Publicaciones_idcategoria_Publicaciones, Usuario_idUsuario });
+            await publicacion.update({ tiempo, titulo, texto, imagen, id_categoria, id_usuario });
             res.status(200).json(publicacion);
         } catch (error) {
             res.status(500).json({ error: error.message });

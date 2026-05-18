@@ -2,20 +2,21 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const Reporte = sequelize.define('Reporte', {
-    idReporte: {
+    id_reporte: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
-    Usuario_idUsuario: {
+    id_usuario: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    publicaciones_idpublicaciones: {
+    id_publicacion: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    razones_Reporte_idrazones_Reporte: {
+    id_razon: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
@@ -27,12 +28,12 @@ const Reporte = sequelize.define('Reporte', {
         type: DataTypes.STRING(45),
         allowNull: false
     },
-    fecha_Y_Hora: {
+    fecha_hora: {
         type: DataTypes.DATE,
         allowNull: false
     }
 }, {
-    tableName: 'Reporte',
+    tableName: 'reporte',
     timestamps: false
 });
 
