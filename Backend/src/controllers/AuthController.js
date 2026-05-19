@@ -1,11 +1,18 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { Usuario, Rol, Perfil, DatosUsuario, Rutina, Ejercicio } = require('../index');
+const config = require('../config/config');
 
 const generateToken = (user) => {
     return jwt.sign(
-        { id: user.id_usuario, correo: user.correo, id_rol: user.id_rol },
-        process.env.JWT_SECRET || 'powerfit_default_secret',
+        { 
+            id: user.id_usuario, 
+            id_usuario: user.id_usuario,
+            correo: user.correo, 
+            id_rol: user.id_rol,
+            rol: user.Rol?.nombre || 'client'
+        },
+        config.jwtSecret,
         { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
     );
 };
@@ -91,7 +98,23 @@ const AuthController = {
 
             const usuario = await Usuario.findOne({
                 where: { correo: userEmail },
-                include: [{ model: Rol }, { model: Perfil }]
+                include: [
+                    { model: Rol },
+                    { 
+                        model: Perfil,
+                        include: [
+                            { model: Perfil, as: 'Followers' },
+                            { model: Perfil, as: 'Following' }
+                        ]
+                    },
+                    { 
+                        model: DatosUsuario,
+                        include: [{
+                            model: Rutina,
+                            include: [{ model: Ejercicio }]
+                        }]
+                    }
+                ]
             });
 
             if (!usuario) {
@@ -115,6 +138,20 @@ const AuthController = {
 
             const token = generateToken(usuario);
 
+            const getEjerciciosElegidos = (userInst) => {
+                const list = [];
+                const du = userInst.DatosUsuario;
+                if (!du) return list;
+                const rutinas = du.Rutinas || (du.Rutina ? [du.Rutina] : []);
+                for (const r of rutinas) {
+                    const ejs = r.Ejercicios || (r.Ejercicio ? (Array.isArray(r.Ejercicio) ? r.Ejercicio : [r.Ejercicio]) : []);
+                    for (const e of ejs) {
+                        list.push(e.id_ejercicio);
+                    }
+                }
+                return list;
+            };
+
             res.status(200).json({
                 message: 'Inicio de sesión exitoso.',
                 token,
@@ -127,9 +164,10 @@ const AuthController = {
                     rol: usuario.Rol?.nombre || 'client',
                     avatar: usuario.Perfil?.foto_perfil || '',
                     cover: usuario.Perfil?.foto_portada || '',
-                    following: [],
-                    followers: [],
-                    ejerciciosElegidos: []
+                    DatosUsuario: usuario.DatosUsuario || null,
+                    following: (usuario.Perfil?.Following || []).map(p => p.id_usuario),
+                    followers: (usuario.Perfil?.Followers || []).map(p => p.id_usuario),
+                    ejerciciosElegidos: getEjerciciosElegidos(usuario)
                 }
             });
         } catch (error) {
@@ -140,17 +178,41 @@ const AuthController = {
 
     me: async (req, res) => {
         try {
-            const usuario = await Usuario.findByPk(req.user.id, {
+            const userId = req.user?.id || req.usuario?.id || req.user?.id_usuario || req.usuario?.id_usuario;
+            const usuario = await Usuario.findByPk(userId, {
                 include: [
                     { model: Rol },
-                    { model: Perfil },
-                    { model: DatosUsuario, include: [{ model: Rutina, include: [{ model: Ejercicio }] }] }
+                    { 
+                        model: Perfil,
+                        include: [
+                            { model: Perfil, as: 'Followers' },
+                            { model: Perfil, as: 'Following' }
+                        ]
+                    },
+                    { 
+                        model: DatosUsuario, 
+                        include: [{ model: Rutina, include: [{ model: Ejercicio }] }] 
+                    }
                 ]
             });
 
             if (!usuario) {
                 return res.status(404).json({ error: 'Usuario no encontrado.' });
             }
+
+            const getEjerciciosElegidos = (userInst) => {
+                const list = [];
+                const du = userInst.DatosUsuario;
+                if (!du) return list;
+                const rutinas = du.Rutinas || (du.Rutina ? [du.Rutina] : []);
+                for (const r of rutinas) {
+                    const ejs = r.Ejercicios || (r.Ejercicio ? (Array.isArray(r.Ejercicio) ? r.Ejercicio : [r.Ejercicio]) : []);
+                    for (const e of ejs) {
+                        list.push(e.id_ejercicio);
+                    }
+                }
+                return list;
+            };
 
             res.status(200).json({
                 id: usuario.id_usuario,
@@ -162,8 +224,9 @@ const AuthController = {
                 avatar: usuario.Perfil?.foto_perfil || '',
                 cover: usuario.Perfil?.foto_portada || '',
                 DatosUsuario: usuario.DatosUsuario || null,
-                following: [],
-                followers: []
+                following: (usuario.Perfil?.Following || []).map(p => p.id_usuario),
+                followers: (usuario.Perfil?.Followers || []).map(p => p.id_usuario),
+                ejerciciosElegidos: getEjerciciosElegidos(usuario)
             });
         } catch (error) {
             res.status(500).json({ error: error.message });

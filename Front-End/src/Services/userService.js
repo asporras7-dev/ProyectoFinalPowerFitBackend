@@ -1,3 +1,4 @@
+
 import { API_BASE_URL } from './apiConfig';
 
 const BASE = API_BASE_URL;
@@ -9,7 +10,7 @@ const authHeaders = () => {
     ...(token ? { Authorization: `Bearer ${token}` } : {})
   };
 };
-
+ 
 const mapUsuario = (u) => ({
   id: u.id ?? u.id_usuario,
   email: u.correo ?? u.email,

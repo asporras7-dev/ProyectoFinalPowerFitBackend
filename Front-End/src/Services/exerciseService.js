@@ -10,7 +10,7 @@ export const obtenerTodosEjercicios = async () => {
     }
     const data = await response.json();
     return data.map(ex => ({
-      id: ex.idEjercicios,
+      id: ex.id_ejercicio || ex.idEjercicios || ex.id,
       ...ex
     }));
   } catch (error) {
@@ -29,7 +29,7 @@ export const getPaginatedExercises = async (page = 1, limit = 10) => {
     return {
       ...data,
       data: data.data.map(ex => ({
-        id: ex.idEjercicios,
+        id: ex.id_ejercicio || ex.idEjercicios || ex.id,
         ...ex
       }))
     };
