@@ -16,7 +16,9 @@ if (process.env.NODE_ENV === 'test') {
         config.db.password, 
         {
             host: config.db.host,
-            dialect: config.db.dialect
+            dialect: config.db.dialect,
+            storage: config.db.storage,
+            logging: false
         }
     );
 }
