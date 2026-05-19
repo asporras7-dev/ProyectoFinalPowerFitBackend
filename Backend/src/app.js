@@ -78,7 +78,7 @@ const PORT = config.server.port || 3000;
 
 if (process.env.NODE_ENV !== 'test') {
     // alter:true permite alterar columnas existentes como contrasenia(255)
-    sequelize.sync({ alter: true })
+    sequelize.sync({ alter: false })
         .then(() => {
             console.log('✅ Base de datos conectada y sincronizada.');
             app.listen(PORT, () => {
