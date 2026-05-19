@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-const endpointUser = "http://localhost:3001"
-=======
 import { API_BASE_URL, BASE_URL } from './apiConfig';
 
 // Helper to handle mapping between both db.json and Sequelize models dynamically
@@ -34,14 +31,9 @@ export const mapUser = (user) => {
     ...user
   };
 };
->>>>>>> f7e7d2999b6066b1f637d367a8065ff0b1adbd23
 
 const multiFetch = async (endpoint, options = {}) => {
-<<<<<<< HEAD
-  return await fetch(`${endpointUser}${endpoint}`, options);
-=======
   return await fetch(`${API_BASE_URL}${endpoint}`, options);
->>>>>>> f7e7d2999b6066b1f637d367a8065ff0b1adbd23
 };
 
 export const registerUser = async (userData) => {
@@ -68,11 +60,7 @@ export const registerUser = async (userData) => {
       semanasEnProgreso: 1,
       ejerciciosElegidos: []
     };
-<<<<<<< HEAD
-    const response = await fetch(`${endpointUser}`, {
-=======
     const response = await fetch(API_BASE_URL, {
->>>>>>> f7e7d2999b6066b1f637d367a8065ff0b1adbd23
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,50 +82,13 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (email, password) => {
   try {
-<<<<<<< HEAD
-    // Para json-server, buscamos en /usuarios haciendo match de email y password
-    const response = await fetch(`${endpointUser}/usuarios?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      }
-    });
-=======
     const response = await fetch(`${API_BASE_URL}?email=${encodeURIComponent(email)}`);
->>>>>>> f7e7d2999b6066b1f637d367a8065ff0b1adbd23
 
     if (!response.ok) {
       throw new Error(`Error del servidor (${response.status}). Asegúrate de que el backend esté activo.`);
     }
 
     const users = await response.json();
-<<<<<<< HEAD
-    
-    if (users.length === 0) {
-      throw new Error("Credenciales inválidas. Revisa tu correo y contraseña.");
-    }
-
-    const user = users[0];
-    return {
-      id: user.idUsuario || user.id,
-      email: user.correo || user.email,
-      nombre: user.nombre,
-      rol: user.rol || (user.Rol ? user.Rol.nombre : (user.Rol_idRol === 1 ? 'admin' : 'client')),
-      ...user,
-      ...(user.DatosUsuario || {}),
-      pesoActual: user.DatosUsuario?.peso || user.pesoActual,
-      deficitEstimado: user.DatosUsuario?.decifitEstimado || user.deficitEstimado,
-      semanasEnProgreso: user.DatosUsuario?.semanas_En_Progreso || user.semanasEnProgreso || 1,
-      ultimoFeedbackDieta: user.DatosUsuario?.ultimo_Feedback_Dieta || user.ultimoFeedbackDieta,
-      ultimoFeedbackEjercicio: user.DatosUsuario?.ultimo_Feedback_Ejercicio || user.ultimoFeedbackEjercicio,
-      ...(user.Perfil || {}),
-      avatar: user.Perfil?.foto_Perfil || user.avatar || '',
-      cover: user.Perfil?.foto_Portada || user.cover || '',
-      following: user.Perfil?.Following?.map(p => p.Usuario_idUsuario) || user.following || [],
-      followers: user.Perfil?.Followers?.map(p => p.Usuario_idUsuario) || user.followers || [],
-      ejerciciosElegidos: user.DatosUsuario?.Rutinas?.[0]?.Ejercicios?.map(e => e.idEjercicios) || user.ejerciciosElegidos || []
-    };
-=======
     const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
 
     if (!user || user.password !== password) {
@@ -145,7 +96,6 @@ export const loginUser = async (email, password) => {
     }
 
     return mapUser(user);
->>>>>>> f7e7d2999b6066b1f637d367a8065ff0b1adbd23
   } catch (error) {
     console.error("Login error:", error);
     throw error;
