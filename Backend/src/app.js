@@ -46,6 +46,7 @@ const AlergiaRoutes = require('./routes/AlergiaRoutes');
 const RutinaRoutes = require('./routes/RutinaRoutes');
 const EjercicioRoutes = require('./routes/EjercicioRoutes');
 
+// Use Routes
 app.use('/api/usuarios', UsuarioRoutes);
 app.use('/api/roles', RolRoutes);
 app.use('/api/perfiles', PerfilRoutes);
