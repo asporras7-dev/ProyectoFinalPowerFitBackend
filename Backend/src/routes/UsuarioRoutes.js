@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const UsuarioController = require('../controllers/UsuarioController');
-const { verificarToken, verificarRol } = require('../middlewares/authMiddleware');
+const auth = require('../middlewares/authMiddleware');
+const { isAdmin } = require('../middlewares/verifyRole');
 
 router.post('/login', UsuarioController.login);
-// Ruta protegida: Solo usuarios logueados y que sean 'admin' pueden obtener todos los usuarios
-router.get('/', verificarToken, verificarRol(['admin']), UsuarioController.getAll);
-router.get('/:id', UsuarioController.getById);
 router.post('/', UsuarioController.create);
-router.put('/:id', UsuarioController.update);
-router.patch('/:id', UsuarioController.update);
-router.delete('/:id', UsuarioController.delete);
+
+// Rutas protegidas
+router.get('/', auth, UsuarioController.getAll);
+router.get('/:id', auth, UsuarioController.getById);
+router.put('/:id', auth, UsuarioController.update);
+router.patch('/:id', auth, UsuarioController.update);
+router.delete('/:id', auth, isAdmin, UsuarioController.delete);
 
 module.exports = router;

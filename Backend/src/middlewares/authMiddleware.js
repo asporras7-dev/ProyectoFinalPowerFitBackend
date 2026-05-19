@@ -1,46 +1,22 @@
 const jwt = require('jsonwebtoken');
+const config = require('../config/config');
 
-const verificarToken = (req, res, next) => {
-    const token = req.header('Authorization');
-
-    if (!token) {
-        return res.status(401).json({ error: 'Acceso denegado. No se proporcionó un token.' });
-    }
-
+const authMiddleware = (req, res, next) => {
     try {
-        // Asume formato "Bearer <token>"
-        const tokenLimpio = token.startsWith('Bearer ') ? token.slice(7) : token;
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ error: 'Acceso denegado. No se proporcionó un token válido.' });
+        }
+
+        const token = authHeader.split(' ')[1];
+        const decoded = jwt.verify(token, config.jwtSecret);
         
-        // Verifica el token usando la clave secreta
-        const payload = jwt.verify(tokenLimpio, process.env.JWT_SECRET || 'mi_secreto_super_seguro_123');
-        
-        // Guarda los datos del usuario en la request para que la siguiente función los pueda usar
-        req.usuario = payload;
-        
-        next(); // Pasa al siguiente middleware o ruta
+        // Adjuntar los datos decodificados del usuario a la petición
+        req.usuario = decoded;
+        next();
     } catch (error) {
-        res.status(401).json({ error: 'Token no válido o expirado.' });
+        return res.status(401).json({ error: 'Token inválido o expirado.' });
     }
 };
 
-const verificarRol = (rolesPermitidos) => {
-    return (req, res, next) => {
-        if (!req.usuario) {
-            return res.status(401).json({ error: 'Usuario no autenticado.' });
-        }
-
-        // Verifica si el rol del usuario está dentro de la lista de roles permitidos
-        if (!rolesPermitidos.includes(req.usuario.rol)) {
-            return res.status(403).json({ 
-                error: 'Acceso denegado. No tienes permisos suficientes para esta acción.' 
-            });
-        }
-
-        next();
-    };
-};
-
-module.exports = {
-    verificarToken,
-    verificarRol
-};
+module.exports = authMiddleware;

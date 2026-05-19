@@ -1,4 +1,6 @@
 const Usuario = require('../models/Usuario');
+const jwt = require('jsonwebtoken');
+const config = require('../config/config');
 
 const UsuarioController = {
     getAll: async (req, res) => {
@@ -9,7 +11,8 @@ const UsuarioController = {
                 const offsetNum = (parseInt(page, 10) - 1) * limitNum;
                 const { count, rows } = await Usuario.findAndCountAll({
                     limit: limitNum,
-                    offset: offsetNum
+                    offset: offsetNum,
+                    attributes: { exclude: ['contrasenia'] }
                 });
                 return res.status(200).json({
                     data: rows,
@@ -19,7 +22,9 @@ const UsuarioController = {
                 });
             }
 
-            const usuarios = await Usuario.findAll();
+            const usuarios = await Usuario.findAll({
+                attributes: { exclude: ['contrasenia'] }
+            });
 
             if (!usuarios || usuarios.length === 0) {
                 return res.status(404).json({ message: "No se encontraron usuarios" });
@@ -34,6 +39,7 @@ const UsuarioController = {
             const { id } = req.params;
             const { Rol, DatosUsuario, Perfil, Rutina, Ejercicio } = require('../index');
             const usuario = await Usuario.findByPk(id, {
+                attributes: { exclude: ['contrasenia'] },
                 include: [
                     { model: Rol },
                     { 
@@ -71,7 +77,9 @@ const UsuarioController = {
             }
 
             const nuevo = await Usuario.create({ correo, contrasenia, nombre, edad, id_rol });
-            res.status(201).json(nuevo);
+            const nuevoJson = nuevo.toJSON();
+            delete nuevoJson.contrasenia;
+            res.status(201).json(nuevoJson);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -166,6 +174,7 @@ const UsuarioController = {
             // Re-fetch the updated user with associations
             const { Rutina, Ejercicio } = require('../index');
             const updatedUser = await Usuario.findByPk(id, {
+                attributes: { exclude: ['contrasenia'] },
                 include: [
                     { model: require('../index').Rol },
                     { 
@@ -199,7 +208,7 @@ const UsuarioController = {
 
             const { Rol, DatosUsuario, Perfil, Rutina, Ejercicio } = require('../index');
             const usuario = await Usuario.findOne({ 
-                where: { correo, contrasenia },
+                where: { correo },
                 include: [
                     { model: Rol },
                     { 
@@ -223,27 +232,25 @@ const UsuarioController = {
                 return res.status(401).json({ error: 'Credenciales inválidas' });
             }
 
-            // Generar token JWT
-            const jwt = require('jsonwebtoken');
-            // Obtener el rol real del usuario, por defecto 'client' si no tiene
-            const userRole = usuario.Rol ? usuario.Rol.nombre : (usuario.id_rol === 1 ? 'admin' : 'client');
-            
-            const payload = {
-                id: usuario.id_usuario,
-                correo: usuario.correo,
-                rol: userRole
-            };
+            const contraseniaValida = await usuario.validarContrasenia(contrasenia);
+            if (!contraseniaValida) {
+                return res.status(401).json({ error: 'Credenciales inválidas' });
+            }
 
+            // Firmar el token JWT
             const token = jwt.sign(
-                payload, 
-                process.env.JWT_SECRET || 'mi_secreto_super_seguro_123', 
+                { id_usuario: usuario.id_usuario, correo: usuario.correo, id_rol: usuario.id_rol },
+                config.jwtSecret,
                 { expiresIn: '24h' }
             );
 
-            // Devolver el usuario junto con el token
+            const usuarioJson = usuario.toJSON();
+            delete usuarioJson.contrasenia;
+
             res.status(200).json({
-                ...usuario.toJSON(),
-                token: token
+                message: 'Login exitoso',
+                token,
+                usuario: usuarioJson
             });
         } catch (error) {
             res.status(500).json({ error: error.message });
