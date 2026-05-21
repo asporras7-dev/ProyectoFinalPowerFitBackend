@@ -2,16 +2,17 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const MensajeContacto = sequelize.define('MensajeContacto', {
-    idmensajes_Contacto: {
+    id_mensaje: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     nombre: {
         type: DataTypes.STRING(150),
         allowNull: false
     },
-    telefono_Contacto: {
+    telefono: {
         type: DataTypes.STRING(45),
         allowNull: false
     },
@@ -31,12 +32,12 @@ const MensajeContacto = sequelize.define('MensajeContacto', {
         type: DataTypes.DATE,
         allowNull: false
     },
-    Usuario_idUsuario: {
+    id_usuario: {
         type: DataTypes.INTEGER,
         allowNull: false
     }
 }, {
-    tableName: 'mensajes_Contacto',
+    tableName: 'mensaje_contacto',
     timestamps: false
 });
 

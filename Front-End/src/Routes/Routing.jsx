@@ -23,45 +23,43 @@ const Routing = () => {
                 <Route path="/contacto" element={<Contacto />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/registro" element={<Registro />} />
-                <Route 
-                    path="/chatbot" 
+                <Route
+                    path="/chatbot"
                     element={
                         <ProtectedRoute>
                             <Chatbot />
                         </ProtectedRoute>
-                    } 
+                    }
                 />
-                <Route 
-                    path="/admin" 
+                <Route
+                    path="/admin"
                     element={
                         <ProtectedRoute allowedRoles={['admin']}>
                             <DashboardAdmin />
                         </ProtectedRoute>
-                    } 
+                    }
                 />
-                <Route 
-                    path="/dashboard" 
+                <Route
+                    path="/dashboard"
                     element={
                         <ProtectedRoute allowedRoles={['client', 'cliente', 'user']}>
                             <DashboardCliente />
                         </ProtectedRoute>
-                    } 
+                    }
                 />
-                <Route 
-                    path="/comunidad" 
+                <Route
+                    path="/comunidad"
                     element={
-                        <ProtectedRoute>
-                            <Testimonios />
-                        </ProtectedRoute>
-                    } 
+                        <Testimonios />
+                    }
                 />
-                <Route 
-                    path="/perfil/:id" 
+                <Route
+                    path="/perfil/:id"
                     element={
                         <ProtectedRoute>
                             <PerfilUsuario />
                         </ProtectedRoute>
-                    } 
+                    }
                 />
             </Routes>
         </Router>

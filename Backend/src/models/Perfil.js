@@ -2,26 +2,30 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const Perfil = sequelize.define('Perfil', {
-    idPerfil: {
+    id_perfil: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
-    Usuario_idUsuario: {
+    id_usuario: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
     biografia: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        allowNull: false
     },
-    foto_Perfil: {
-        type: DataTypes.TEXT
+    foto_perfil: {
+        type: DataTypes.TEXT,
+        allowNull: false
     },
-    foto_Portada: {
-        type: DataTypes.TEXT
+    foto_portada: {
+        type: DataTypes.TEXT,
+        allowNull: false
     }
 }, {
-    tableName: 'Perfil',
+    tableName: 'perfil',
     timestamps: false
 });
 

@@ -1,11 +1,13 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
+const bcrypt = require('bcryptjs');
 
 const Usuario = sequelize.define('Usuario', {
-    idUsuario: {
+    id_usuario: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: false
     },
     correo: {
         type: DataTypes.STRING(200),
@@ -13,7 +15,7 @@ const Usuario = sequelize.define('Usuario', {
         unique: true
     },
     contrasenia: {
-        type: DataTypes.STRING(45),
+        type: DataTypes.STRING(255),
         allowNull: false
     },
     nombre: {
@@ -24,13 +26,33 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    Rol_idRol: {
+    id_rol: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        field: 'id_rol'
     }
 }, {
-    tableName: 'Usuario',
-    timestamps: false
+    tableName: 'usuario',
+    timestamps: false,
+    hooks: {
+        beforeCreate: async (usuario) => {
+            if (usuario.contrasenia) {
+                const salt = await bcrypt.genSalt(10);
+                usuario.contrasenia = await bcrypt.hash(usuario.contrasenia, salt);
+            }
+        },
+        beforeUpdate: async (usuario) => {
+            if (usuario.changed('contrasenia')) {
+                const salt = await bcrypt.genSalt(10);
+                usuario.contrasenia = await bcrypt.hash(usuario.contrasenia, salt);
+            }
+        }
+    }
 });
 
+Usuario.prototype.validarContrasenia = async function (contrasenia) {
+    return await bcrypt.compare(contrasenia, this.contrasenia);
+};
+
 module.exports = Usuario;
+

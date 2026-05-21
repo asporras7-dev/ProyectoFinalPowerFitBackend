@@ -2,15 +2,15 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const RutinaEjercicio = sequelize.define('RutinaEjercicio', {
-    rut_id: {
+    id_rutina: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        field: 'Rutina_idRutina'
+        allowNull: false
     },
-    ej_id: {
+    id_ejercicio: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        field: 'Ejercicios_idEjercicios'
+        allowNull: false
     },
     repeticiones: {
         type: DataTypes.INTEGER,
@@ -20,12 +20,12 @@ const RutinaEjercicio = sequelize.define('RutinaEjercicio', {
         type: DataTypes.STRING(45),
         allowNull: false
     },
-    tiempo_Entre_Sets: {
+    tiempo_entre_sets: {
         type: DataTypes.STRING(45),
         allowNull: false
     }
 }, {
-    tableName: 'Rutina_Ejercicios',
+    tableName: 'rutina_ejercicio',
     timestamps: false
 });
 
