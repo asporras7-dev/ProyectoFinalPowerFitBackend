@@ -1,10 +1,20 @@
 import { MOCK_BASE_URL, API_BASE_URL } from './apiConfig';
 const API_URL = MOCK_BASE_URL;
 
+const authHeaders = () => {
+    const token = localStorage.getItem('token');
+    return {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {})
+    };
+};
+
 export const fetchStoriesData = async () => {
     const [storiesRes, contributorsRes, topicsRes, commentsRes] = await Promise.all([
         fetch(`${API_URL}/stories`),
-        fetch(`${API_BASE_URL}/api/contribuidores`),
+        fetch(`${API_BASE_URL}/api/contribuidores`, {
+            headers: authHeaders()
+        }),
         fetch(`${API_URL}/trendingTopics`),
         fetch(`${API_URL}/comentarios`)
     ]);
@@ -12,6 +22,7 @@ export const fetchStoriesData = async () => {
     if (!storiesRes.ok || !contributorsRes.ok || !topicsRes.ok) {
         throw new Error('Error al cargar la información.');
     }
+
 
     const storiesDataRaw = await storiesRes.json();
     const contributorsData = await contributorsRes.json();
@@ -32,6 +43,10 @@ export const fetchStoriesData = async () => {
         userId: s.userId || s.Usuario_idUsuario,
         category: s.category || (s.CategoriaPublicacion ? s.CategoriaPublicacion.nombre : 'Pérdida de Peso'),
         tag: s.tag || (s.CategoriaPublicacion ? s.CategoriaPublicacion.nombre : 'Pérdida de Peso'),
+        userName: s.userName || s.Usuario?.nombre,
+        userAvatar: s.userAvatar || s.Usuario?.Perfil?.foto_perfil,
+        likedBy: s.likedBy || [],
+        fecha: s.fecha || s.time,
         likes: s.likes || 0,
         comments: 0 // Will be calculated below
     }));
@@ -53,7 +68,10 @@ export const createStory = async (storyPayload) => {
         category: storyPayload.category,
         tag: storyPayload.category,
         userId: storyPayload.userId,
-        time: new Date().toISOString(),
+        userName: storyPayload.userName,
+        userAvatar: storyPayload.userAvatar,
+        time: storyPayload.time || "Justo ahora",
+        fecha: storyPayload.fecha || new Date().toISOString(),
         likes: 0,
         likedBy: []
     };
@@ -188,6 +206,10 @@ export const getStoriesByUserId = async (userId) => {
         image: s.image,
         time: s.time,
         userId: s.userId,
+        userName: s.userName || s.Usuario?.nombre,
+        userAvatar: s.userAvatar || s.Usuario?.Perfil?.foto_perfil,
+        likedBy: s.likedBy || [],
+        fecha: s.fecha || s.time,
         likes: s.likes || 0,
         comments: 0
     }));
@@ -202,15 +224,15 @@ export const getStoriesByUserId = async (userId) => {
 export const createReport = async (reportPayload) => {
     const response = await fetch(`${API_BASE_URL}/api/reportes`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: authHeaders(),
         body: JSON.stringify({
             storyId: reportPayload.storyId,
             reporterId: reportPayload.reporterId,
             reason: reportPayload.reason || 'Spam',
-            status: 'pending',
-            fecha: new Date().toISOString()
+            subReason: reportPayload.subReason || '',
+            otherText: reportPayload.otherText || '',
+            status: reportPayload.status || 'pending',
+            fecha: reportPayload.fecha || new Date().toISOString()
         })
     });
     if (!response.ok) {
@@ -220,7 +242,9 @@ export const createReport = async (reportPayload) => {
 };
 
 export const getAllReports = async () => {
-    const response = await fetch(`${API_BASE_URL}/api/reportes`);
+    const response = await fetch(`${API_BASE_URL}/api/reportes`, {
+        headers: authHeaders()
+    });
     if (!response.ok) {
         throw new Error('Error al cargar los reportes.');
     }
@@ -229,13 +253,15 @@ export const getAllReports = async () => {
 
 export const deleteReport = async (reportId) => {
     const response = await fetch(`${API_BASE_URL}/api/reportes/${reportId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: authHeaders()
     });
     if (!response.ok) {
         throw new Error('Error al eliminar el reporte.');
     }
     return response;
 };
+
 
 export const getStoryById = async (storyId) => {
     const response = await fetch(`${API_URL}/stories/${storyId}`);
