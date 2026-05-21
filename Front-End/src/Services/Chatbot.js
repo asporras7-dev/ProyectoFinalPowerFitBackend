@@ -1,6 +1,8 @@
+import { CHATBOT_URL } from './apiConfig';
+
 export async function sendMessage(messages, contextoUsuario) {
   try {
-    const res = await fetch("http://localhost:3001/chat", {
+    const res = await fetch(`${CHATBOT_URL}/chat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,3 +23,4 @@ export async function sendMessage(messages, contextoUsuario) {
     return "Lo siento, tuve un problema al conectarme al servidor.";
   }
 }
+

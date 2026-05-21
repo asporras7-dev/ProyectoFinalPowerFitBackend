@@ -37,17 +37,20 @@ const UsuarioController = {
     getById: async (req, res) => {
         try {
             const { id } = req.params;
-            const { Rol, DatosUsuario, Perfil, Rutina, Ejercicio } = require('../index');
+            const { Rol, DatosUsuario, Perfil, Rutina, Ejercicio, Alergia } = require('../index');
             const usuario = await Usuario.findByPk(id, {
                 attributes: { exclude: ['contrasenia'] },
                 include: [
                     { model: Rol },
                     { 
                         model: DatosUsuario,
-                        include: [{
-                            model: Rutina,
-                            include: [{ model: Ejercicio }]
-                        }]
+                        include: [
+                            { model: Alergia },
+                            {
+                                model: Rutina,
+                                include: [{ model: Ejercicio }]
+                            }
+                        ]
                     },
                     { 
                         model: Perfil,
@@ -70,13 +73,70 @@ const UsuarioController = {
     },
     create: async (req, res) => {
         try {
-            const { correo, contrasenia, nombre, edad, id_rol } = req.body;
+            const { correo, email, contrasenia, password, nombre, edad, id_rol } = req.body;
 
-            if (!correo || !contrasenia || !nombre) {
+            const finalCorreo = correo || email;
+            const finalContrasenia = contrasenia || password;
+
+            if (!finalCorreo || !finalContrasenia || !nombre) {
                 return res.status(400).json({ error: 'El correo, contrasenia, nombre es requerido' });
             }
 
-            const nuevo = await Usuario.create({ correo, contrasenia, nombre, edad, id_rol });
+            // Create Usuario record
+            const nuevo = await Usuario.create({
+                correo: finalCorreo,
+                contrasenia: finalContrasenia,
+                nombre,
+                edad: edad || 20,
+                id_rol: id_rol || 2 // Default client role
+            });
+            const id = nuevo.id_usuario;
+
+            const { DatosUsuario, Perfil, Alergia, DatosUsuarioAlergia } = require('../index');
+
+            // Create default Perfil
+            const foto_perfil = req.body.avatar || '';
+            const foto_portada = req.body.cover || '';
+            await Perfil.create({
+                foto_perfil,
+                foto_portada,
+                biografia: 'Miembro de PowerFit',
+                id_usuario: id
+            });
+
+            // Create DatosUsuario with mapped camelCase to snake_case properties
+            const physicalData = {
+                sexo: req.body.sexo || 'm',
+                altura: req.body.altura ? parseFloat(req.body.altura) : 0,
+                peso: req.body.pesoActual ? parseFloat(req.body.pesoActual) : (req.body.peso ? parseFloat(req.body.peso) : 0),
+                lugar_entrenamiento: req.body.lugarEntrenamiento || 'gym',
+                peso_meta: req.body.pesoMeta ? parseFloat(req.body.pesoMeta) : 0,
+                plazo_semanas: req.body.plazoSemanas ? parseInt(req.body.plazoSemanas, 10) : 8,
+                deficit_estimado: req.body.deficitEstimado ? parseInt(req.body.deficitEstimado, 10) : 450,
+                semanas_progreso: req.body.semanasEnProgreso ? parseInt(req.body.semanasEnProgreso, 10) : 1,
+                feedback_dieta: req.body.ultimoFeedbackDieta || 'Ninguno',
+                feedback_ejercicio: req.body.ultimoFeedbackEjercicio || 'Ninguno',
+                imagen: req.body.imagen || ''
+            };
+
+            const datosUsuario = await DatosUsuario.create({ ...physicalData, id_usuario: id });
+
+            // Handle Alergias if present
+            if (req.body.alergias) {
+                const alergiasList = req.body.alergias
+                    .split(',')
+                    .map(name => name.replace('Adicional:', '').trim())
+                    .filter(name => name && name.toLowerCase() !== 'ninguna');
+
+                for (const nombreAlergia of alergiasList) {
+                    const [alergia] = await Alergia.findOrCreate({ where: { nombre: nombreAlergia } });
+                    await DatosUsuarioAlergia.create({
+                        id_datos_usuario: datosUsuario.id_datos_usuario,
+                        id_alergia: alergia.id_alergia
+                    });
+                }
+            }
+
             const nuevoJson = nuevo.toJSON();
             delete nuevoJson.contrasenia;
             res.status(201).json(nuevoJson);
@@ -94,13 +154,18 @@ const UsuarioController = {
                 return res.status(404).json({ message: 'Usuario no encontrado' });
             }
 
-            if (!correo || !contrasenia || !nombre) {
-                return res.status(400).json({ error: 'El correo, contrasenia, nombre es requerido' });
+            const updateFields = {};
+            if (correo !== undefined) updateFields.correo = correo;
+            if (contrasenia !== undefined) updateFields.contrasenia = contrasenia;
+            if (nombre !== undefined) updateFields.nombre = nombre;
+            if (edad !== undefined) updateFields.edad = edad;
+            if (id_rol !== undefined) updateFields.id_rol = id_rol;
+
+            if (Object.keys(updateFields).length > 0) {
+                await usuario.update(updateFields);
             }
 
-            await usuario.update({ correo, contrasenia, nombre, edad, id_rol });
-
-            const { DatosUsuario, Perfil } = require('../index');
+            const { DatosUsuario, Perfil, Alergia, DatosUsuarioAlergia } = require('../index');
 
             // Update or Create DatosUsuario if fields are present
             let datosUsuario = await DatosUsuario.findOne({ where: { id_usuario: id } });
@@ -122,7 +187,50 @@ const UsuarioController = {
                 if (datosUsuario) {
                     await datosUsuario.update(updateData);
                 } else {
-                    await DatosUsuario.create({ ...updateData, id_usuario: id });
+                    datosUsuario = await DatosUsuario.create({ 
+                        ...updateData, 
+                        id_usuario: id,
+                        semanas_progreso: req.body.semanasEnProgreso || 1,
+                        feedback_dieta: req.body.ultimoFeedbackDieta || 'Ninguno',
+                        feedback_ejercicio: req.body.ultimoFeedbackEjercicio || 'Ninguno',
+                        imagen: req.body.imagen || ''
+                    });
+                }
+            }
+
+            // Handle Alergias if present
+            if (req.body.alergias !== undefined) {
+                if (!datosUsuario) {
+                    datosUsuario = await DatosUsuario.create({
+                        id_usuario: id,
+                        sexo: req.body.sexo || 'm',
+                        altura: req.body.altura || 0,
+                        peso: req.body.peso || 0,
+                        lugar_entrenamiento: req.body.lugarEntrenamiento || 'gym',
+                        peso_meta: req.body.pesoMeta || 0,
+                        plazo_semanas: req.body.plazoSemanas || 8,
+                        deficit_estimado: req.body.deficitEstimado || 450,
+                        semanas_progreso: 1,
+                        feedback_dieta: 'Ninguno',
+                        feedback_ejercicio: 'Ninguno',
+                        imagen: ''
+                    });
+                }
+
+                // Clean up existing associations for this user
+                await DatosUsuarioAlergia.destroy({ where: { id_datos_usuario: datosUsuario.id_datos_usuario } });
+
+                const alergiasList = req.body.alergias
+                    .split(',')
+                    .map(name => name.replace('Adicional:', '').trim())
+                    .filter(name => name && name.toLowerCase() !== 'ninguna');
+
+                for (const nombreAlergia of alergiasList) {
+                    const [alergia] = await Alergia.findOrCreate({ where: { nombre: nombreAlergia } });
+                    await DatosUsuarioAlergia.create({
+                        id_datos_usuario: datosUsuario.id_datos_usuario,
+                        id_alergia: alergia.id_alergia
+                    });
                 }
             }
 
@@ -179,10 +287,13 @@ const UsuarioController = {
                     { model: require('../index').Rol },
                     { 
                         model: DatosUsuario,
-                        include: [{
-                            model: Rutina,
-                            include: [{ model: Ejercicio }]
-                        }]
+                        include: [
+                            { model: Alergia },
+                            {
+                                model: Rutina,
+                                include: [{ model: Ejercicio }]
+                            }
+                        ]
                     },
                     { 
                         model: Perfil,
@@ -206,17 +317,20 @@ const UsuarioController = {
                 return res.status(400).json({ error: 'Correo y contrasenia son requeridos' });
             }
 
-            const { Rol, DatosUsuario, Perfil, Rutina, Ejercicio } = require('../index');
+            const { Rol, DatosUsuario, Perfil, Rutina, Ejercicio, Alergia } = require('../index');
             const usuario = await Usuario.findOne({ 
                 where: { correo },
                 include: [
                     { model: Rol },
                     { 
                         model: DatosUsuario,
-                        include: [{
-                            model: Rutina,
-                            include: [{ model: Ejercicio }]
-                        }]
+                        include: [
+                            { model: Alergia },
+                            {
+                                model: Rutina,
+                                include: [{ model: Ejercicio }]
+                            }
+                        ]
                     },
                     { 
                         model: Perfil,
@@ -274,3 +388,4 @@ const UsuarioController = {
 };
 
 module.exports = UsuarioController;
+

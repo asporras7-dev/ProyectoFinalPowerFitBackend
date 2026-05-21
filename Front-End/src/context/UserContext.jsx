@@ -49,6 +49,7 @@ export const UserProvider = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem('user');
+        localStorage.removeItem('token');
         setUser(null);
     };
 
