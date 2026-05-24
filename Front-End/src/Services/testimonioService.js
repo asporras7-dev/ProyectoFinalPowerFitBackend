@@ -1,5 +1,5 @@
 import { MOCK_BASE_URL, API_BASE_URL } from './apiConfig';
-const API_URL = MOCK_BASE_URL;
+const API_URL = `${API_BASE_URL}/api`;
 
 const authHeaders = () => {
     const token = localStorage.getItem('token');
@@ -11,12 +11,12 @@ const authHeaders = () => {
 
 export const fetchStoriesData = async () => {
     const [storiesRes, contributorsRes, topicsRes, commentsRes] = await Promise.all([
-        fetch(`${API_URL}/stories`),
+        fetch(`${API_URL}/publicaciones`, { headers: authHeaders() }),
         fetch(`${API_BASE_URL}/api/contribuidores`, {
             headers: authHeaders()
         }),
-        fetch(`${API_URL}/trendingTopics`),
-        fetch(`${API_URL}/comentarios`)
+        fetch(`${API_BASE_URL}/api/temas`),
+        fetch(`${API_URL}/comentarios`, { headers: authHeaders() })
     ]);
 
     if (!storiesRes.ok || !contributorsRes.ok || !topicsRes.ok) {
@@ -76,11 +76,9 @@ export const createStory = async (storyPayload) => {
         likedBy: []
     };
     
-    const response = await fetch(`${API_URL}/stories`, {
+    const response = await fetch(`${API_URL}/publicaciones`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: authHeaders(),
         body: JSON.stringify(payload)
     });
 
@@ -109,17 +107,15 @@ export const createStory = async (storyPayload) => {
 
 export const updateStoryLikes = async (storyId, newLikes, likedBy) => {
     // First get the story to preserve existing fields
-    const getResponse = await fetch(`${API_URL}/stories/${storyId}`);
+    const getResponse = await fetch(`${API_URL}/publicaciones/${storyId}`, { headers: authHeaders() });
     if (!getResponse.ok) {
         throw new Error('Error al buscar la historia.');
     }
     const story = await getResponse.json();
 
-    const response = await fetch(`${API_URL}/stories/${storyId}`, {
+    const response = await fetch(`${API_URL}/publicaciones/${storyId}`, {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: authHeaders(),
         body: JSON.stringify({ 
             ...story,
             likes: newLikes,
@@ -135,8 +131,9 @@ export const updateStoryLikes = async (storyId, newLikes, likedBy) => {
 };
 
 export const deleteStory = async (storyId) => {
-    const response = await fetch(`${API_URL}/stories/${storyId}`, {
-        method: 'DELETE'
+    const response = await fetch(`${API_URL}/publicaciones/${storyId}`, {
+        method: 'DELETE',
+        headers: authHeaders()
     });
 
     if (!response.ok) {
@@ -147,7 +144,7 @@ export const deleteStory = async (storyId) => {
 };
 
 export const fetchCommentsByStory = async (storyId) => {
-    const response = await fetch(`${API_URL}/comentarios?storyId=${storyId}`);
+    const response = await fetch(`${API_URL}/comentarios?storyId=${storyId}`, { headers: authHeaders() });
     if (!response.ok) {
         throw new Error('Error al cargar los comentarios.');
     }
@@ -157,9 +154,7 @@ export const fetchCommentsByStory = async (storyId) => {
 export const addComment = async (commentPayload) => {
     const response = await fetch(`${API_URL}/comentarios`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: authHeaders(),
         body: JSON.stringify(commentPayload)
     });
     if (!response.ok) {
@@ -169,16 +164,13 @@ export const addComment = async (commentPayload) => {
 };
 
 export const updateStoryCommentsCount = async (storyId, newCount) => {
-    // In json-server, this is computed dynamically or updated on the story.
     // Fetch story first.
-    const getResponse = await fetch(`${API_URL}/stories/${storyId}`);
+    const getResponse = await fetch(`${API_URL}/publicaciones/${storyId}`, { headers: authHeaders() });
     if (getResponse.ok) {
         const story = await getResponse.json();
-        await fetch(`${API_URL}/stories/${storyId}`, {
+        await fetch(`${API_URL}/publicaciones/${storyId}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: authHeaders(),
             body: JSON.stringify({ ...story, commentsCount: newCount })
         });
     }
@@ -186,8 +178,8 @@ export const updateStoryCommentsCount = async (storyId, newCount) => {
 
 export const getStoriesByUserId = async (userId) => {
     const [storiesRes, commentsRes] = await Promise.all([
-        fetch(`${API_URL}/stories?userId=${userId}`),
-        fetch(`${API_URL}/comentarios`)
+        fetch(`${API_URL}/publicaciones?userId=${userId}`, { headers: authHeaders() }),
+        fetch(`${API_URL}/comentarios`, { headers: authHeaders() })
     ]);
     if (!storiesRes.ok) {
         throw new Error('Error al cargar las historias del usuario.');
@@ -264,7 +256,7 @@ export const deleteReport = async (reportId) => {
 
 
 export const getStoryById = async (storyId) => {
-    const response = await fetch(`${API_URL}/stories/${storyId}`);
+    const response = await fetch(`${API_URL}/publicaciones/${storyId}`, { headers: authHeaders() });
     if (!response.ok) {
         throw new Error('Error al cargar la historia.');
     }

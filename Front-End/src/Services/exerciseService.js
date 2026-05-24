@@ -1,5 +1,5 @@
-import { MOCK_BASE_URL } from './apiConfig';
-const BASE_URL = MOCK_BASE_URL;
+import { API_BASE_URL } from './apiConfig';
+const BASE_URL = `${API_BASE_URL}/api`;
 
 //Obtener todos los ejercicios
 export const obtenerTodosEjercicios = async () => {
