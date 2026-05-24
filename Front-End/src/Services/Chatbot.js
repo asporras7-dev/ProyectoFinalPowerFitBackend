@@ -1,10 +1,17 @@
+import { API_BASE_URL } from "./apiConfig";
+
 export async function sendMessage(messages, contextoUsuario) {
   try {
-    const res = await fetch("http://localhost:3023/chat", {
+    const token = localStorage.getItem("token");
+
+    const headers = {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {})
+    };
+
+    const res = await fetch(`${API_BASE_URL}/api/chat`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
       body: JSON.stringify({ messages, contextoUsuario }),
     });
 

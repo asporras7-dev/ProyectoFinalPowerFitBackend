@@ -27,6 +27,7 @@ const DatosUsuarioRoutes = require('./routes/DatosUsuarioRoutes');
 const AlergiaRoutes = require('./routes/AlergiaRoutes');
 const RutinaRoutes = require('./routes/RutinaRoutes');
 const EjercicioRoutes = require('./routes/EjercicioRoutes');
+const ChatbotRoutes = require('./routes/ChatbotRoutes');
 
 // Use Routes
 app.use('/api/usuarios', UsuarioRoutes);
@@ -47,16 +48,22 @@ app.use('/api/datos-usuario', DatosUsuarioRoutes);
 app.use('/api/alergias', AlergiaRoutes);
 app.use('/api/rutinas', RutinaRoutes);
 app.use('/api/ejercicios', EjercicioRoutes);
+app.use('/api/chat', ChatbotRoutes);
 
 const PORT = config.server.port || 3000;
 
-sequelize.sync({ force: false })
-    .then(() => {
-        console.log('Database connected and synced');
-        app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
+if (process.env.NODE_ENV !== 'test') {
+    sequelize.sync({ force: false })
+        .then(() => {
+            console.log('Database connected and synced');
+            app.listen(PORT, () => {
+                console.log(`Server running on port ${PORT}`);
+            });
+        })
+        .catch(err => {
+            console.error('Unable to connect to the database:', err);
         });
-    })
-    .catch(err => {
-        console.error('Unable to connect to the database:', err);
-    });
+}
+
+module.exports = app;
+

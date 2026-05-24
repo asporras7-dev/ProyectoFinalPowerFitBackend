@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { saveContactMessage } from '../Services/userService';
 import emailjs from '@emailjs/browser';
-import '../styles/Contacto.css';
+import '../Styles/Contacto.css';
 
 const FormContact = () => {
     const [formData, setFormData] = useState({
