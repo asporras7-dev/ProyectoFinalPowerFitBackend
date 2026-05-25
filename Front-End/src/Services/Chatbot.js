@@ -28,3 +28,4 @@ export async function sendMessage(messages, contextoUsuario) {
     return "Lo siento, tuve un problema al conectarme al servidor.";
   }
 }
+
