@@ -6,8 +6,15 @@
  */
 
 const request = require('supertest');
+<<<<<<< HEAD
 const app = require('../src/app');
 const { sequelize, Rol, Usuario, Alergia, DatosUsuario, Perfil } = require('../src/index');
+=======
+const jwt = require('jsonwebtoken');
+const app = require('../src/app');
+const { sequelize, Rol, Usuario, Alergia, DatosUsuario, Perfil } = require('../src/index');
+const config = require('../src/config/config');
+>>>>>>> 88a0599d891205455a82af413f7cd84f8c7bdf71
 
 // Establecemos el entorno a 'test'
 process.env.NODE_ENV = 'test';
@@ -15,18 +22,44 @@ process.env.NODE_ENV = 'test';
 describe('Suite de Pruebas de Integración de Endpoints API (PowerFit)', () => {
     let testRol;
     let createdUser;
+<<<<<<< HEAD
     let userToken; // Para compatibilidad con JWT
+=======
+    let userToken; // Token JWT generado para pruebas de rutas protegidas
+    let adminToken; // Token con rol admin para rutas de administración
+>>>>>>> 88a0599d891205455a82af413f7cd84f8c7bdf71
     let testAlergia;
 
     // Inicializar y sincronizar base de datos limpia en memoria antes de comenzar
     beforeAll(async () => {
         await sequelize.sync({ force: true });
 
+<<<<<<< HEAD
         // Crear rol admin para poder probar todas las rutas incluyendo las restringidas
         testRol = await Rol.create({
             nombre: 'admin',
             descripcion: 'Usuario administrador del sistema de pruebas'
         });
+=======
+        // Crear rol por defecto para los usuarios de prueba
+        testRol = await Rol.create({
+            nombre: 'Cliente',
+            descripcion: 'Usuario regular del sistema de pruebas'
+        });
+
+        // Generar tokens JWT de prueba (sin necesidad de login real)
+        userToken = jwt.sign(
+            { id_usuario: 999, correo: 'test@test.com', id_rol: testRol.id_rol, rol: 'cliente' },
+            config.jwtSecret,
+            { expiresIn: '1h' }
+        );
+
+        adminToken = jwt.sign(
+            { id_usuario: 998, correo: 'admin@test.com', id_rol: testRol.id_rol, rol: 'admin' },
+            config.jwtSecret,
+            { expiresIn: '1h' }
+        );
+>>>>>>> 88a0599d891205455a82af413f7cd84f8c7bdf71
     });
 
     // Cerrar base de datos tras las pruebas
@@ -82,6 +115,7 @@ describe('Suite de Pruebas de Integración de Endpoints API (PowerFit)', () => {
                 });
 
             expect(res.statusCode).toBe(200);
+<<<<<<< HEAD
             expect(res.body).toHaveProperty('token');
             expect(res.body.usuario).toHaveProperty('id_usuario');
             expect(res.body.usuario.correo).toBe('test.user@powerfit.com');
@@ -89,6 +123,14 @@ describe('Suite de Pruebas de Integración de Endpoints API (PowerFit)', () => {
             expect(res.body.usuario.Rol.nombre).toBe('admin');
             
             userToken = res.body.token; // Guardamos el token para peticiones protegidas
+=======
+            // El login devuelve { message, token, usuario }
+            expect(res.body).toHaveProperty('token');
+            expect(res.body).toHaveProperty('usuario');
+            expect(res.body.usuario.correo).toBe('test.user@powerfit.com');
+            // Actualizar el token de prueba con el real del login
+            userToken = res.body.token;
+>>>>>>> 88a0599d891205455a82af413f7cd84f8c7bdf71
         });
 
         // Escenario de Fallo: Login con contraseña incorrecta
@@ -209,7 +251,11 @@ describe('Suite de Pruebas de Integración de Endpoints API (PowerFit)', () => {
         test('POST /api/alergias - Debería registrar una nueva alergia (Código 201)', async () => {
             const res = await request(app)
                 .post('/api/alergias')
+<<<<<<< HEAD
                 .set('Authorization', `Bearer ${userToken}`)
+=======
+                .set('Authorization', `Bearer ${adminToken}`)
+>>>>>>> 88a0599d891205455a82af413f7cd84f8c7bdf71
                 .send({
                     nombre: 'Lactosa'
                 });
@@ -224,7 +270,11 @@ describe('Suite de Pruebas de Integración de Endpoints API (PowerFit)', () => {
         test('POST /api/alergias - Debería denegar la creación si falta el nombre (Código 400)', async () => {
             const res = await request(app)
                 .post('/api/alergias')
+<<<<<<< HEAD
                 .set('Authorization', `Bearer ${userToken}`)
+=======
+                .set('Authorization', `Bearer ${adminToken}`)
+>>>>>>> 88a0599d891205455a82af413f7cd84f8c7bdf71
                 .send({});
 
             expect(res.statusCode).toBe(400);
@@ -246,7 +296,11 @@ describe('Suite de Pruebas de Integración de Endpoints API (PowerFit)', () => {
         test('PUT /api/alergias/:id - Debería editar la alergia de forma exitosa (Código 200)', async () => {
             const res = await request(app)
                 .put(`/api/alergias/${testAlergia.id_alergia}`)
+<<<<<<< HEAD
                 .set('Authorization', `Bearer ${userToken}`)
+=======
+                .set('Authorization', `Bearer ${adminToken}`)
+>>>>>>> 88a0599d891205455a82af413f7cd84f8c7bdf71
                 .send({
                     nombre: 'Lácteos e Intolerancia'
                 });
@@ -259,7 +313,11 @@ describe('Suite de Pruebas de Integración de Endpoints API (PowerFit)', () => {
         test('DELETE /api/alergias/:id - Debería retornar 404 para una alergia inexistente', async () => {
             const res = await request(app)
                 .delete('/api/alergias/99999')
+<<<<<<< HEAD
                 .set('Authorization', `Bearer ${userToken}`);
+=======
+                .set('Authorization', `Bearer ${adminToken}`);
+>>>>>>> 88a0599d891205455a82af413f7cd84f8c7bdf71
 
             expect(res.statusCode).toBe(404);
             expect(res.body.message).toBe('Alergia no encontrado');
@@ -269,7 +327,11 @@ describe('Suite de Pruebas de Integración de Endpoints API (PowerFit)', () => {
         test('DELETE /api/alergias/:id - Debería borrar la alergia correctamente (Código 200)', async () => {
             const res = await request(app)
                 .delete(`/api/alergias/${testAlergia.id_alergia}`)
+<<<<<<< HEAD
                 .set('Authorization', `Bearer ${userToken}`);
+=======
+                .set('Authorization', `Bearer ${adminToken}`);
+>>>>>>> 88a0599d891205455a82af413f7cd84f8c7bdf71
 
             expect(res.statusCode).toBe(200);
             expect(res.body.message).toBe('Alergia eliminado correctamente');
@@ -283,7 +345,11 @@ describe('Suite de Pruebas de Integración de Endpoints API (PowerFit)', () => {
         test('DELETE /api/usuarios/:id - Debería eliminar el usuario de pruebas al final (Código 200)', async () => {
             const res = await request(app)
                 .delete(`/api/usuarios/${createdUser.id_usuario}`)
+<<<<<<< HEAD
                 .set('Authorization', `Bearer ${userToken}`);
+=======
+                .set('Authorization', `Bearer ${adminToken}`);
+>>>>>>> 88a0599d891205455a82af413f7cd84f8c7bdf71
 
             expect(res.statusCode).toBe(200);
             expect(res.body.message).toBe('Usuario eliminado correctamente');

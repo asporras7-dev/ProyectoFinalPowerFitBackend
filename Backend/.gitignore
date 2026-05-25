@@ -1,2 +1,4 @@
-node_modules
-Proyecto-final-Frontend\Backend\node_modules
+node_modules/
+.env
+*.env
+test_auth.js

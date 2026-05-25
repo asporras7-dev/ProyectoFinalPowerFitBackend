@@ -76,7 +76,79 @@ const UsuarioController = {
                 return res.status(400).json({ error: 'El correo, contrasenia, nombre es requerido' });
             }
 
-            const nuevo = await Usuario.create({ correo, contrasenia, nombre, edad, id_rol });
+            // Crear el usuario con id_rol por defecto a 2 (Cliente) si no se especifica
+            const nuevo = await Usuario.create({
+                correo,
+                contrasenia,
+                nombre,
+                edad: edad ? Number(edad) : 18,
+                id_rol: id_rol || 1
+            });
+
+            const { Perfil, DatosUsuario, Alergia } = require('../index');
+
+            // Crear Perfil y DatosUsuario si hay campos de registro físico/completo
+            const isFullRegistration = req.body.sexo !== undefined || req.body.peso !== undefined || req.body.altura !== undefined;
+            
+            if (isFullRegistration) {
+                // Crear Perfil
+                const foto_perfil = req.body.avatar || req.body.foto_perfil || 'avatar.png';
+                const foto_portada = req.body.cover || req.body.foto_portada || 'banner.jpg';
+                const biografia = req.body.biografia || 'Miembro de PowerFit';
+                
+                await Perfil.create({
+                    foto_perfil,
+                    foto_portada,
+                    biografia,
+                    id_usuario: nuevo.id_usuario
+                });
+
+                // Crear DatosUsuario
+                const sexo = req.body.sexo || 'Masculino';
+                const altura = req.body.altura !== undefined ? Number(req.body.altura) : 1.70;
+                const peso = req.body.peso !== undefined ? Number(req.body.peso) : 70.0;
+                const lugar_entrenamiento = req.body.lugarEntrenamiento || req.body.lugar_entrenamiento || 'Casa';
+                const peso_meta = req.body.pesoMeta !== undefined ? Number(req.body.pesoMeta) : 70.0;
+                const plazo_semanas = req.body.plazoSemanas !== undefined ? Number(req.body.plazoSemanas) : 8;
+                const deficit_estimado = req.body.deficitEstimado !== undefined ? Number(req.body.deficitEstimado) : 450;
+                const imagen = req.body.imagen || 'inicial.png';
+                const semanas_progreso = req.body.semanasEnProgreso !== undefined ? Number(req.body.semanasEnProgreso) : 0;
+                const feedback_dieta = req.body.ultimoFeedbackDieta || req.body.feedback_dieta || 'Ninguno';
+                const feedback_ejercicio = req.body.ultimoFeedbackEjercicio || req.body.feedback_ejercicio || 'Ninguno';
+
+                const datosUsuario = await DatosUsuario.create({
+                    sexo,
+                    altura,
+                    peso,
+                    lugar_entrenamiento,
+                    peso_meta,
+                    plazo_semanas,
+                    deficit_estimado,
+                    imagen,
+                    id_usuario: nuevo.id_usuario,
+                    semanas_progreso,
+                    feedback_dieta,
+                    feedback_ejercicio
+                });
+
+                // Procesar alergias si se enviaron
+                if (req.body.alergias && typeof req.body.alergias === 'string' && req.body.alergias.trim() !== '') {
+                    const alergiasList = req.body.alergias
+                        .split(',')
+                        .map(name => name.trim())
+                        .filter(name => name.length > 0);
+
+                    const alergiaRecords = [];
+                    for (const name of alergiasList) {
+                        const [alergiaRecord] = await Alergia.findOrCreate({
+                            where: { nombre: name }
+                        });
+                        alergiaRecords.push(alergiaRecord);
+                    }
+                    await datosUsuario.setAlergias(alergiaRecords);
+                }
+            }
+
             const nuevoJson = nuevo.toJSON();
             delete nuevoJson.contrasenia;
             res.status(201).json(nuevoJson);
