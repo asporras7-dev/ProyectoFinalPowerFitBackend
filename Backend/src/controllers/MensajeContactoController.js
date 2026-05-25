@@ -1,14 +1,31 @@
 const MensajeContacto = require('../models/MensajeContacto');
 
+const formatMensaje = (m) => {
+    if (!m) return null;
+    return {
+        id: m.id_mensaje,
+        id_mensaje: m.id_mensaje,
+        nombre: m.nombre,
+        telefono: m.telefono,
+        contacto: m.telefono,
+        correo: m.correo,
+        email: m.correo,
+        mensaje: m.mensaje,
+        pais: m.pais,
+        fecha: m.fecha,
+        id_usuario: m.id_usuario
+    };
+};
+
 const MensajeContactoController = {
     getAll: async (req, res) => {
         try {
             const mensajes = await MensajeContacto.findAll();
 
             if (!mensajes || mensajes.length === 0) {
-                return res.status(404).json({ message: "No se encontraron mensajes" });
+                return res.status(200).json([]); // Return empty list rather than 404 to avoid frontend crash on empty inbox
             }
-            res.status(200).json(mensajes);
+            res.status(200).json(mensajes.map(formatMensaje));
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -22,7 +39,7 @@ const MensajeContactoController = {
                 return res.status(404).json({ message: 'MensajeContacto no encontrado' });
             }
 
-            res.status(200).json(mensaje);
+            res.status(200).json(formatMensaje(mensaje));
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -47,7 +64,7 @@ const MensajeContactoController = {
                 fecha: fecha || new Date(), 
                 id_usuario: id_usuario || null 
             });
-            res.status(201).json(nuevo);
+            res.status(201).json(formatMensaje(nuevo));
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -74,7 +91,7 @@ const MensajeContactoController = {
                 fecha: fecha || mensajeEncontrado.fecha, 
                 id_usuario: id_usuario !== undefined ? id_usuario : mensajeEncontrado.id_usuario 
             });
-            res.status(200).json(mensajeEncontrado);
+            res.status(200).json(formatMensaje(mensajeEncontrado));
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -97,3 +114,4 @@ const MensajeContactoController = {
 };
 
 module.exports = MensajeContactoController;
+

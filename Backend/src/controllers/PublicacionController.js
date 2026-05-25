@@ -169,9 +169,16 @@ const PublicacionController = {
                 return res.status(404).json({ message: 'Publicacion no encontrado' });
             }
 
+            // Clean up all FK-dependent records before deleting the publication
+            const { Reporte, PublicacionComentario, LikePublicacion } = require('../index');
+            await Reporte.destroy({ where: { id_publicacion: id } });
+            await PublicacionComentario.destroy({ where: { id_publicacion: id } });
+            await LikePublicacion.destroy({ where: { id_publicacion: id } });
+
             await publicacion.destroy();
             res.status(200).json({ message: 'Publicacion eliminado correctamente' });
         } catch (error) {
+            console.error("Delete publicacion error:", error);
             res.status(500).json({ error: error.message });
         }
     }

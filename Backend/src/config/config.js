@@ -19,5 +19,7 @@ module.exports = {
     server: {
         port: process.env.PORT || 3000
     },
+    // Groq API configuration
+    groqApiKey: process.env.GROQ_API_KEY || '',
     jwtSecret: process.env.JWT_SECRET || 'powerfit_jwt_secret_key_2026_default_secure'
 }

@@ -79,7 +79,6 @@ app.use((req, res) => {
 const PORT = config.server.port || 3000;
 
 if (process.env.NODE_ENV !== 'test') {
-<<<<<<< HEAD
     // alter:true permite alterar columnas existentes como contrasenia(255)
     sequelize.sync({ alter: false })
         .then(() => {
@@ -90,22 +89,7 @@ if (process.env.NODE_ENV !== 'test') {
         })
         .catch(err => {
             console.error('❌ Error al conectar con la base de datos:', err.message);
-=======
-    sequelize.sync({ force: false })
-        .then(() => {
-            console.log('Database connected and synced');
-            app.listen(PORT, () => {
-                console.log(`Server running on port ${PORT}`);
-            });
-        })
-        .catch(err => {
-            console.error('Unable to connect to the database:', err);
->>>>>>> 88a0599d891205455a82af413f7cd84f8c7bdf71
         });
 }
 
 module.exports = app;
-<<<<<<< HEAD
-=======
-
->>>>>>> 88a0599d891205455a82af413f7cd84f8c7bdf71
