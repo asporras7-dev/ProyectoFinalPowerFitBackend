@@ -88,6 +88,14 @@ Powerfit digitaliza y unifica la experiencia de entrenamiento con la motivación
 
 ---
 
+## Arquitectura Preparada para Producción (Production-Ready)
+
+El proyecto aún no se encuentra desplegado en un servidor público, pero su arquitectura ha sido construida bajo estrictos estándares corporativos para facilitar un paso a producción (Go-Live) seguro y escalable:
+
+- **Frontend (SPA)**: Listo para ser optimizado y transpilado a estáticos a través de Vite (`npm run build`). Los archivos resultantes están estructurados para un despliegue ágil en plataformas de *Edge Computing* y CDN globales (como **Vercel, Netlify o AWS S3 + CloudFront**), integrándose fácilmente en flujos de CI/CD para despliegues continuos.
+- **Backend API**: El servidor de Node.js está diseñado bajo una arquitectura sin estado (*Stateless*), lo que permite que sea desplegado mediante múltiples opciones corporativas: gestores de procesos (**PM2**), orquestación de contenedores (**Docker / Kubernetes**), o plataformas PaaS (**AWS Elastic Beanstalk / Azure App Service**), garantizando escalabilidad horizontal y *Zero Downtime*.
+- **Base de Datos Relacional**: La capa de datos gestionada por Sequelize facilita futuras migraciones a entornos Cloud (ej. AWS RDS), manteniendo intacta la estructura e integridad de los datos físicos y rutinas de los usuarios.
+- **Enfoque en Seguridad**: Todo el flujo de datos ha sido diseñado anticipando el uso de proxies inversos y certificados SSL/TLS, lo que asegurará la confidencialidad absoluta de los historiales médicos y métricas de la plataforma una vez montado en un entorno real.
 
 ---
 
