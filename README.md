@@ -168,3 +168,30 @@ cd Proyecto-final-PowerFit
 
 El frontend estará disponible en tu navegador en `http://localhost:5173` y conectado a tu API local. ¡Listo para desarrollar!
 
+---
+
+## Estructura del Proyecto
+
+El proyecto está dividido en dos grandes bloques bajo un patrón de arquitectura limpia:
+
+```text
+Proyecto-final-PowerFit/
+├── Backend/                 # API RESTful con Node.js y Express
+│   ├── src/                 
+│   │   ├── config/          # Configuración de servidor y base de datos
+│   │   ├── controllers/     # Lógica de negocio (auth, rutinas, posts)
+│   │   ├── MCP/             # Protocolo de Contexto de Modelo
+│   │   ├── middlewares/     # JWT y protección de rutas
+│   │   ├── migrations/      # Migraciones de DB
+│   │   ├── models/          # Modelos y relaciones (N:M) de Sequelize
+│   │   └── routes/          # Rutas de la API
+│   └── tests/               # Pruebas unitarias y de integración (Jest)
+├── Front-End/               # Aplicación cliente con React y Vite
+│   ├── src/                 
+│   │   ├── components/      # Componentes reutilizables
+│   │   ├── context/         # Manejo de estado global (Auth)
+│   │   ├── Pages/           # Vistas principales (Feed, Profile, etc.)
+│   │   ├── Routes/          # Definición de rutas en el cliente
+│   │   ├── Services/        # Servicios de conexión HTTP (Axios)
+│   │   └── Styles/          # Hojas de estilo
+```
