@@ -35,6 +35,18 @@ El proyecto está construido bajo una arquitectura cliente-servidor (Full-Stack)
 
 ---
 
+## Valor de Negocio y Logros Técnicos (Highlights para Reclutadores)
+
+Powerfit no es únicamente una aplicación CRUD tradicional; es un ecosistema digital robusto que demuestra sólidas competencias de Ingeniería de Software orientadas a la escalabilidad y al rendimiento:
+
+- **Integración de IA Generativa Aplicada**: Implementación fluida de Modelos de Lenguaje (Groq API / Gemini SDK) para proporcionar a los usuarios un entrenador/nutricionista virtual. Esto demuestra la capacidad de orquestar APIs de terceros de manera asíncrona sin bloquear el *Event Loop* del backend de Node.js.
+- **Arquitectura Social Compleja**: Desarrollo de un motor relacional en base de datos (N:M a través de Sequelize) para soportar dinámicas propias de una red social (Perfiles, Publicaciones, *Likes*, Comentarios y Tendencias), resolviendo los cuellos de botella clásicos de consultas anidadas.
+- **Mentalidad de Testing (Calidad de Software)**: El entorno backend está configurado profesionalmente con **Jest & Supertest** para pruebas unitarias y de integración (`test:coverage`). Esto evidencia un fuerte compromiso con el código limpio, escalable y la prevención de regresiones, algo altamente valorado en entornos corporativos.
+- **Descarga Estratégica del Backend (Serverless)**: Integración de **EmailJS** directamente en el cliente (React) para correos transaccionales y soporte, lo que disminuye la carga computacional del servidor centralizado y mejora los tiempos de respuesta.
+- **Seguridad "By-Design"**: Sistema de moderación en comunidad, hashing de contraseñas con Bcrypt, gestión de accesos basada en roles (RBAC) y sesiones seguras sin estado con **JWT**.
+
+---
+
 ## Funcionalidades Principales
 
 Powerfit digitaliza y unifica la experiencia de entrenamiento con la motivación de una comunidad activa. Sus funcionalidades se dividen en los siguientes módulos:
