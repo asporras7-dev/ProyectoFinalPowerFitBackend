@@ -116,8 +116,8 @@ Si deseas clonar y probar este proyecto en tu entorno local, sigue las instrucci
 
 ### 2. Clonar el Repositorio
 ```bash
-git clone https://github.com/TuUsuario/Proyecto-final-PowerFit.git
-cd Proyecto-final-PowerFit
+git clone https://github.com/asporras7-dev/ProyectoFinalPowerFitBackend.git
+cd ProyectoFinalPowerFitBackend
 ```
 
 ### 3. Configuración de la Base de Datos (MySQL)
