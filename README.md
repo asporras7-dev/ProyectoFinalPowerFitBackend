@@ -35,18 +35,6 @@ El proyecto está construido bajo una arquitectura cliente-servidor (Full-Stack)
 
 ---
 
-## Valor de Negocio y Logros Técnicos
-
-Powerfit no es únicamente una aplicación CRUD tradicional; es un ecosistema digital robusto que demuestra sólidas competencias de Ingeniería de Software orientadas a la escalabilidad y al rendimiento:
-
-- **Integración de IA Generativa Aplicada**: Implementación fluida de Modelos de Lenguaje (Groq API / Gemini SDK) para proporcionar a los usuarios un entrenador/nutricionista virtual. Esto demuestra la capacidad de orquestar APIs de terceros de manera asíncrona sin bloquear el *Event Loop* del backend de Node.js.
-- **Arquitectura Social Compleja**: Desarrollo de un motor relacional en base de datos (N:M a través de Sequelize) para soportar dinámicas propias de una red social (Perfiles, Publicaciones, *Likes*, Comentarios y Tendencias), resolviendo los cuellos de botella clásicos de consultas anidadas.
-- **Mentalidad de Testing (Calidad de Software)**: El entorno backend está configurado profesionalmente con **Jest & Supertest** para pruebas unitarias y de integración (`test:coverage`). Esto evidencia un fuerte compromiso con el código limpio, escalable y la prevención de regresiones, algo altamente valorado en entornos corporativos.
-- **Descarga Estratégica del Backend (Serverless)**: Integración de **EmailJS** directamente en el cliente (React) para correos transaccionales y soporte, lo que disminuye la carga computacional del servidor centralizado y mejora los tiempos de respuesta.
-- **Seguridad "By-Design"**: Sistema de moderación en comunidad, hashing de contraseñas con Bcrypt, gestión de accesos basada en roles (RBAC) y sesiones seguras sin estado con **JWT**.
-
----
-
 ## Funcionalidades Principales
 
 Powerfit digitaliza y unifica la experiencia de entrenamiento con la motivación de una comunidad activa. Sus funcionalidades se dividen en los siguientes módulos:
@@ -88,6 +76,18 @@ Powerfit digitaliza y unifica la experiencia de entrenamiento con la motivación
 
 ---
 
+## Valor de Negocio y Logros Técnicos (Highlights para Reclutadores)
+
+Powerfit no es únicamente una aplicación CRUD tradicional; es un ecosistema digital robusto que demuestra sólidas competencias de Ingeniería de Software orientadas a la escalabilidad y al rendimiento:
+
+- **Integración de IA Generativa Aplicada**: Implementación fluida de Modelos de Lenguaje (Groq API / Gemini SDK) para proporcionar a los usuarios un entrenador/nutricionista virtual. Esto demuestra la capacidad de orquestar APIs de terceros de manera asíncrona sin bloquear el *Event Loop* del backend de Node.js.
+- **Arquitectura Social Compleja**: Desarrollo de un motor relacional en base de datos (N:M a través de Sequelize) para soportar dinámicas propias de una red social (Perfiles, Publicaciones, *Likes*, Comentarios y Tendencias), resolviendo los cuellos de botella clásicos de consultas anidadas.
+- **Mentalidad de Testing (Calidad de Software)**: El entorno backend está configurado profesionalmente con **Jest & Supertest** para pruebas unitarias y de integración (`test:coverage`). Esto evidencia un fuerte compromiso con el código limpio, escalable y la prevención de regresiones, algo altamente valorado en entornos corporativos.
+- **Descarga Estratégica del Backend (Serverless)**: Integración de **EmailJS** directamente en el cliente (React) para correos transaccionales y soporte, lo que disminuye la carga computacional del servidor centralizado y mejora los tiempos de respuesta.
+- **Seguridad "By-Design"**: Sistema de moderación en comunidad, hashing de contraseñas con Bcrypt, gestión de accesos basada en roles (RBAC) y sesiones seguras sin estado con **JWT**.
+
+---
+
 ## Arquitectura Preparada para Producción (Production-Ready)
 
 El proyecto aún no se encuentra desplegado en un servidor público, pero su arquitectura ha sido construida bajo estrictos estándares corporativos para facilitar un paso a producción (Go-Live) seguro y escalable:
@@ -102,6 +102,9 @@ El proyecto aún no se encuentra desplegado en un servidor público, pero su arq
 ## Instalación y Ejecución Local (Guía Paso a Paso)
 
 Si deseas clonar y probar este proyecto en tu entorno local, sigue las instrucciones a continuación.
+
+<details>
+<summary><b>Haz clic aquí para ver la Guía de Instalación y Ejecución Local</b></summary>
 
 ### 1. Prerrequisitos
 - [Node.js](https://nodejs.org/) (Versión 18 o superior recomendada).
@@ -168,9 +171,14 @@ cd Proyecto-final-PowerFit
 
 El frontend estará disponible en tu navegador en `http://localhost:5173` y conectado a tu API local. ¡Listo para desarrollar!
 
+</details>
+
 ---
 
 ## Estructura del Proyecto
+
+<details>
+<summary><b>Haz clic aquí para desplegar la Arquitectura de Carpetas</b></summary>
 
 El proyecto está dividido en dos grandes bloques bajo un patrón de arquitectura limpia:
 
@@ -195,3 +203,4 @@ Proyecto-final-PowerFit/
 │   │   ├── Services/        # Servicios de conexión HTTP (Axios)
 │   │   └── Styles/          # Hojas de estilo
 ```
+</details>
