@@ -202,5 +202,7 @@ Proyecto-final-PowerFit/
 │   │   ├── Routes/          # Definición de rutas en el cliente
 │   │   ├── Services/        # Servicios de conexión HTTP (Axios)
 │   │   └── Styles/          # Hojas de estilo
+├── package.json             # Configuración de dependencias
+└── .gitignore               # Archivos ignorados por Git
 ```
 </details>
