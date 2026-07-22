@@ -76,7 +76,7 @@ Powerfit digitaliza y unifica la experiencia de entrenamiento con la motivación
 
 ---
 
-## Valor de Negocio y Logros Técnicos (Highlights para Reclutadores)
+## Valor de Negocio y Logros Técnicos
 
 Powerfit no es únicamente una aplicación CRUD tradicional; es un ecosistema digital robusto que demuestra sólidas competencias de Ingeniería de Software orientadas a la escalabilidad y al rendimiento:
 
